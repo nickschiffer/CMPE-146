@@ -1,0 +1,9 @@
+binutils/
+Board_USB_Driver/
+cgreen/
+eclipse32/
+MinGW/
+python-3.5.0-embed-win32/
+toolchain/
+*.bat
+*.exe
