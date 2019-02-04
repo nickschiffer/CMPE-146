@@ -2,15 +2,19 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="xor" key="selection"/>
+		<item value="LabGPIO_0_1_2" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="LabGPIO_0"/>
+			<item value="FIODIR"/>
+			<item value="LPC_GPIO"/>
 			<item value="xor"/>
 		</list>
 		<list key="replacehistory">
+			<item value="LabGPIO_0_1_2"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
