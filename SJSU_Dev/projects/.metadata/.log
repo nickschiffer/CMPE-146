@@ -7154,3 +7154,64 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.core.jobs 2 2 2019-02-03 13:24:35.969
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.equinox.internal.p2.ui.sdk.scheduler.AutomaticUpdater$6
+!SESSION 2019-02-03 13:24:36.126 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_141
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.cpp.product -product org.eclipse.epp.package.cpp.product -clean -data file:/C:/CMPE146/CMPE-146/SJSU_Dev/projects/
+
+!ENTRY org.eclipse.egit.ui 2 0 2019-02-03 13:24:50.181
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Nick'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.ui 2 2 2019-02-03 13:47:31.134
+!MESSAGE Invalid preference category path: org.nodeclipse.enide.editors.proto.preferences.ProtoPreferencePage (bundle: org.nodeclipse.enide.editors.proto, page: org.nodeclipse.enide.editors.proto.preferences.ProtoEditorPreferencePage)
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-02-03 18:31:24.220
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-02-03 18:31:24.224
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.core.resources 4 372 2019-02-03 18:31:24.230
+!MESSAGE Resource '/lpc1758_NoOS_HelloWorld' is not open.
+
+!ENTRY org.eclipse.core.resources 4 372 2019-02-03 18:31:24.260
+!MESSAGE Resource '/lpc1758_helloworld' is not open.
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2019-02-03 18:31:26.548
+!MESSAGE Error in final launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: Failed to execute MI command:
+-exec-run
+Error message from debugger back end:
+Error creating process /cygdrive/c/CMPE146/CMPE-146/SJSU_Dev/projects/lpc1758_freertos/_build/lpc1758_freertos.elf, (error 193).
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:111)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:228)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:101)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:90)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:885)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: java.lang.Exception: Error creating process /cygdrive/c/CMPE146/CMPE-146/SJSU_Dev/projects/lpc1758_freertos/_build/lpc1758_freertos.elf, (error 193).
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:941)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:770)
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2019-02-03 18:31:26.549
+!MESSAGE Failed to execute MI command:
+-exec-run
+Error message from debugger back end:
+Error creating process /cygdrive/c/CMPE146/CMPE-146/SJSU_Dev/projects/lpc1758_freertos/_build/lpc1758_freertos.elf, (error 193).
+!STACK 0
+java.lang.Exception: Error creating process /cygdrive/c/CMPE146/CMPE-146/SJSU_Dev/projects/lpc1758_freertos/_build/lpc1758_freertos.elf, (error 193).
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:941)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:770)

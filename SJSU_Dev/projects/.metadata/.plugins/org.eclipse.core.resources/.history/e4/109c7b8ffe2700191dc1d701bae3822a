@@ -1,0 +1,40 @@
+
+#include "LABGPIO_0.hpp"
+
+
+
+LabGPIO_0::LabGPIO_0(uint8_t pin)
+{
+}
+
+void LabGPIO_0::setAsInput()
+{
+}
+
+void LabGPIO_0::setAsOutput()
+{
+}
+
+void LabGPIO_0::setDirection(bool output)
+{
+}
+
+void LabGPIO_0::setHigh()
+{
+}
+
+void LabGPIO_0::setLow()
+{
+}
+
+void LabGPIO_0::set(bool high)
+{
+}
+
+bool LabGPIO_0::getLevel()
+{
+}
+
+LabGPIO_0::~LabGPIO_0()
+{
+}
