@@ -262,7 +262,7 @@ void vControlLED(void *pvParameters)
         }
         case 2: {
             if ((pin >= 0) && (pin <= 13)){
-                LPC_PINCON->PINSEL0 &= ~(3 << (pin * 2));
+                LPC_PINCON->PINSEL4 &= ~(3 << (pin * 2));
             }
             else break;
             break;
@@ -316,7 +316,7 @@ void vReadSwitch(void *pvParameters)
             else break;
             break;
         }
-        case 1:{
+        case 1: {
             if ((pin >= 0) && (pin <= 1)){
                 LPC_PINCON->PINSEL2 &= ~(3 << (pin * 2));
             }
@@ -337,7 +337,7 @@ void vReadSwitch(void *pvParameters)
         }
         case 2: {
             if ((pin >= 0) && (pin <= 13)){
-                LPC_PINCON->PINSEL0 &= ~(3 << (pin * 2));
+                LPC_PINCON->PINSEL4 &= ~(3 << (pin * 2));
             }
             else break;
             break;
