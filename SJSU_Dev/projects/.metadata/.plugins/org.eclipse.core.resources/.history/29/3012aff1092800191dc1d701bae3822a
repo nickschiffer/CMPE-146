@@ -1,0 +1,115 @@
+
+#include "LabGPIO_0_1_2.hpp"
+#include <LPC17xx.h>
+
+
+
+LabGPIO_0_1_2::LabGPIO_0_1_2(uint8_t port, uint8_t pin)
+{
+    this->pin  = pin;
+    this->port = port;
+//    LPC_PINCON->PINSEL1 &= ~(3 << (pin*2));
+}
+
+void LabGPIO_0_1_2::setAsInput()
+{
+
+    switch(port){
+        case 0:
+            LPC_GPIO0->FIODIR &= ~(1 << pin);
+            break;
+        case 1:
+            LPC_GPIO1->FIODIR &= ~(1 << pin);
+            break;
+        case 2:
+            LPC_GPIO2->FIODIR &= ~(1 << pin);
+            break;
+        default:
+            break;
+    }
+
+    return;
+}
+
+void LabGPIO_0_1_2::setAsOutput()
+{
+    switch(port){
+        case 0:
+            LPC_GPIO0->FIODIR |= (1 << pin);
+            break;
+        case 1:
+            LPC_GPIO1->FIODIR |= (1 << pin);
+            break;
+        case 2:
+            LPC_GPIO2->FIODIR |= (1 << pin);
+            break;
+    }
+
+    return;
+
+}
+
+void LabGPIO_0_1_2::setDirection(bool output)
+{
+    if (output){
+        switch(port){
+            case 0:
+                LPC_GPIO0->FIODIR |= (1 << pin);
+                break;
+            case 1:
+                LPC_GPIO1->FIODIR |= (1 << pin);
+                break;
+            case 2:
+                LPC_GPIO2->FIODIR |= (1 << pin);
+                break;
+        }
+    }
+    else {
+        switch(port){
+            case 0:
+                LPC_GPIO0->FIODIR &= ~(1 << pin);
+                break;
+            case 1:
+                LPC_GPIO1->FIODIR &= ~(1 << pin);
+                break;
+            case 2:
+                LPC_GPIO2->FIODIR &= ~(1 << pin);
+                break;
+        }
+
+    }
+
+}
+
+void LabGPIO_0_1_2::setHigh()
+{
+    switch(port){
+        case 0:
+
+            break;
+        case 1:
+
+            break;
+
+        case 2:
+
+            break;
+    }
+    return;
+}
+
+void LabGPIO_0_1_2::setLow()
+{
+}
+
+void LabGPIO_0_1_2::set(bool high)
+{
+}
+
+bool LabGPIO_0_1_2::getLevel()
+{
+}
+
+LabGPIO_0_1_2::~LabGPIO_0_1_2()
+{
+}
