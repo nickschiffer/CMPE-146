@@ -1,3 +1,11 @@
+/*
+ * Nickolas Schiffer #012279319
+ * CMPE 146 LED Switch
+ */
+
+
+
+
 #include "LabGPIO_0_1_2.hpp"
 #include <LPC17xx.h>
 

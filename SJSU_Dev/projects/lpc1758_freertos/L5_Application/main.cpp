@@ -23,16 +23,25 @@
  * 			@see L0_LowLevel/lpc_sys.h if you wish to override printf/scanf functions.
  *
  */
+
+/*
+ * Nickolas Schiffer #012279319
+ * CMPE 146 LED Switch
+ */
+
 #include "tasks.hpp"
 #include "GPIO/LabGPIO_0_1_2.hpp"
 #include "LED_Display.hpp"
 #include <stdio.h>
 
-//Logic
+
 #define LOW  false
 #define HIGH true
 #define BINARY_COUNTER_TIME_INTERVAL 500
 
+/*
+ * Global Variables used to keep various states
+ */
 volatile bool onboard_led_state    = false;
 volatile bool external_led_state   = false;
 volatile bool easter_egg           = false;
@@ -45,6 +54,9 @@ typedef struct params {
     bool onboard;
 };
 
+/*
+ * Parameter Structs and subsequent pointers passed to the Tasks
+ */
 static const params onboard_switch  = { .port = 1, .pin = 9, .onboard = true };
 static const params onboard_led     = { .port = 1, .pin = 0, .onboard = true };
 static const params external_switch = { .port = 2, .pin = 1, .onboard = false };
@@ -55,7 +67,13 @@ static const params *pOnboard_led     = &onboard_led;
 static const params *pExternal_switch = &external_switch;
 static const params *pExternal_led    = &external_led;
 
-//Easter Egg #1
+/*Easter Egg #1
+ * Counts from 0 to 15 on both onboard LEDs and 7 seg digits.
+ * Then rapidly counts to 99 on 7 seg displays and then back down to where
+ * the 7 segs were previously. The state of the LEDs then return to the state that
+ * they were in before the routine is called.
+ * All other functionality is purposely interrupted while this routine completes.
+ */
 void vBinaryCounter(void *pvParameters)
 {
     auto led3 = LabGPIO_0_1_2(1, 0);
@@ -172,7 +190,10 @@ void vBinaryCounter(void *pvParameters)
     }
 }
 
-//Easter Egg(?) #2
+/*Easter Egg(?) #2
+ * Counts number of internal LED Toggles on Left  7 seg
+ * Counts number of external LED Toggles on right 7 seg
+ */
 void vLEDCounter(void *pvParameters)
 {
     LED_Display ledDisplay = LED_Display::getInstance();
@@ -207,15 +228,45 @@ void vControlLED(void *pvParameters)
 
     /* Initialization Code */
     switch (port) {
-        case 0:
-            LPC_PINCON->PINSEL0 &= ~(3 << (pin * 2));
+        case 0: {
+            if ((pin >= 0) && (pin <= 11)){
+                LPC_PINCON->PINSEL0 &= ~(3 << (pin * 2));
+            }
+            else if (pin == 15){
+                LPC_PINCON->PINSEL0 &= ~(3 << 30);
+            }
+            else if ((pin >= 16) && (pin <= 30)){
+                LPC_PINCON->PINSEL1 &= ~(3 << ((pin - 16) * 2));
+            }
+            else break;
             break;
-        case 1:
-            LPC_PINCON->PINSEL1 &= ~(3 << (pin * 2));
+        }
+        case 1: {
+            if ((pin >= 0) && (pin <= 1)){
+                LPC_PINCON->PINSEL2 &= ~(3 << (pin * 2));
+            }
+            else if (pin == 4){
+                LPC_PINCON->PINSEL2 &= ~(3 << 8);
+            }
+            else if ((pin >= 8) && (pin <= 10)){
+                LPC_PINCON->PINSEL2 &= ~(3 << (pin * 2));
+            }
+            else if ((pin >= 14) && (pin <= 15)){
+                LPC_PINCON->PINSEL2 &= ~(3 << (pin * 2));
+            }
+            else if ((pin >= 16) && (pin <= 31)){
+                LPC_PINCON->PINSEL3 &= ~(3 << ((pin - 16) * 2));
+            }
+            else break;
             break;
-        case 2:
-            LPC_PINCON->PINSEL2 &= ~(3 << (pin * 2));
+        }
+        case 2: {
+            if ((pin >= 0) && (pin <= 13)){
+                LPC_PINCON->PINSEL0 &= ~(3 << (pin * 2));
+            }
+            else break;
             break;
+        }
 
         default:
             break;
@@ -228,8 +279,7 @@ void vControlLED(void *pvParameters)
         while (easter_egg);
         led.set(!(onboard ? onboard_led_state : external_led_state));
     }
-    /* Only necessary if above loop has a condition */
-    //xTaskDelete(NULL);
+
 }
 
 //Switch Reading Task
@@ -251,17 +301,48 @@ void vReadSwitch(void *pvParameters)
     auto sw = LabGPIO_0_1_2(port, pin);
 
     /* Initialization Code */
-
+    //GPIO Selection, gets kind of messy
     switch (port) {
-        case 0:
-            LPC_PINCON->PINSEL0 &= ~(3 << (pin * 2));
+        case 0: {
+            if ((pin >= 0) && (pin <= 11)){
+                LPC_PINCON->PINSEL0 &= ~(3 << (pin * 2));
+            }
+            else if (pin == 15){
+                LPC_PINCON->PINSEL0 &= ~(3 << 30);
+            }
+            else if ((pin >= 16) && (pin <= 30)) {
+                LPC_PINCON->PINSEL1 &= ~(3 << ((pin - 16) * 2));
+            }
+            else break;
             break;
-        case 1:
-            LPC_PINCON->PINSEL1 &= ~(3 << (pin * 2));
+        }
+        case 1:{
+            if ((pin >= 0) && (pin <= 1)){
+                LPC_PINCON->PINSEL2 &= ~(3 << (pin * 2));
+            }
+            else if (pin == 4){
+                LPC_PINCON->PINSEL2 &= ~(3 << 8);
+            }
+            else if ((pin >= 8) && (pin <= 10)){
+                LPC_PINCON->PINSEL2 &= ~(3 << (pin * 2));
+            }
+            else if ((pin >= 14) && (pin <= 15)){
+                LPC_PINCON->PINSEL2 &= ~(3 << (pin * 2));
+            }
+            else if ((pin >= 16) && (pin <= 31)){
+                LPC_PINCON->PINSEL3 &= ~(3 << ((pin - 16) * 2));
+            }
+            else break;
             break;
-        case 2:
-            LPC_PINCON->PINSEL2 &= ~(3 << (pin * 2));
+        }
+        case 2: {
+            if ((pin >= 0) && (pin <= 13)){
+                LPC_PINCON->PINSEL0 &= ~(3 << (pin * 2));
+            }
+            else break;
             break;
+        }
+
         default:
             break;
     }
@@ -289,8 +370,6 @@ void vReadSwitch(void *pvParameters)
         }
 
     }
-    /* Only necessary if above loop has a condition */
-    //xTaskDelete(NULL);
 }
 
 /**

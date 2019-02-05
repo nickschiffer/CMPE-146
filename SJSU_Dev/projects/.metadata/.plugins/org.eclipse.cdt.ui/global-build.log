@@ -6348,3 +6348,407 @@ Finished building: lpc1758_freertos.siz
  
 Finished building: lpc1758_freertos.lst
  
+19:23:00 **** Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:46:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91372	    756	   1184	  93312	  16c80	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:29:09 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:46:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91404	    756	   1184	  93344	  16ca0	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:33:47 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:46:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91532	    756	   1184	  93472	  16d20	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:36:48 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:46:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91548	    756	   1184	  93488	  16d30	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:37:44 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91548	    756	   1184	  93488	  16d30	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+19:42:36 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:46:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91548	    756	   1184	  93488	  16d30	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:44:02 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:46:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91548	    756	   1184	  93488	  16d30	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:49:23 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:49:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91548	    756	   1184	  93488	  16d30	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:53:24 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:49:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+../L5_Application/main.cpp: In function 'void vControlLED(void*)':
+../L5_Application/main.cpp:233:64: error: expected ';' before ')' token
+                 LPC_PINCON->PINSEL1 &= ~(3 << ((pin - 16) * 2)));
+                                                                ^
+make: *** [L5_Application/main.o] Error 1
+19:53:44 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:49:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91548	    756	   1184	  93488	  16d30	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:54:15 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:49:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91548	    756	   1184	  93488	  16d30	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:55:23 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:49:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91548	    756	   1184	  93488	  16d30	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 
+19:59:58 **** Incremental Build of configuration _build for project lpc1758_freertos ****
+make -j2 all 
+Building file: ../L5_Application/GPIO/LABGPIO_0_1_2.cpp
+Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/GPIO/LABGPIO_0_1_2.d" -MT"L5_Application/GPIO/LABGPIO_0_1_2.o" -c -o "L5_Application/GPIO/LABGPIO_0_1_2.o" "../L5_Application/GPIO/LABGPIO_0_1_2.cpp"
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\lpc1758_freertos\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/GPIO/LABGPIO_0_1_2.cpp: In constructor 'LabGPIO_0_1_2::LabGPIO_0_1_2(uint8_t, uint8_t)':
+../L5_Application/GPIO/LABGPIO_0_1_2.cpp:12:55: warning: declaration of 'pin' shadows a member of 'LabGPIO_0_1_2' [-Wshadow]
+ LabGPIO_0_1_2::LabGPIO_0_1_2(uint8_t port, uint8_t pin)
+                                                       ^
+In file included from ../L5_Application/GPIO/LABGPIO_0_1_2.cpp:9:0:
+../L5_Application/GPIO/LabGPIO_0_1_2.hpp:22:13: note: shadowed declaration is here
+     uint8_t pin;
+             ^
+../L5_Application/GPIO/LABGPIO_0_1_2.cpp:12:55: warning: declaration of 'port' shadows a member of 'LabGPIO_0_1_2' [-Wshadow]
+ LabGPIO_0_1_2::LabGPIO_0_1_2(uint8_t port, uint8_t pin)
+                                                       ^
+In file included from ../L5_Application/GPIO/LABGPIO_0_1_2.cpp:9:0:
+../L5_Application/GPIO/LabGPIO_0_1_2.hpp:21:13: note: shadowed declaration is here
+     uint8_t port;
+             ^
+../L5_Application/main.cpp:55:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
+Finished building: ../L5_Application/GPIO/LABGPIO_0_1_2.cpp
+ 
+Finished building: ../L5_Application/main.cpp
+ 
+Building target: lpc1758_freertos.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"lpc1758_freertos.map" -specs=nano.specs -o "lpc1758_freertos.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/GPIO/LABGPIO_0_1_2.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
+Finished building target: lpc1758_freertos.elf
+ 
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
+Create binary file
+arm-none-eabi-objcopy -O binary lpc1758_freertos.elf lpc1758_freertos.bin
+ 
+Invoking: Cross ARM GNU Create Flash Image
+Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "lpc1758_freertos.elf"  "lpc1758_freertos.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "lpc1758_freertos.elf" > "lpc1758_freertos.lst"
+Finished building: lpc1758_freertos.hex
+ 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "lpc1758_freertos.elf"
+   text	   data	    bss	    dec	    hex	filename
+  91548	    756	   1184	  93488	  16d30	lpc1758_freertos.elf
+Finished building: lpc1758_freertos.siz
+ 
+Finished building: lpc1758_freertos.lst
+ 

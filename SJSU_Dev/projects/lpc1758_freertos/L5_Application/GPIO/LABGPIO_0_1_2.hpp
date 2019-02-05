@@ -1,3 +1,10 @@
+/*
+ * Nickolas Schiffer #012279319
+ * CMPE 146 LED Switch
+ */
+
+
+
 #ifndef LABGPIO_H
 #define LABGPIO_H
 
