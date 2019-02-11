@@ -1,129 +1,65 @@
-/*
- *     SocialLedge.com - Copyright (C) 2013
- *
- *     This file is part of free software framework for embedded processors.
- *     You can use it and/or distribute it as long as this copyright header
- *     remains unmodified.  The code is free for personal use and requires
- *     permission to use in a commercial product.
- *
- *      THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
- *      OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
- *      MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
- *      I SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
- *      CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
- *
- *     You can reach the author of this software at :
- *          p r e e t . w i k i @ g m a i l . c o m
- */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "uart0_min.h"
 
-/**
- * @file
- * @brief This is the application entry point.
- * 			FreeRTOS and stdio printf is pre-configured to use uart0_min.h before main() enters.
- * 			@see L0_LowLevel/lpc_sys.h if you wish to override printf/scanf functions.
- *
- */
-#include "tasks.hpp"
-#include "examples/examples.hpp"
+#define SCENARIO 1
 
-/**
- * The main() creates tasks or "threads".  See the documentation of scheduler_task class at scheduler_task.hpp
- * for details.  There is a very simple example towards the beginning of this class's declaration.
- *
- * @warning SPI #1 bus usage notes (interfaced to SD & Flash):
- *      - You can read/write files from multiple tasks because it automatically goes through SPI semaphore.
- *      - If you are going to use the SPI Bus in a FreeRTOS task, you need to use the API at L4_IO/fat/spi_sem.h
- *
- * @warning SPI #0 usage notes (Nordic wireless)
- *      - This bus is more tricky to use because if FreeRTOS is not running, the RIT interrupt may use the bus.
- *      - If FreeRTOS is running, then wireless task may use it.
- *        In either case, you should avoid using this bus or interfacing to external components because
- *        there is no semaphore configured for this bus and it should be used exclusively by nordic wireless.
- */
-int main(void)
+void vTaskOneCode(void *p)
 {
+    while(1)
+    {
+    	uart0_puts("aaaaaaaaaaaaaaaaaaaa");
+    	vTaskDelay(100); // This sleeps the task for 100ms (because 1 RTOS tick = 1 millisecond)
+    }
+}
+
+// Create another task and run this code in a while(1) loop
+void vTaskTwoCode(void *p)
+{
+    while(1)
+    {
+    	uart0_puts("bbbbbbbbbbbbbbbbbbbb");
+    	vTaskDelay(100);
+    }
+}
+
+// You can comment out the sample code of lpc1758_freertos project and run this code instead
+int main(int argc, char const *argv[])
+{
+    /// This "stack" memory is enough for each task to run properly (512 * 32-bit) = 2Kbytes stack
+    const uint32_t STACK_SIZE_WORDS = 512;
+
     /**
-     * A few basic tasks for this bare-bone system :
-     *      1.  Terminal task provides gateway to interact with the board through UART terminal.
-     *      2.  Remote task allows you to use remote control to interact with the board.
-     *      3.  Wireless task responsible to receive, retry, and handle mesh network.
+     * Observe and explain the following scenarios:
      *
-     * Disable remote task if you are not using it.  Also, it needs SYS_CFG_ENABLE_TLM
-     * such that it can save remote control codes to non-volatile memory.  IR remote
-     * control codes can be learned by typing the "learn" terminal command.
-     */
-    scheduler_add_task(new terminalTask(PRIORITY_HIGH));
-
-    /* Consumes very little CPU, but need highest priority to handle mesh network ACKs */
-    scheduler_add_task(new wirelessTask(PRIORITY_CRITICAL));
-
-    /* Change "#if 0" to "#if 1" to run period tasks; @see period_callbacks.cpp */
-    #if 0
-    const bool run_1Khz = false;
-    scheduler_add_task(new periodicSchedulerTask(run_1Khz));
-    #endif
-
-    /* The task for the IR receiver to "learn" IR codes */
-    // scheduler_add_task(new remoteTask  (PRIORITY_LOW));
-
-    /* Your tasks should probably used PRIORITY_MEDIUM or PRIORITY_LOW because you want the terminal
-     * task to always be responsive so you can poke around in case something goes wrong.
-     */
-
-    /**
-     * This is a the board demonstration task that can be used to test the board.
-     * This also shows you how to send a wireless packets to other boards.
-     */
-    #if 0
-        scheduler_add_task(new example_io_demo());
-    #endif
-
-    /**
-     * Change "#if 0" to "#if 1" to enable examples.
-     * Try these examples one at a time.
-     */
-    #if 0
-        scheduler_add_task(new example_task());
-        scheduler_add_task(new example_alarm());
-        scheduler_add_task(new example_logger_qset());
-        scheduler_add_task(new example_nv_vars());
-    #endif
-
-    /**
-	 * Try the rx / tx tasks together to see how they queue data to each other.
-	 */
-    #if 0
-        scheduler_add_task(new queue_tx());
-        scheduler_add_task(new queue_rx());
-    #endif
-
-    /**
-     * Another example of shared handles and producer/consumer using a queue.
-     * In this example, producer will produce as fast as the consumer can consume.
-     */
-    #if 0
-        scheduler_add_task(new producer());
-        scheduler_add_task(new consumer());
-    #endif
-
-    /**
-     * If you have RN-XV on your board, you can connect to Wifi using this task.
-     * This does two things for us:
-     *   1.  The task allows us to perform HTTP web requests (@see wifiTask)
-     *   2.  Terminal task can accept commands from TCP/IP through Wifly module.
+     * 1) Same Priority: A = 1, B = 1
+     * 2) Different Priority: A = 2, B = 1
+     * 3) Different Priority: A = 1, B = 2
      *
-     * To add terminal command channel, add this at terminal.cpp :: taskEntry() function:
-     * @code
-     *     // Assuming Wifly is on Uart3
-     *     addCommandChannel(Uart3::getInstance(), false);
-     * @endcode
+     * Turn in screen shots of what you observed
+     * as well as an explanation of what you observed
      */
-    #if 0
-        Uart3 &u3 = Uart3::getInstance();
-        u3.init(WIFI_BAUD_RATE, WIFI_RXQ_SIZE, WIFI_TXQ_SIZE);
-        scheduler_add_task(new wifiTask(Uart3::getInstance(), PRIORITY_LOW));
-    #endif
+#if !defined SCENARIO
+# error "SCENARIO is not defined."
+#endif
+#if SCENARIO == 1
+    //Scenario 1
+    xTaskCreate(vTaskOneCode,"Task A", STACK_SIZE_WORDS, NULL, PRIORITY_LOW, NULL);
+    xTaskCreate(vTaskTwoCode,"Task B", STACK_SIZE_WORDS, NULL, PRIORITY_LOW, NULL);
+#endif
+#if SCENARIO == 2
+    //Scenario 2
+    xTaskCreate(vTaskOneCode,"Task A", STACK_SIZE_WORDS, NULL, PRIORITY_MEDIUM, NULL);
+    xTaskCreate(vTaskTwoCode,"Task B", STACK_SIZE_WORDS, NULL, PRIORITY_LOW, NULL);
+#endif
 
-    scheduler_start(); ///< This shouldn't return
-    return -1;
+#if SCENARIO == 3
+    //Scenario 3
+    xTaskCreate(vTaskOneCode,"Task A", STACK_SIZE_WORDS, NULL, PRIORITY_LOW, NULL);
+    xTaskCreate(vTaskTwoCode,"Task B", STACK_SIZE_WORDS, NULL, PRIORITY_MEDIUM, NULL);
+#endif
+    /* Start Scheduler - This will not return, and your tasks will start to run their while(1) loop */
+    vTaskStartScheduler();
+
+    return 0;
 }
