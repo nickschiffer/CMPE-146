@@ -7,3 +7,4 @@ python-3.5.0-embed-win32/
 toolchain/
 *.bat
 *.exe
+*/projects_mingw/
