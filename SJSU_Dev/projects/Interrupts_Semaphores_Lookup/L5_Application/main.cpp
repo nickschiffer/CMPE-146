@@ -35,9 +35,11 @@
 //#include "LED_Display.hpp"
 #include <stdio.h>
 
+GPIOInterrupt interruptHandler;
+
 
 void Eint3Handler(){
-    GPIOInterrupt interruptHandler = GPIOInterrupt::getInstance();
+//    GPIOInterrupt interruptHandler = GPIOInterrupt::getInstance();
     interruptHandler.HandleInterrupt();
 }
 
@@ -58,7 +60,7 @@ int main(void)
 
 
   // Initialize GPIOInterrupt Instance
-  GPIOInterrupt interruptHandler =  GPIOInterrupt::getInstance();
+//  GPIOInterrupt interruptHandler =  GPIOInterrupt::getInstance();
   interruptHandler.Initialize();
   //Initialize Hander on switch
   int success = interruptHandler.AttachInterruptHandler(2, 0, (IsrPointer)callback_func_1, kRisingEdge);

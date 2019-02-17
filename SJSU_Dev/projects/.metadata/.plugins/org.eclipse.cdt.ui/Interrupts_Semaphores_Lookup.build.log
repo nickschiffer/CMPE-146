@@ -1,9 +1,9 @@
-20:51:02 **** Incremental Build of configuration _build for project Interrupts_Semaphores_Lookup ****
+21:33:13 **** Incremental Build of configuration _build for project Interrupts_Semaphores_Lookup ****
 make -j2 all 
-Building file: ../L5_Application/GPIO/GPIOInterrupt.cpp
+Building file: ../L5_Application/main.cpp
 Invoking: Cross ARM C++ Compiler
-arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/GPIO/GPIOInterrupt.d" -MT"L5_Application/GPIO/GPIOInterrupt.o" -c -o "L5_Application/GPIO/GPIOInterrupt.o" "../L5_Application/GPIO/GPIOInterrupt.cpp"
-Finished building: ../L5_Application/GPIO/GPIOInterrupt.cpp
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+Finished building: ../L5_Application/main.cpp
  
 Building target: Interrupts_Semaphores_Lookup.elf
 Invoking: Cross ARM C++ Linker
@@ -16,18 +16,18 @@ arm-none-eabi-objcopy -O binary Interrupts_Semaphores_Lookup.elf Interrupts_Sema
  
 Invoking: Cross ARM GNU Create Flash Image
 Invoking: Cross ARM GNU Create Listing
-arm-none-eabi-objcopy -O ihex "Interrupts_Semaphores_Lookup.elf"  "Interrupts_Semaphores_Lookup.hex"
 arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "Interrupts_Semaphores_Lookup.elf" > "Interrupts_Semaphores_Lookup.lst"
+arm-none-eabi-objcopy -O ihex "Interrupts_Semaphores_Lookup.elf"  "Interrupts_Semaphores_Lookup.hex"
 Finished building: Interrupts_Semaphores_Lookup.hex
  
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "Interrupts_Semaphores_Lookup.elf"
    text	   data	    bss	    dec	    hex	filename
-  67052	    756	   1360	  69168	  10e30	Interrupts_Semaphores_Lookup.elf
+  67080	    756	   1368	  69204	  10e54	Interrupts_Semaphores_Lookup.elf
 Finished building: Interrupts_Semaphores_Lookup.siz
  
 Finished building: Interrupts_Semaphores_Lookup.lst
  
 
-20:51:04 Build Finished (took 1s.666ms)
+21:33:15 Build Finished (took 1s.713ms)
 
