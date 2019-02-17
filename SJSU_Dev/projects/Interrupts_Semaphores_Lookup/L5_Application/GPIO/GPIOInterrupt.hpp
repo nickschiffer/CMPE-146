@@ -25,17 +25,12 @@ typedef void (*IsrPointer)(void);
 class GPIOInterrupt
 {
  public:
-    /**
-     * Optional: GPIOInterrupt could be a singleton class, meaning, only one instance can exist at a time.
-     * Look up how to implement this. It is best to not allocate memory in the constructor and leave complex
-     * code to the Initialize() that you call in your main()
-     */
-    GPIOInterrupt();
+
 
     /*
      * Singleton class implementation
      */
-    static GPIOInterrupt& getInstance();
+    static GPIOInterrupt* getInstance();
     ~GPIOInterrupt();
 
     /**
@@ -67,6 +62,14 @@ class GPIOInterrupt
     void HandleInterrupt();
 
  private:
+    /**
+         * Optional: GPIOInterrupt could be a singleton class, meaning, only one instance can exist at a time.
+         * Look up how to implement this. It is best to not allocate memory in the constructor and leave complex
+         * code to the Initialize() that you call in your main()
+         */
+    GPIOInterrupt();
+
+
     /**
      * Allocate a lookup table matrix here of function pointers (avoid dynamic allocation)
      * Upon AttachInterruptHandler(), you will store the user's function callback

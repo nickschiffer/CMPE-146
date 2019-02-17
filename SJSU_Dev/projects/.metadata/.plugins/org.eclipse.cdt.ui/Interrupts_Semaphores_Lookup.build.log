@@ -1,4 +1,4 @@
-21:33:13 **** Incremental Build of configuration _build for project Interrupts_Semaphores_Lookup ****
+23:53:02 **** Incremental Build of configuration _build for project Interrupts_Semaphores_Lookup ****
 make -j2 all 
 Building file: ../L5_Application/main.cpp
 Invoking: Cross ARM C++ Compiler
@@ -16,18 +16,18 @@ arm-none-eabi-objcopy -O binary Interrupts_Semaphores_Lookup.elf Interrupts_Sema
  
 Invoking: Cross ARM GNU Create Flash Image
 Invoking: Cross ARM GNU Create Listing
-arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "Interrupts_Semaphores_Lookup.elf" > "Interrupts_Semaphores_Lookup.lst"
 arm-none-eabi-objcopy -O ihex "Interrupts_Semaphores_Lookup.elf"  "Interrupts_Semaphores_Lookup.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "Interrupts_Semaphores_Lookup.elf" > "Interrupts_Semaphores_Lookup.lst"
 Finished building: Interrupts_Semaphores_Lookup.hex
  
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "Interrupts_Semaphores_Lookup.elf"
    text	   data	    bss	    dec	    hex	filename
-  67080	    756	   1368	  69204	  10e54	Interrupts_Semaphores_Lookup.elf
+  66844	    756	   1376	  68976	  10d70	Interrupts_Semaphores_Lookup.elf
 Finished building: Interrupts_Semaphores_Lookup.siz
  
 Finished building: Interrupts_Semaphores_Lookup.lst
  
 
-21:33:15 Build Finished (took 1s.713ms)
+23:53:03 Build Finished (took 1s.765ms)
 

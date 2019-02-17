@@ -14,11 +14,11 @@ GPIOInterrupt::GPIOInterrupt()
 {
 }
 
-GPIOInterrupt& GPIOInterrupt::getInstance()
+GPIOInterrupt* GPIOInterrupt::getInstance()
 {
 
     static GPIOInterrupt instance;
-    return instance;
+    return &instance;
 }
 
 void GPIOInterrupt::Initialize()
@@ -68,12 +68,6 @@ bool GPIOInterrupt::AttachInterruptHandler(uint8_t port, uint32_t pin, IsrPointe
                 if (((pin >= 0) && (pin <= 13))){
 
                     pin_isr_map[1][pin] = (IsrPointer)pin_isr;
-
-                    //view contents of map
-                    u0_dbg_printf("size of map: %d\nsize of address: %d\n\n", sizeof(pin_isr_map), sizeof(pin_isr));
-                    for (int i = 0; i <= 30; i++){
-                        u0_dbg_printf("ISR pointer: %d: %d\n\n", i, pin_isr_map[1][i]);
-                    }
 
                     switch(condition){
                         case kRisingEdge:{
@@ -138,23 +132,10 @@ void GPIOInterrupt::HandleInterrupt()
     if (LPC_GPIOINT->IO2IntStatR){
         uint8_t counter = 0;
         uint32_t IO2R = LPC_GPIOINT->IO2IntStatR;
-        u0_dbg_printf("Pre-Handling. IO2R: %d, Counter: %d\n\n", IO2R, counter);
         while ((counter <= 32) && (IO2R)){
-            u0_dbg_printf("Handling. IO2R: %d, Counter: %d\n\n", IO2R, counter);
             if (IO2R % 2 != 0){
-                u0_dbg_printf("Found 1. IO2R: %d, Counter: %d\n\n", IO2R, counter);
                 LPC_GPIOINT->IO2IntClr = (1 << counter);
-                u0_dbg_printf("Cleared.\nisr name: %d\n", pin_isr_map[1][counter]);
-
-
-                //view contents of map
-                for (int i = 0; i <= 30; i++){
-                    u0_dbg_printf("ISR pointer: %d: %d\n\n", i, pin_isr_map[1][i]);
-                }
-
-
-                (pin_isr_map[1][counter])(); //This line is crashing
-                u0_dbg_printf("Executed.\n");
+                (pin_isr_map[1][counter])();
             }
             IO2R >>= 1;
             counter++;
