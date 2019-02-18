@@ -3,6 +3,8 @@
 //#pragma once
 
 #include <stdint.h>
+#include <LPC17xx.h>
+#include "printf_lib.h"
 
 
 
@@ -76,7 +78,7 @@ class GPIOInterrupt
      * Upon AttachInterruptHandler(), you will store the user's function callback
      * Upon the EINT3 interrupt, you will find out which callback to invoke based on Port/Pin status.
      */
-    IsrPointer pin_isr_map[2][32];
+    IsrPointer pin_isr_map[2][32] = {{nullptr}};
 
     static GPIOInterrupt* instance;
 

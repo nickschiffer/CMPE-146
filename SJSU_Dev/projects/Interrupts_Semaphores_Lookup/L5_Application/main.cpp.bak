@@ -70,7 +70,7 @@ int main(void)
   interruptHandler->Initialize();
   //Initialize Hander on switch
   interruptHandler->AttachInterruptHandler(2, 0, (IsrPointer)callback_func_1, kRisingEdge);
-//  interruptHandler->AttachInterruptHandler(2, 0, (IsrPointer)callback_func_2, kFallingEdge);
+  interruptHandler->AttachInterruptHandler(2, 1, (IsrPointer)callback_func_2, kRisingEdge);
 //  interruptHandler->AttachInterruptHandler(2, 0, (IsrPointer)callback_func_3, kBothEdges);
 
   //Register Handler

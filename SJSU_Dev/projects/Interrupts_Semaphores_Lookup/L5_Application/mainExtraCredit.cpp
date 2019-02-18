@@ -39,6 +39,9 @@
 #define LOW  false
 #define HIGH true
 #define BINARY_COUNTER_TIME_INTERVAL 500
+#define sw_number bool
+#define sw_number1 true
+#define sw_number2 false
 
 /*
  * Global Variables used to keep various states
@@ -55,21 +58,22 @@ SemaphoreHandle_t external_switch2_semaphore = NULL;
 typedef struct params {
     uint8_t port;
     uint8_t pin;
+    sw_number sw;
     bool onboard;
 };
 
 /*
  * Parameter Structs and subsequent pointers passed to the Tasks
  */
-static const params external_switch1 = { .port = 2, .pin = 0, .onboard = false };
-static const params external_led1    = { .port = 2, .pin = 1, .onboard = false };
-static const params external_switch2 = { .port = 2, .pin = 2, .onboard = false };
-static const params external_led2    = { .port = 2, .pin = 3, .onboard = false };
+//static const params external_switch1 = { .port = 2, .pin = 0, .onboard = false };
+static const params internal_led1    = { .port = 1, .pin = 0, .sw = sw_number1, .onboard = true };
+//static const params external_switch2 = { .port = 2, .pin = 2, .onboard = false };
+static const params internal_led2    = { .port = 1, .pin = 8, .sw = sw_number2, .onboard = true };
 
-static const params *pExternal_switch1  = &external_switch1;
-static const params *pExternal_led1     = &external_led1;
-static const params *pExternal_switch2  = &external_switch2;
-static const params *pExternal_led2     = &external_led2;
+//static const params *pExternal_switch1  = &external_switch1;
+static const params *pInternal_led1     = &internal_led1;
+//static const params *pExternal_switch2  = &external_switch2;
+static const params *pInternal_led2     = &internal_led2;
 
 /*Easter Egg #1
  * Counts from 0 to 15 on both onboard LEDs and 7 seg digits.
@@ -227,6 +231,7 @@ void vControlLED(void *pvParameters)
     uint8_t port = param->port;
     uint8_t pin  = param->pin;
     bool onboard = param->onboard;
+    sw_number sw = param->sw;
 
     auto led = GPIO_0_1_2(port, pin);
 
@@ -237,9 +242,39 @@ void vControlLED(void *pvParameters)
     printf("Starting Onboard-LED\n\n");
     while (1) {
         while (easter_egg);
-        led.set(!(onboard ? onboard_led_state : external_led_state));
+        if (sw == sw_number1){
+            if (xSemaphoreTake(external_switch1_semaphore, portMAX_DELAY)){
+                printf("external switch 1 semaphore taken.\n\n");
+                led.set(!(onboard ? onboard_led_state : external_led_state));
+            }
+        }
+
+        else if (sw == sw_number2){
+            if (xSemaphoreTake(external_switch1_semaphore, portMAX_DELAY)){
+                printf("external switch 2 semaphore taken.\n\n");
+                led.set(!(onboard ? onboard_led_state : external_led_state));
+            }
+
+        }
+
     }
 
+
+}
+
+void Eint3Handler(){
+    GPIOInterrupt *interruptHandler = GPIOInterrupt::getInstance();
+    interruptHandler->HandleInterrupt();
+}
+
+void xSemaphore1Supplier(){
+    xSemaphoreGive(external_switch1_semaphore);
+    printf("sem1 supplied\n\n");
+}
+
+void xSemaphore2Supplier(){
+    xSemaphoreGive(external_switch2_semaphore);
+    printf("sem2 supplied\n\n");
 }
 
 //Switch Reading Task
@@ -318,14 +353,17 @@ int main(void)
     external_switch2_semaphore = xSemaphoreCreateBinary();
 
     GPIOInterrupt *gpio_interrupts = GPIOInterrupt::getInstance();
-    //gpio_interrupts->AttachInterruptHandler(2,0,vReadSwitch, pEx, )
+    gpio_interrupts->Initialize();
+    gpio_interrupts->AttachInterruptHandler(2,0,(IsrPointer)xSemaphore1Supplier, kRisingEdge);
+    gpio_interrupts->AttachInterruptHandler(2,1,(IsrPointer)xSemaphore2Supplier, kRisingEdge);
+    isr_register(EINT3_IRQn, Eint3Handler);
 
     //Create Tasks
 
-    xTaskCreate(vControlLED, "LED 1 Control", 1024, (void *) pExternal_led1, PRIORITY_LOW, NULL);
-    xTaskCreate(vReadSwitch, "internal Switch Read", 1024, (void *) pExternal_switch1, PRIORITY_LOW, NULL);
-    xTaskCreate(vControlLED, "LED 2 Control", 1024, (void *) pExternal_led2, PRIORITY_LOW, NULL);
-    xTaskCreate(vReadSwitch, "external Switch Read", 1024, (void *) pExternal_switch2, PRIORITY_LOW, NULL);
+    xTaskCreate(vControlLED, "LED 1 Control", 1024, (void *) pInternal_led1, PRIORITY_LOW, NULL);
+//    xTaskCreate(vReadSwitch, "internal Switch Read", 1024, (void *) pExternal_switch1, PRIORITY_LOW, NULL);
+    xTaskCreate(vControlLED, "LED 2 Control", 1024, (void *) pInternal_led2, PRIORITY_LOW, NULL);
+//    xTaskCreate(vReadSwitch, "external Switch Read", 1024, (void *) pExternal_switch2, PRIORITY_LOW, NULL);
     xTaskCreate(vLEDCounter, "LED Counter", 1024, NULL, PRIORITY_LOW, NULL);
     xTaskCreate(vBinaryCounter, "Binary Counter", 1024, NULL, PRIORITY_LOW, NULL);
 
