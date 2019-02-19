@@ -20,10 +20,6 @@ SemaphoreHandle_t rising_semaphore = NULL;
 SemaphoreHandle_t falling_semaphore = NULL;
 
 
-void vRising_func(){
-
-}
-
 void vRising_Semaphore_Supplier(){
     xSemaphoreGive(rising_semaphore);
 }
@@ -32,9 +28,6 @@ void vFalling_Semaphore_Supplier(){
     xSemaphoreGive(falling_semaphore);
 }
 
-void vFalling_func(){
-
-}
 
 void Eint3Handler(){
     GPIOInterrupt *interruptHandler = GPIOInterrupt::getInstance();
