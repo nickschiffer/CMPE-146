@@ -4,7 +4,6 @@
 
 #include <stdint.h>
 #include <LPC17xx.h>
-#include "printf_lib.h"
 
 
 

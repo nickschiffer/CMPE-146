@@ -32,12 +32,11 @@
 #include <GPIO/GPIOInterrupt.hpp>
 #include <GPIO/GPIO_0_1_2.hpp>
 #include "tasks.hpp"
-//#include "LED_Display.hpp"
 #include <stdio.h>
 #include <stdint.h>
 #include <uart0_min.h>
 
-//GPIOInterrupt interruptHandler;
+
 
 uint16_t rising_counter  = 0;
 uint16_t falling_counter = 0;
@@ -64,7 +63,7 @@ void callback_func_3(){
 int main(void)
 {
 
-  //Intialize GPIO port an input
+  //Initialize GPIO ports as inputs
    auto sw1 = GPIO_0_1_2(2, 0);
    auto sw2 = GPIO_0_1_2(0, 0);
 
@@ -75,20 +74,12 @@ int main(void)
   GPIOInterrupt *interruptHandler =  GPIOInterrupt::getInstance();
   interruptHandler->Initialize();
   isr_register(EINT3_IRQn, Eint3Handler);
-  //Initialize Hander on switch
+
+  //Attach Handler to switches
   interruptHandler->AttachInterruptHandler(2, 0, (IsrPointer)callback_func_1, kRisingEdge);
   interruptHandler->AttachInterruptHandler(0, 0, (IsrPointer)callback_func_2, kFallingEdge);
 //  interruptHandler->AttachInterruptHandler(2, 0, (IsrPointer)callback_func_3, kBothEdges);
 
-  //Register Handler
-
-
-
-
-
-
-
-  // Configure the registers to trigger Port2 interrupt (such as P2.0 rising edge)
 
 
   while (1)

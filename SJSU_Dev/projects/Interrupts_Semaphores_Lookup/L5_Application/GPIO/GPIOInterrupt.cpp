@@ -123,7 +123,6 @@ void GPIOInterrupt::HandleInterrupt()
                  */
                 if (pin_isr_map[0][counter] != nullptr){
                     LPC_GPIOINT->IO0IntClr = (1 << counter);
-                    u0_dbg_printf("Rising 0 Triggered.\n\n");
                     pin_isr_map[0][counter]();
                 }
             }
@@ -132,13 +131,12 @@ void GPIOInterrupt::HandleInterrupt()
 
     }
 
-    else if (LPC_GPIOINT->IO0IntStatF){
+    if (LPC_GPIOINT->IO0IntStatF){
         uint8_t counter = 0;
         while ((counter <= 30) && (LPC_GPIOINT->IO0IntStatF >> counter)){
             if ((LPC_GPIOINT->IO0IntStatF >> counter) % 2){
                 if (pin_isr_map[0][counter] != nullptr){
                     LPC_GPIOINT->IO0IntClr = (1 << counter);
-                    u0_dbg_printf("Falling 0 Triggered.\n\n");
                     pin_isr_map[0][counter]();
                 }
             }
@@ -146,13 +144,12 @@ void GPIOInterrupt::HandleInterrupt()
         }
     }
 
-    else if (LPC_GPIOINT->IO2IntStatR){
+    if (LPC_GPIOINT->IO2IntStatR){
         uint8_t counter = 0;
         while ((counter <= 13) && (LPC_GPIOINT->IO2IntStatR >> counter)){
             if ((LPC_GPIOINT->IO2IntStatR >> counter) % 2){
                 if (pin_isr_map[1][counter] != nullptr){
                     LPC_GPIOINT->IO2IntClr = (1 << counter);
-                    u0_dbg_printf("Rising 2 Triggered.\n\n");
                     pin_isr_map[1][counter]();
                 }
             }
@@ -161,13 +158,12 @@ void GPIOInterrupt::HandleInterrupt()
 
     }
 
-    else if (LPC_GPIOINT->IO2IntStatF){
+    if (LPC_GPIOINT->IO2IntStatF){
         uint8_t counter = 0;
         while ((counter <= 13) && (LPC_GPIOINT->IO2IntStatF >> counter)){
            if ((LPC_GPIOINT->IO2IntStatF >> counter) % 2){
                if (pin_isr_map[1][counter] != nullptr){
                    LPC_GPIOINT->IO2IntClr = (1 << counter);
-                   u0_dbg_printf("Falling 2 Triggered.\n\n");
                    pin_isr_map[1][counter]();
                }
            }
