@@ -1,6 +1,5 @@
 #ifndef GPIO_INTERRUPT_H
 #define GPIO_INTERRUPT_H
-//#pragma once
 
 #include <stdint.h>
 #include <LPC17xx.h>

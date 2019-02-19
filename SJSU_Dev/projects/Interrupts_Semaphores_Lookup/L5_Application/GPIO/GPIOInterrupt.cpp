@@ -114,7 +114,7 @@ void GPIOInterrupt::HandleInterrupt()
             /*
              * If the rightmost digit is a 1 (odd) we've hit an interrupt
              */
-            if ((LPC_GPIOINT->IO0IntStatR >> counter) % 2){
+            if ((LPC_GPIOINT->IO0IntStatR >> counter) & 1){
                 /*
                  * If the pin_isr_map has an entry for this pin (!= nullptr), we know we've
                  * established a handler for this interrupt previously. We then clear this interrupt
@@ -134,7 +134,7 @@ void GPIOInterrupt::HandleInterrupt()
     if (LPC_GPIOINT->IO0IntStatF){
         uint8_t counter = 0;
         while ((counter <= 30) && (LPC_GPIOINT->IO0IntStatF >> counter)){
-            if ((LPC_GPIOINT->IO0IntStatF >> counter) % 2){
+            if ((LPC_GPIOINT->IO0IntStatF >> counter) & 1){
                 if (pin_isr_map[0][counter] != nullptr){
                     LPC_GPIOINT->IO0IntClr = (1 << counter);
                     pin_isr_map[0][counter]();
@@ -147,7 +147,7 @@ void GPIOInterrupt::HandleInterrupt()
     if (LPC_GPIOINT->IO2IntStatR){
         uint8_t counter = 0;
         while ((counter <= 13) && (LPC_GPIOINT->IO2IntStatR >> counter)){
-            if ((LPC_GPIOINT->IO2IntStatR >> counter) % 2){
+            if ((LPC_GPIOINT->IO2IntStatR >> counter) & 1){
                 if (pin_isr_map[1][counter] != nullptr){
                     LPC_GPIOINT->IO2IntClr = (1 << counter);
                     pin_isr_map[1][counter]();
@@ -161,7 +161,7 @@ void GPIOInterrupt::HandleInterrupt()
     if (LPC_GPIOINT->IO2IntStatF){
         uint8_t counter = 0;
         while ((counter <= 13) && (LPC_GPIOINT->IO2IntStatF >> counter)){
-           if ((LPC_GPIOINT->IO2IntStatF >> counter) % 2){
+           if ((LPC_GPIOINT->IO2IntStatF >> counter) & 1){
                if (pin_isr_map[1][counter] != nullptr){
                    LPC_GPIOINT->IO2IntClr = (1 << counter);
                    pin_isr_map[1][counter]();

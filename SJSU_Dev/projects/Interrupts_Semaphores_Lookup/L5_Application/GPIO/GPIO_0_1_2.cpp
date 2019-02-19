@@ -216,3 +216,6 @@ bool GPIO_0_1_2::getLevel()
 
 }
 
+GPIO_0_1_2::~GPIO_0_1_2()
+{
+}
