@@ -122,8 +122,8 @@ void GPIOInterrupt::HandleInterrupt()
                  * callback isr pointer stored in the pin_isr_map.
                  */
                 if (pin_isr_map[0][counter] != nullptr){
-                    LPC_GPIOINT->IO0IntClr = (1 << counter);
                     pin_isr_map[0][counter]();
+                    LPC_GPIOINT->IO0IntClr = (1 << counter);
                 }
             }
             counter++;
@@ -136,8 +136,8 @@ void GPIOInterrupt::HandleInterrupt()
         while ((counter <= 30) && (LPC_GPIOINT->IO0IntStatF >> counter)){
             if ((LPC_GPIOINT->IO0IntStatF >> counter) & 1){
                 if (pin_isr_map[0][counter] != nullptr){
-                    LPC_GPIOINT->IO0IntClr = (1 << counter);
                     pin_isr_map[0][counter]();
+                    LPC_GPIOINT->IO0IntClr = (1 << counter);
                 }
             }
             counter++;
@@ -149,8 +149,8 @@ void GPIOInterrupt::HandleInterrupt()
         while ((counter <= 13) && (LPC_GPIOINT->IO2IntStatR >> counter)){
             if ((LPC_GPIOINT->IO2IntStatR >> counter) & 1){
                 if (pin_isr_map[1][counter] != nullptr){
-                    LPC_GPIOINT->IO2IntClr = (1 << counter);
                     pin_isr_map[1][counter]();
+                    LPC_GPIOINT->IO2IntClr = (1 << counter);
                 }
             }
             counter++;
@@ -163,8 +163,8 @@ void GPIOInterrupt::HandleInterrupt()
         while ((counter <= 13) && (LPC_GPIOINT->IO2IntStatF >> counter)){
            if ((LPC_GPIOINT->IO2IntStatF >> counter) & 1){
                if (pin_isr_map[1][counter] != nullptr){
-                   LPC_GPIOINT->IO2IntClr = (1 << counter);
                    pin_isr_map[1][counter]();
+                   LPC_GPIOINT->IO2IntClr = (1 << counter);
                }
            }
            counter++;
