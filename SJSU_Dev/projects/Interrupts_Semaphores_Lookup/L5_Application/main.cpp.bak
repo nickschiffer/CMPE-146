@@ -16,7 +16,7 @@
 uint16_t rising_counter  = 0;
 uint16_t falling_counter = 0;
 
-SemaphoreHandle_t rising_semaphore = NULL;
+SemaphoreHandle_t rising_semaphore  = NULL;
 SemaphoreHandle_t falling_semaphore = NULL;
 
 

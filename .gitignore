@@ -8,3 +8,4 @@ toolchain/
 *.bat
 *.exe
 */projects_mingw/
+SJSU_Dev/projects_mingw/freertos_mingw
