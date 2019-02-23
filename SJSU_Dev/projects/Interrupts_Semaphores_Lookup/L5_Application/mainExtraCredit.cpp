@@ -62,7 +62,8 @@ typedef struct params {
     uint8_t pin;
     sw_number sw;
     bool onboard;
-};
+}params;
+
 
 /*
  * Parameter Structs and subsequent pointers passed to the Tasks
@@ -74,6 +75,8 @@ static const params internal_led    = { .port = 1, .pin = 8, .sw = sw_number2, .
 
 static const params *pExternal_led     = &external_led;
 static const params *pInternal_led     = &internal_led;
+
+static const params *pExternal1 = params(2,1,sw_number1,false);
 
 /*Easter Egg #1
  * Counts from 0 to 15 on both onboard LEDs and 7 seg digits.

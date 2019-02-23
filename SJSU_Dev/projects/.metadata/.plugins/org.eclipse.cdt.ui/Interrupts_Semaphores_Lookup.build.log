@@ -1,13 +1,10 @@
-18:39:26 **** Incremental Build of configuration _build for project Interrupts_Semaphores_Lookup ****
+18:55:36 **** Incremental Build of configuration _build for project Interrupts_Semaphores_Lookup ****
 make -j2 all 
 Building file: ../L5_Application/mainExtraCredit.cpp
 Invoking: Cross ARM C++ Compiler
 arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\Interrupts_Semaphores_Lookup\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/mainExtraCredit.d" -MT"L5_Application/mainExtraCredit.o" -c -o "L5_Application/mainExtraCredit.o" "../L5_Application/mainExtraCredit.cpp"
-../L5_Application/mainExtraCredit.cpp:65:1: warning: 'typedef' was ignored in this declaration
- };
- ^
 ../L5_Application/mainExtraCredit.cpp: In function 'void vLEDCounter(void*)':
-../L5_Application/mainExtraCredit.cpp:160:10: warning: unused variable 'success' [-Wunused-variable]
+../L5_Application/mainExtraCredit.cpp:161:10: warning: unused variable 'success' [-Wunused-variable]
      bool success = ledDisplay.init();
           ^
 Finished building: ../L5_Application/mainExtraCredit.cpp
@@ -22,8 +19,8 @@ Create binary file
 arm-none-eabi-objcopy -O binary Interrupts_Semaphores_Lookup.elf Interrupts_Semaphores_Lookup.bin
  
 Invoking: Cross ARM GNU Create Flash Image
-Invoking: Cross ARM GNU Create Listing
 arm-none-eabi-objcopy -O ihex "Interrupts_Semaphores_Lookup.elf"  "Interrupts_Semaphores_Lookup.hex"
+Invoking: Cross ARM GNU Create Listing
 arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "Interrupts_Semaphores_Lookup.elf" > "Interrupts_Semaphores_Lookup.lst"
 Finished building: Interrupts_Semaphores_Lookup.hex
  
@@ -36,5 +33,5 @@ Finished building: Interrupts_Semaphores_Lookup.siz
 Finished building: Interrupts_Semaphores_Lookup.lst
  
 
-18:39:28 Build Finished (took 1s.759ms)
+18:55:38 Build Finished (took 1s.761ms)
 
