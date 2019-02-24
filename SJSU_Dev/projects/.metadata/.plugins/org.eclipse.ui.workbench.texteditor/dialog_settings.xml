@@ -2,12 +2,16 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="LabGPIO_0_1_2" key="selection"/>
+		<item value="PCLKSEL1" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="PCLKSEL1"/>
+			<item value="PCSSP"/>
+			<item value="PCSSP0"/>
+			<item value="PCONP"/>
 			<item value="LabGPIO_0"/>
 			<item value="FIODIR"/>
 			<item value="LPC_GPIO"/>
