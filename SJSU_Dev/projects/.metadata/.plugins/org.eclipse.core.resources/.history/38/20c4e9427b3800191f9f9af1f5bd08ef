@@ -1,0 +1,23 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Feb 24, 2019
+ *      Author: Nick
+ */
+
+#include "SPI/LabSpi.hpp"
+#include "tasks.hpp"
+
+void vReadTask(){
+    LabSpi spi = LabSpi();
+}
+
+int main(){
+    scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+    xTaskCreate(vReadTask, "Read1", 1024, NULL, PRIORITY_LOW, NULL);
+    scheduler_start();
+    return -1;
+}
+
+
+

@@ -1,0 +1,57 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Feb 24, 2019
+ *      Author: Nick
+ */
+
+#include "SPI/LabSpi.hpp"
+#include "tasks.hpp"
+#include "stdio.h"
+#include "FreeRTOS.h"
+
+uint8_t *mode1 = new uint8_t(1);
+uint8_t *mode2 = new uint8_t(2);
+SemaphoreHandle_t mutex = xSemaphoreCreateMutex();
+GPIO_0_1_2 CS = GPIO_0_1_2(0,6);
+
+void vReadFlash(void *pvParameters){
+    uint8_t mode = *((uint8_t*) pvParameters);
+    LabSpi spi = LabSpi();
+    spi.initialize(16, LabSpi::tSPI, 12);
+    uint8_t manufacture_id;
+    uint8_t device_id_1;
+    uint8_t device_id_2;
+    while (1){
+        if (xSemaphoreTake(mutex, portMAX_DELAY)){
+            manufacture_id = spi.transfer(0x9F);
+            device_id_1 = spi.transfer(0xFF);
+            device_id_2 = spi.transfer(0xFF);
+            printf("Manufacture ID %d: %X\nDeviceID1: %X\nDeviceID2: %X", mode, manufacture_id, device_id_1, device_id_2);
+            xSemaphoreGive(mutex);
+        }
+        vTaskDelay(1000);
+    }
+}
+
+void vCheckStatus(void *pvParameters){
+    LabSpi spi = LabSpi();
+
+    while(1){
+        spi.isBusy() ? printf("SPI Flash is currently busy\n\n") : printf("SPI Flash is currently NOT busy\n\n");
+        vTaskDelay(100);
+    }
+}
+
+
+int main(){
+    scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+    xTaskCreate(vReadFlash, "Read1", 1024, (void *)mode1, PRIORITY_LOW, NULL);
+    xTaskCreate(vReadFlash, "Read2", 1024, (void *)mode2, PRIORITY_LOW, NULL);
+    //xTaskCreate(vCheckStatus, "Status", 1024, NULL, PRIORITY_LOW, NULL);
+    scheduler_start();
+    return -1;
+}
+
+
+

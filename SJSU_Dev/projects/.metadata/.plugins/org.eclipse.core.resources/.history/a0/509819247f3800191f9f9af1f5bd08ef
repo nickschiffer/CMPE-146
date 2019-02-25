@@ -1,0 +1,36 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Feb 24, 2019
+ *      Author: Nick
+ */
+
+#include "SPI/LabSpi.hpp"
+#include "tasks.hpp"
+#include "stdio.h"
+#include "FreeRTOS.h"
+
+void vReadTask(void *pvParamters){
+    uint8_t mode = *((uint8_t*) pvParamters);
+    LabSpi spi = LabSpi();
+    spi.initialize(16, LabSpi::tSPI, 12);
+    uint8_t result;
+    while (1){
+        result = spi.transfer(0x9F);
+        printf("Result%d: %X\n\n", (int)mode, result);
+        vTaskDelay(1000);
+    }
+}
+
+int main(){
+    uint8_t mode1 = 1;
+    uint8_t mode2 = 2;
+    scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+    xTaskCreate(vReadTask, "Read1", 1024, (void *)&mode1, PRIORITY_LOW, NULL);
+    xTaskCreate(vReadTask, "Read2", 1024, (void *)&mode2, PRIORITY_LOW, NULL);
+    scheduler_start();
+    return -1;
+}
+
+
+

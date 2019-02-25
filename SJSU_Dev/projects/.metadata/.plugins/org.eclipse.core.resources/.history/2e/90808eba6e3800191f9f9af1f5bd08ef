@@ -1,0 +1,60 @@
+/*
+ * LabSpi.cpp
+ *
+ *  Created on: Feb 24, 2019
+ *      Author: Nick
+ */
+
+#include "SPI/LabSpi.hpp"
+
+
+
+
+bool LabSpi::initialize(uint8_t data_size_select, FrameModes format, uint8_t divide)
+{
+
+
+
+    /*
+     * Power on SSP1
+     */
+    LPC_SC->PCONP |= (1 << 10);
+    /*
+     * PCLK_SEL0 = CCLK / 4 (p58)
+     */
+    //LPC_SC->PCLKSEL0 &= ~(3 << 20);
+    /*
+     * Set port 0.8 [17:16] = 10 for MISO 1
+     */
+    LPC_PINCON->PINSEL0 |=  (1 << 17);
+    LPC_PINCON->PINSEL0 &= ~(1 << 16);
+    /*
+     *Set port 0.9 [19:18] = 10 for MOSI 1
+     */
+    LPC_PINCON->PINSEL0 |=  (1 << 19);
+    LPC_PINCON->PINSEL0 &= ~(1 << 18);
+    /*
+     * Set port 0.7 to SCK1 = 10
+     */
+    LPC_PINCON->PINSEL0 |=  (1 << 15);
+    LPC_PINCON->PINSEL0 &= ~(1 << 14);
+}
+
+
+uint8_t LabSpi::transfer(uint8_t send)
+{
+}
+
+
+LabSpi::LabSpi()
+{
+}
+
+
+LabSpi::~LabSpi()
+{
+}
+
+
+
+
