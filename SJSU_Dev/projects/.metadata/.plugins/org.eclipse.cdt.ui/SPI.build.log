@@ -1,4 +1,4 @@
-19:51:47 **** Incremental Build of configuration _build for project SPI ****
+21:00:01 **** Incremental Build of configuration _build for project SPI ****
 make -j2 all 
 Building file: ../L5_Application/main.cpp
 Invoking: Cross ARM C++ Compiler
@@ -15,8 +15,8 @@ Create binary file
 arm-none-eabi-objcopy -O binary SPI.elf SPI.bin
  
 Invoking: Cross ARM GNU Create Flash Image
-arm-none-eabi-objcopy -O ihex "SPI.elf"  "SPI.hex"
 Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "SPI.elf"  "SPI.hex"
 arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "SPI.elf" > "SPI.lst"
 Finished building: SPI.hex
  
@@ -29,5 +29,5 @@ Finished building: SPI.siz
 Finished building: SPI.lst
  
 
-19:51:49 Build Finished (took 1s.820ms)
+21:00:02 Build Finished (took 1s.868ms)
 
