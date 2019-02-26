@@ -1,0 +1,139 @@
+/*
+ *     SocialLedge.com - Copyright (C) 2013
+ *
+ *     This file is part of free software framework for embedded processors.
+ *     You can use it and/or distribute it as long as this copyright header
+ *     remains unmodified.  The code is free for personal use and requires
+ *     permission to use in a commercial product.
+ *
+ *      THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
+ *      OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+ *      MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+ *      I SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
+ *      CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+ *
+ *     You can reach the author of this software at :
+ *          p r e e t . w i k i @ g m a i l . c o m
+ */
+
+/**
+ * @file
+ * @brief This is the application entry point.
+ */
+
+#include <stdio.h>
+#include <sys/_stdint.h>
+#include <LPC17xx.h>
+#include <GPIO/GPIO_0_1_2.hpp>
+
+GPIO_0_1_2 cs = GPIO_0_1_2(0,6);
+
+void spi_init(void)
+{
+  /* Init the exact SPI config to talk to the SPI flash */
+    cs.setAsOutput();
+    cs.setHigh();
+    /*
+     * PCSSP1 = bit 10 (p64 from datasheet)
+     * power on
+     */
+    LPC_SC->PCONP |= (1 << 10);
+
+    /*
+     * PCLK_SEL0 = CCLK / 4 (p58)
+     */
+    //LPC_SC->PCLKSEL0 &= ~(3 << 20);
+    /*
+     * Set port 0.8 [17:16] = 10 for MISO 1
+     */
+    LPC_PINCON->PINSEL0 |=  (1 << 17);
+    LPC_PINCON->PINSEL0 &= ~(1 << 16);
+    /*
+     *Set port 0.9 [19:18] = 10 for MOSI 1
+     */
+    LPC_PINCON->PINSEL0 |=  (1 << 19);
+    LPC_PINCON->PINSEL0 &= ~(1 << 18);
+    /*
+     * Set port 0.7 to SCK1 = 10
+     */
+    LPC_PINCON->PINSEL0 |=  (1 << 15);
+    LPC_PINCON->PINSEL0 &= ~(1 << 14);
+    /*
+     * Set port 0.6 to SSEL1 [13:12] = 10
+     */
+//    LPC_PINCON->PINSEL0 |=  (1 << 13);
+//    LPC_PINCON->PINSEL0 &= ~(1 << 12);
+
+
+    /*
+     * Enable pull-up resistors on ports 0.8, 0.9 (MISO/MOSI1)
+     */
+//    LPC_PINCON->PINMODE0 &= ~(3 << 16);
+//    LPC_PINCON->PINMODE0 &= ~(3 << 18);
+
+    /*
+     * Setup SSP
+     */
+    //LPC_SSP1->CR0 |= (7);
+    LPC_SSP1->CR0 |= (15);
+
+    LPC_SSP1->CPSR |= (2);
+    LPC_SSP1->CR1 |= (1 << 1);
+    //LPC_SSP1->CR1
+
+}
+
+void adesto_s(bool sel){
+    sel ? cs.setLow() : cs.setHigh();
+}
+void adesto_ds(){
+
+}
+uint8_t spi_transfer(uint8_t out)
+{
+    printf("preDR: %X\nSR: %X\n\n", LPC_SSP1->DR, LPC_SSP1->SR);
+    LPC_SSP1->DR = out << 8;
+    printf("loadedDR: %X\nSR: %X\n\n", LPC_SSP1->DR, LPC_SSP1->SR);
+    while((LPC_SSP1->SR & (1 << 2))){// wait until not RNE
+        printf("busyDR: %X\nSR: %X\n\n", LPC_SSP1->DR, LPC_SSP1->SR);
+        if (LPC_SSP1->SR & (1 << 0))
+            printf("TFE\n");
+        if (LPC_SSP1->SR & (1 << 1))
+            printf("TNF\n");
+        if (LPC_SSP1->SR & (1 << 2))
+            printf("RNE\n");
+        if (LPC_SSP1->SR & (1 << 3))
+            printf("RFF\n");
+        if (LPC_SSP1->SR & (1 << 4))
+            printf("BSY\n");
+    }
+    printf("DR: %X\nSR: %X\n\n", LPC_SSP1->DR, LPC_SSP1->SR);
+    return (uint8_t)(0xFF & LPC_SSP1->DR);
+}
+
+// WARNING: This is just a sample; you will have to fill in plenty of your own code per requirements
+
+//see p. 36 in adesto manual
+void read_sig(void)
+{
+  uint8_t d[2];
+
+  // The simplest test is to try to read the signature of the Adesto flash and print it out
+  adesto_s(true);
+      d[0] = spi_transfer(0x9F); // TODO: Find what to send to read Adesto flash signature
+  adesto_s(false);
+
+//  adesto_s(true);
+//      d[1] = spi_transfer(0x9F);
+//  adesto_s(false);
+
+  printf("Returned data: %X %X\n", d[0], d[1]);
+}
+
+int main(void)
+{
+  spi_init();
+  read_sig();
+  while (true);
+  return 0;
+}

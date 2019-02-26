@@ -1,0 +1,21 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Feb 24, 2019
+ *      Author: Nick
+ */
+
+#include "SPI/LabSpi.hpp"
+
+void xReadTask(){
+
+}
+
+int main(){
+
+    scheduler_start();
+    return -1;
+}
+
+
+

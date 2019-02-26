@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;SPI/L5_Application/SPI/SPI.hpp&apos; to &apos;LabSpi.hpp&apos;" description="Rename resource &apos;SPI.hpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="L5_Application/SPI/SPI.hpp" name="LabSpi.hpp" stamp="1550962794749" updateReferences="true"/>
+</session>

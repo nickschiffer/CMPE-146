@@ -1,0 +1,59 @@
+/*
+ *     SocialLedge.com - Copyright (C) 2013
+ *
+ *     This file is part of free software framework for embedded processors.
+ *     You can use it and/or distribute it as long as this copyright header
+ *     remains unmodified.  The code is free for personal use and requires
+ *     permission to use in a commercial product.
+ *
+ *      THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
+ *      OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+ *      MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+ *      I SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
+ *      CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+ *
+ *     You can reach the author of this software at :
+ *          p r e e t . w i k i @ g m a i l . c o m
+ */
+
+/**
+ * @file
+ * @brief This is the application entry point.
+ */
+
+#include <stdio.h>
+#include "utilities.h"
+#include "io.hpp"
+
+
+
+void spi_init(void)
+{
+  /* Init the exact SPI config to talk to the SPI flash */
+}
+
+uint8_t spi_transfer(uint8_t out)
+{
+}
+
+// WARNING: This is just a sample; you will have to fill in plenty of your own code per requirements
+void read_sig(void)
+{
+  uint8_t d[2];
+
+  // The simplest test is to try to read the signature of the Adesto flash and print it out
+  adesto_cs();
+  {
+    d[0] = spi_transfer(0xAA); // TODO: Find what to send to read Adesto flash signature
+    d[1] = spi_transfer(0xBB);
+  }
+  adesto_ds();
+
+  printf("Returned data: %x %x\n", d[0], d[1]);
+}
+
+void main(void)
+{
+  spi_init();
+  read_sig();
+}

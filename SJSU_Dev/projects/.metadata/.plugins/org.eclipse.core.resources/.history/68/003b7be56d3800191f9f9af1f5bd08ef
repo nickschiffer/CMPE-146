@@ -1,0 +1,31 @@
+
+#include "SPI/LabSpi.hpp"
+
+
+
+
+bool LabSpi::initialize(uint8_t data_size_select, FrameModes format, uint8_t divide)
+{
+}
+
+uint8_t LabSpi::transfer(uint8_t send)
+{
+}
+
+LabSpi::LabSpi()
+{
+}
+
+LabSpi::~LabSpi()
+{
+}
+/*
+ * LabSpi.cpp
+ *
+ *  Created on: Feb 24, 2019
+ *      Author: Nick
+ */
+
+
+
+
