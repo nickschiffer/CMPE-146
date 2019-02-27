@@ -9,4 +9,5 @@ toolchain/
 *.exe
 /projects_mingw/
 SJSU_Dev/projects_mingw/freertos_mingw
-*/.metadata/*
+#*/.metadata/*
+*/.history/
