@@ -1,0 +1,24 @@
+/*
+ * adcDriver.cpp
+ *
+ *  Created on: Mar 2, 2019
+ *      Author: Nickolas Schiffer
+ */
+
+#include "adcDriver.hpp"
+
+LabAdc::LabAdc()
+{
+}
+
+void LabAdc::AdcInitBurstMode()
+{
+}
+
+void LabAdc::AdcSelectPin(Pin pin)
+{
+}
+
+float LabAdc::ReadAdcVoltageByChannel(uint8_t channel)
+{
+}

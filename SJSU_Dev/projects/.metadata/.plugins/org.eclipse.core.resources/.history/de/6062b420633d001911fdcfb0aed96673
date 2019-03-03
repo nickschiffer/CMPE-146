@@ -1,0 +1,31 @@
+/*
+ * pwmDriver.cpp
+ *
+ *  Created on: Mar 2, 2019
+ *      Author: Nick
+ */
+
+#include <PWM/pwmDriver.hpp>
+
+void LabPwm::PwmSelectAllPins()
+{
+   LPC_SC->PCONP |= (1 << pconp_pwm1);
+}
+
+void LabPwm::PwmSelectPin(PWM_Pin pwm_pin_arg)
+{
+}
+
+void LabPwm::PwmInitSingleEdgeMode(uint32_t frequency_Hz)
+{
+    LPC_SC->PCONP    |= (1 << pconp_pwm1);
+    LPC_SC->PCLKSEL1 |= (1 << pclk_pwm1);
+}
+
+void LabPwm::SetDutyCycle(PWM_Pin pwm_pin_arg, float duty_cycle_percentage)
+{
+}
+
+void LabPwm::SetFrequency(uint32_t frequency_Hz)
+{
+}

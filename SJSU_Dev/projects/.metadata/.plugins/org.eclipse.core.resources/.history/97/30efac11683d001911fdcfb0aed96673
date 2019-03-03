@@ -1,0 +1,71 @@
+/*
+ * pwmDriver.cpp
+ *
+ *  Created on: Mar 2, 2019
+ *      Author: Nick
+ */
+
+#include <PWM/pwmDriver.hpp>
+
+void LabPwm::PwmSelectAllPins()
+{
+   //Select pins 2.0 - 2.5 as PWM: 01
+   LPC_PINCON->PINSEL4 |= (1 << 0);
+   LPC_PINCON->PINSEL4 |= (1 << 2);
+   LPC_PINCON->PINSEL4 |= (1 << 4);
+   LPC_PINCON->PINSEL4 |= (1 << 6);
+   LPC_PINCON->PINSEL4 |= (1 << 8);
+   LPC_PINCON->PINSEL4 |= (1 << 10);
+
+   /*
+    * Initialize PWM Channels
+    */
+   LPC_PWM1->PCR &= ~(1 << 2);
+   LPC_PWM1->PCR &= ~(1 << 3);
+   LPC_PWM1->PCR &= ~(1 << 4);
+   LPC_PWM1->PCR &= ~(1 << 5);
+   LPC_PWM1->PCR &= ~(1 << 6);
+
+   /*
+    * Enable PWM Output on all channels
+    */
+   LPC_PWM1->PCR |= (1 << 9);
+   LPC_PWM1->PCR |= (1 << 10);
+   LPC_PWM1->PCR |= (1 << 11);
+   LPC_PWM1->PCR |= (1 << 12);
+   LPC_PWM1->PCR |= (1 << 13);
+   LPC_PWM1->PCR |= (1 << 14);
+}
+
+void LabPwm::PwmSelectPin(PWM_Pin pwm_pin_arg)
+{
+    LPC_PINCON->PINSEL4 |= (1 << (2*pwm_pin_arg));
+}
+
+void LabPwm::PwmInitSingleEdgeMode(uint32_t frequency_Hz)
+{
+    /*
+     * Enable PWM peripheral power and clock
+     */
+    LPC_SC->PCONP    |= (1 << pconp_pwm1);
+    LPC_SC->PCLKSEL0 |= (1 << (2*pclk_pwm1));
+
+
+
+
+
+
+    /*
+     * Enable Counter
+     */
+    LPC_PWM1->CTCR |= (1);
+
+}
+
+void LabPwm::SetDutyCycle(PWM_Pin pwm_pin_arg, float duty_cycle_percentage)
+{
+}
+
+void LabPwm::SetFrequency(uint32_t frequency_Hz)
+{
+}

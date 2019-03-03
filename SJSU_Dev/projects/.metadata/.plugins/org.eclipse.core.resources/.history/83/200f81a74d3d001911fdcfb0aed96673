@@ -1,0 +1,80 @@
+/*
+ * Nickolas Schiffer #012279319
+ * CMPE 146 S19
+ * Lab: ADC_PWM part 0
+ * Ch. 29 of LPC17xx datasheet
+ */
+
+#include <stdlib.h>
+#include <LPC17xx.h>
+#include <tasks.hpp>
+#include <stdio.h>
+#include "ADC/adcDriver.hpp"
+
+uint16_t adc_read_channel(uint8_t channel){
+    if (!((channel >= 0) && (channel <= 7))){
+        printf("Invalid param\n");
+        return 0xFFFF;
+    }
+    LPC_ADC->ADCR |= (1 << channel);
+    return (uint16_t)(LPC_ADC->ADGDR >> 4);
+}
+
+void vLightSensorPrint(void *pvParameters){
+    /*
+    * 1) Initial ADC setup (Power, clkselect, pinselect, clkdivider)
+    * 2) Select ADC channel 2
+    * 3) Enable burst mode
+    */
+    /*
+     * Set pin 0.25 to ADC0.2
+     */
+    LPC_PINCON->PINSEL1 |= (1 << 18);
+
+    /*
+     * Initialize ADC Power
+     */
+    LPC_SC->PCONP |= (1 << pconp_adc);
+    /*
+     * Select pin 2 to be converted (hardwired to light sensor): bits 7:0
+     */
+    LPC_ADC->ADCR |= (1 << 2);
+    /*
+     * Set clock divider (should be <= 13MHz) -> 48Mhz / 4 = 12Mhz: bits 15:8
+     */
+    LPC_ADC->ADCR |= (4 << 8);
+    /*
+     * Enable Burst Mode: bit 16
+     */
+    LPC_ADC->ADCR |= (1 << 16);
+    /*
+     * Enable ADC Operational State: pin 21
+     */
+    LPC_ADC->ADCR |= (1 << 21);
+    /*
+     * Start Conversion now: pins 26:24
+     */
+    //LPC_ADC->ADCR |= (1 << 24);
+
+
+    while(1) {
+        uint16_t ls_val = adc_read_channel(2);
+        printf("Light Sensor value is %d\n", ls_val);
+        vTaskDelay(100);
+    }
+}
+
+void vDriverTest(void *pvParamters){
+    auto adc = LabAdc();
+    adc.AdcSelectPin(LabAdc::k0_25);
+}
+
+
+int main(){
+    scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+
+    xTaskCreate(vLightSensorPrint, "LightSensorPrint", 1024, NULL, PRIORITY_LOW, NULL);
+
+    scheduler_start();
+    return EXIT_FAILURE;
+}

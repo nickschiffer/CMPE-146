@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;ADC_PWM/L5_Application/ADC/adDriver.cpp&apos; to &apos;adcDriver.cpp&apos;" description="Rename resource &apos;adDriver.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="L5_Application/ADC/adDriver.cpp" name="adcDriver.cpp" stamp="1551571116049" updateReferences="true"/>
+</session>
