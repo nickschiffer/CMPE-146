@@ -12,8 +12,9 @@
 #include <LPC17xx.h>
 #include "printf_lib.h"
 
-#define PCLK_RATE    12000000
-#define GRANULARITY  1000
+//#define PCLK_RATE    1500000
+#define PCLK_RATE    48000
+#define RESOLUTION   1000
 #define DEFAULT_FREQ 1000
 
 class LabPwm
@@ -52,7 +53,7 @@ class LabPwm
     *
     * @param frequency_Hz is the initial frequency in Hz.
     */
-    void PwmInitSingleEdgeMode(uint32_t frequency_Hz);
+    void PwmInitSingleEdgeMode(uint32_t frequency_Hz = 1000);
 
     /**
     * 1) Convert duty_cycle_percentage to the appropriate match register value (depends on current frequency)
@@ -72,8 +73,8 @@ class LabPwm
     */
     void SetFrequency(uint32_t frequency_Hz);
  private:
-    static uint32_t pr;
-    static uint32_t mr0;
+    static uint64_t pr;
+    static uint64_t mr0;
 };
 
 

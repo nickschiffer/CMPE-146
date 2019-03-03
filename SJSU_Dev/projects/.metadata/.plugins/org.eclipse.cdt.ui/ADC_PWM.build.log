@@ -1,4 +1,4 @@
-23:41:23 **** Incremental Build of configuration _build for project ADC_PWM ****
+03:43:21 **** Incremental Build of configuration _build for project ADC_PWM ****
 make -j2 all 
 Building file: ../L5_Application/main.part0.cpp
 Invoking: Cross ARM C++ Compiler
@@ -16,18 +16,18 @@ arm-none-eabi-objcopy -O binary ADC_PWM.elf ADC_PWM.bin
  
 Invoking: Cross ARM GNU Create Flash Image
 Invoking: Cross ARM GNU Create Listing
-arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "ADC_PWM.elf" > "ADC_PWM.lst"
 arm-none-eabi-objcopy -O ihex "ADC_PWM.elf"  "ADC_PWM.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "ADC_PWM.elf" > "ADC_PWM.lst"
 Finished building: ADC_PWM.hex
  
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "ADC_PWM.elf"
    text	   data	    bss	    dec	    hex	filename
-  90012	    756	   1176	  91944	  16728	ADC_PWM.elf
+  90428	    756	   1192	  92376	  168d8	ADC_PWM.elf
 Finished building: ADC_PWM.siz
  
 Finished building: ADC_PWM.lst
  
 
-23:41:25 Build Finished (took 1s.923ms)
+03:43:23 Build Finished (took 1s.759ms)
 

@@ -78,24 +78,34 @@ void vADCDriverTest(void *pvParameters){
 
 void vPWMDriverTest(void *pvParameters){
     auto pwm = LabPwm();
-    pwm.PwmInitSingleEdgeMode(1000);
-    pwm.PwmSelectPin(LabPwm::k2_1);
+    pwm.PwmInitSingleEdgeMode(100);
+    //pwm.PwmSelectPin(LabPwm::k2_1);
     pwm.PwmSelectAllPins();
-//    pwm.SetFrequency(30);
+    //pwm.SetFrequency(1);
 
-    float duty_cycle = 1;
+    float duty_cycle = 0.5;
     while (1){
+        while (duty_cycle >= 0.01){
         pwm.SetDutyCycle(LabPwm::k2_0, duty_cycle);
         pwm.SetDutyCycle(LabPwm::k2_1, duty_cycle);
         pwm.SetDutyCycle(LabPwm::k2_2, duty_cycle);
         pwm.SetDutyCycle(LabPwm::k2_3, duty_cycle);
         pwm.SetDutyCycle(LabPwm::k2_4, duty_cycle);
-        if (duty_cycle <= 0.01){
-            duty_cycle = 1;
-        }
         duty_cycle -= 0.01;
-        vTaskDelay(100);
+        vTaskDelay(10);
+        }
+
+    while (duty_cycle <= 1){
+        pwm.SetDutyCycle(LabPwm::k2_0, duty_cycle);
+        pwm.SetDutyCycle(LabPwm::k2_1, duty_cycle);
+        pwm.SetDutyCycle(LabPwm::k2_2, duty_cycle);
+        pwm.SetDutyCycle(LabPwm::k2_3, duty_cycle);
+        pwm.SetDutyCycle(LabPwm::k2_4, duty_cycle);
+        duty_cycle += 0.01;
+        vTaskDelay(10);
     }
+    }
+
 
 }
 
@@ -105,7 +115,7 @@ int main(){
 
     //xTaskCreate(vLightSensorPrint, "LightSensorPrint", 1024, NULL, PRIORITY_LOW, NULL);
     //xTaskCreate(vADCDriverTest, "ADCDriverTest", 1024, NULL, PRIORITY_LOW, NULL);
-    xTaskCreate(vPWMDriverTest, "PWMDriverTest", 1024, NULL, PRIORITY_LOW, NULL);
+    xTaskCreate(vPWMDriverTest, "PWMDriverTest", 1000, NULL, PRIORITY_LOW, NULL);
 
     scheduler_start();
     return EXIT_FAILURE;
