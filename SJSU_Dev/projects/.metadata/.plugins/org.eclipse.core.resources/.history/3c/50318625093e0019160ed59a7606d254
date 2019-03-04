@@ -1,0 +1,47 @@
+#include <stdlib.h>
+#include <LPC17xx.h>
+#include <tasks.hpp>
+#include <stdio.h>
+#include "ADC/adcDriver.hpp"
+#include "PWM/pwmDriver.hpp"
+#include <math.h>
+
+#define VREF 3.3
+
+void vRGBTEST(void *pvParamters){
+    auto pwm = LabPwm();
+    pwm.PwmSelectPin(LabPwm::k2_0);
+    pwm.PwmSelectPin(LabPwm::k2_1);
+    pwm.PwmSelectPin(LabPwm::k2_2);
+    pwm.PwmInitSingleEdgeMode(100);
+
+    auto adc = LabAdc();
+    adc.AdcSelectPin(LabAdc::k0_26);
+    adc.AdcInitBurstMode();
+
+    float duty_cycle_red, duty_cycle_green, duty_cycle_blue, voltage;
+    uint16_t delay = 1;
+
+    while(1){
+        //duty_cycle_red = duty_cycle_green = duty_cycle_blue = 0;
+
+        for (double x = 0; x < 360; x+=delay){
+            voltage = adc.ReadAdcVoltageByChannel(LabAdc::channel_3);
+            delay = (uint16_t)map(voltage, 0, 3.3, 1, 50);
+            printf("voltage %f\ndelay: %u\n", voltage, delay);
+
+            duty_cycle_red   = (float)((1*(sin((double)(x/180*M_PI))+1))/2);
+            duty_cycle_green = (float)((1*(sin((double)(x/180*M_PI+((double)(1.5)*M_PI)))+1))/2);
+            duty_cycle_blue  = (float)((1*(sin((double)(x/180*M_PI+((double)(0.5)*M_PI)))+1))/2);
+            pwm.SetDutyCycle(LabPwm::k2_0,duty_cycle_red);
+            pwm.SetDutyCycle(LabPwm::k2_1,duty_cycle_green);
+            pwm.SetDutyCycle(LabPwm::k2_2,duty_cycle_blue);
+            printf("r: %f\ng: %f\nb: %f\n\n", duty_cycle_red, duty_cycle_green, duty_cycle_blue);
+            vTaskDelay(10);
+        }
+
+
+        }
+
+
+}

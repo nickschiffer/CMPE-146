@@ -1,0 +1,136 @@
+#include <stdlib.h>
+#include <LPC17xx.h>
+#include <tasks.hpp>
+#include <stdio.h>
+#include "ADC/adcDriver.hpp"
+#include "PWM/pwmDriver.hpp"
+#include "GPIO/GPIOInterrupt.hpp"
+#include <math.h>
+
+typedef bool Mode;
+
+#define VREF 3.3
+#define MODE   bool
+#define NORMAL false
+#define EC     true
+
+
+
+Mode mode = NORMAL;
+
+float duty_cycle_red, duty_cycle_green, duty_cycle_blue;
+
+
+float map(float x, float in_min, float in_max, float out_min, float out_max){
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+void vSwitchMode(){
+    mode = !mode;
+}
+
+void vRGBTEST(void *pvParamters){
+    auto pwm = LabPwm();
+//    pwm.PwmSelectPin(LabPwm::k2_0);
+//    pwm.PwmSelectPin(LabPwm::k2_1);
+//    pwm.PwmSelectPin(LabPwm::k2_2);
+//    pwm.PwmInitSingleEdgeMode(100);
+
+    auto adc = LabAdc();
+    adc.AdcSelectPin(LabAdc::k0_26);
+    //adc.AdcInitBurstMode();
+
+    float duty_cycle_red, duty_cycle_green, duty_cycle_blue, voltage;
+    uint16_t delay = 1;
+
+    while(1){
+        //duty_cycle_red = duty_cycle_green = duty_cycle_blue = 0;
+        while(mode != EC){
+            vTaskDelay(100);
+        }
+        for (double x = 0; x < 360; x+=delay){
+            voltage = adc.ReadAdcVoltageByChannel(LabAdc::channel_3);
+            delay = (uint16_t)map(voltage, 0, 3.3, 1, 50);
+            printf("voltage %f\ndelay: %u\n", voltage, delay);
+
+            duty_cycle_red   = (float)((1*(sin((double)(x/180*M_PI))+1))/2);
+            duty_cycle_green = (float)((1*(sin((double)(x/180*M_PI+((double)(1.5)*M_PI)))+1))/2);
+            duty_cycle_blue  = (float)((1*(sin((double)(x/180*M_PI+((double)(0.5)*M_PI)))+1))/2);
+            pwm.SetDutyCycle(LabPwm::k2_0,duty_cycle_red);
+            pwm.SetDutyCycle(LabPwm::k2_1,duty_cycle_green);
+            pwm.SetDutyCycle(LabPwm::k2_2,duty_cycle_blue);
+            printf("r: %f\ng: %f\nb: %f\n\n", duty_cycle_red, duty_cycle_green, duty_cycle_blue);
+            vTaskDelay(10);
+        }
+
+
+        }
+
+
+}
+
+void vVoltageReadTask(void *pvParamters){
+    auto adc = LabAdc();
+    adc.AdcSelectPin(LabAdc::k0_26);
+    float voltage, duty_cycle;
+
+    while (1){
+        voltage = adc.ReadAdcVoltageByChannel(LabAdc::channel_3);
+        printf("volatage: %f\nr_ds: %u\ng_ds: %u\nb_ds: %u", voltage, duty_cycle_red, duty_cycle_green, duty_cycle_blue);
+    }
+}
+
+void vPWMADCTEST(void *pvParameters){
+    auto pwm = LabPwm();
+    auto adc = LabAdc();
+
+    adc.AdcSelectPin(LabAdc::k0_26);
+    adc.AdcInitBurstMode();
+
+    pwm.PwmSelectPin(LabPwm::k2_0);
+    pwm.PwmSelectPin(LabPwm::k2_1);
+    pwm.PwmSelectPin(LabPwm::k2_2);
+    pwm.PwmInitSingleEdgeMode(100);
+    float voltage;
+
+    while (1){
+        while(mode != NORMAL){
+            vTaskDelay(100);
+        }
+
+        voltage = adc.ReadAdcVoltageByChannel(LabAdc::channel_3);
+        duty_cycle_red = duty_cycle_green = duty_cycle_blue = (float)(voltage / (float)VREF);
+        pwm.SetDutyCycle(LabPwm::k2_0, duty_cycle_red);
+        pwm.SetDutyCycle(LabPwm::k2_1, duty_cycle_green);
+        pwm.SetDutyCycle(LabPwm::k2_2, duty_cycle_blue);
+//        printf("voltage: %f\n\n", voltage);
+//        printf("duty cycle: %f\n\n", duty_cycle);
+        vTaskDelay(10);
+    }
+
+
+}
+
+void Eint3Handler(){
+    GPIOInterrupt *interruptHandler = GPIOInterrupt::getInstance();
+    interruptHandler->HandleInterrupt();
+}
+
+int main(){
+    scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+
+
+    GPIOInterrupt *gpio_interrupts = GPIOInterrupt::getInstance();
+    gpio_interrupts->Initialize();
+    gpio_interrupts->AttachInterruptHandler(2,7, (IsrPointer)vSwitchMode, kRisingEdge);
+    isr_register(EINT3_IRQn, Eint3Handler);
+
+    //xTaskCreate(vLightSensorPrint, "LightSensorPrint", 1024, NULL, PRIORITY_LOW, NULL);
+//    xTaskCreate(vADCDriverTest, "ADCDriverTest", 1024, NULL, PRIORITY_LOW, NULL);
+//    xTaskCreate(vPWMDriverTest, "PWMDriverTest", 1000, NULL, PRIORITY_LOW, NULL);
+    xTaskCreate(vPWMADCTEST, "PWMADCTest", 1000, NULL, PRIORITY_LOW, NULL);
+    xTaskCreate(vRGBTEST, "RGBTest", 1000, NULL, PRIORITY_LOW, NULL);
+
+    scheduler_start();
+    return EXIT_FAILURE;
+}

@@ -16,7 +16,7 @@ void LabAdc::AdcInitBurstMode()
     /*
      * Set pin 0.25 to ADC0.2
      */
-    LPC_PINCON->PINSEL1 |= (1 << 18);
+    //LPC_PINCON->PINSEL1 |= (1 << 18);
 
     /*
      * Initialize ADC Power
@@ -26,6 +26,10 @@ void LabAdc::AdcInitBurstMode()
      * Set clock divider (should be <= 13MHz) -> 48Mhz / 4 = 12Mhz: bits 15:8
      */
     LPC_ADC->ADCR |= (4 << CLOCK_DIV);
+    /*
+     * Set START bits to 000
+     */
+    LPC_ADC->ADCR &= ~(7 << 24);
     /*
      * Enable Burst Mode: bit 16
      */

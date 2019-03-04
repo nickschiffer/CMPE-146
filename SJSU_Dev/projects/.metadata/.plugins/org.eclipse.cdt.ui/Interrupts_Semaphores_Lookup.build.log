@@ -1,4 +1,4 @@
-21:50:25 **** Incremental Build of configuration _build for project Interrupts_Semaphores_Lookup ****
+15:42:53 **** Incremental Build of configuration _build for project Interrupts_Semaphores_Lookup ****
 make -j2 all 
 Building file: ../L5_Application/mainExtraCredit.cpp
 Invoking: Cross ARM C++ Compiler
@@ -24,5 +24,5 @@ arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sect
                       ^
 make: *** [L5_Application/mainExtraCredit.o] Error 1
 
-21:50:26 Build Finished (took 699ms)
+15:42:53 Build Finished (took 638ms)
 

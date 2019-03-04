@@ -13,7 +13,7 @@
 #include "printf_lib.h"
 
 //#define PCLK_RATE    1500000
-#define PCLK_RATE    48000
+#define PCLK_RATE    48000000
 #define RESOLUTION   1000
 #define DEFAULT_FREQ 1000
 
