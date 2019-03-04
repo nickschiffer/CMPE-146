@@ -1,0 +1,49 @@
+/*
+ * adcDriver.cpp
+ *
+ *  Created on: Mar 2, 2019
+ *      Author: Nickolas Schiffer
+ */
+
+#include "adcDriver.hpp"
+
+LabAdc::LabAdc()
+{
+}
+
+void LabAdc::AdcInitBurstMode()
+{
+    /*
+     * Set pin 0.25 to ADC0.2
+     */
+    LPC_PINCON->PINSEL1 |= (1 << 18);
+
+    /*
+     * Initialize ADC Power
+     */
+    LPC_SC->PCONP |= (1 << pconp_adc);
+    /*
+     * Select pin 2 to be converted (hardwired to light sensor): bits 7:0
+     */
+    LPC_ADC->ADCR |= (1 << 2);
+    /*
+     * Set clock divider (should be <= 13MHz) -> 48Mhz / 4 = 12Mhz: bits 15:8
+     */
+    LPC_ADC->ADCR |= (4 << 8);
+    /*
+     * Enable Burst Mode: bit 16
+     */
+    LPC_ADC->ADCR |= (1 << 16);
+    /*
+     * Enable ADC Operational State: pin 21
+     */
+    LPC_ADC->ADCR |= (1 << 21);
+}
+
+void LabAdc::AdcSelectPin(Pin pin)
+{
+}
+
+float LabAdc::ReadAdcVoltageByChannel(uint8_t channel)
+{
+}

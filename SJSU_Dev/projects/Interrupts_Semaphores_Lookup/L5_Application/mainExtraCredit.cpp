@@ -229,7 +229,7 @@ void Eint3Handler(){
     interruptHandler->HandleInterrupt();
 }
 
-void vSemaphore1Supplier(){
+void vSwitchMode(){
     xSemaphoreGive(external_switch1_semaphore);
 }
 
@@ -277,7 +277,7 @@ int main(void)
 
     GPIOInterrupt *gpio_interrupts = GPIOInterrupt::getInstance();
     gpio_interrupts->Initialize();
-    gpio_interrupts->AttachInterruptHandler(2, 0, (IsrPointer)vSemaphore1Supplier, kRisingEdge);
+    gpio_interrupts->AttachInterruptHandler(2, 0, (IsrPointer)vSwitchMode, kRisingEdge);
     gpio_interrupts->AttachInterruptHandler(0, 0, (IsrPointer)vSemaphore2Supplier, kRisingEdge);
     isr_register(EINT3_IRQn, Eint3Handler);
 

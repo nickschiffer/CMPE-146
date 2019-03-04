@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;ADC_PWM/L5_Application/main.part0.cpp&apos; to &apos;main.part0.cpp.bak&apos;" description="Rename resource &apos;main.part0.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="L5_Application/main.part0.cpp" name="main.part0.cpp.bak" stamp="1551656656147" updateReferences="true"/>
+</session>

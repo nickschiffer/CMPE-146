@@ -1,0 +1,9 @@
+#include <stdlib.h>
+#include <LPC17xx.h>
+#include <tasks.hpp>
+#include <stdio.h>
+#include "ADC/adcDriver.hpp"
+#include "PWM/pwmDriver.hpp"
+#include <math.h>
+
+#define VREF 3.3
