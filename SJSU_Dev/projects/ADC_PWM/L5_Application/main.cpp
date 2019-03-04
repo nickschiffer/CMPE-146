@@ -14,8 +14,10 @@ typedef bool Mode;
 #define NORMAL false
 #define EC     true
 
-LabAdc::ADC_Channel pot_channel = LabAdc::channel_3;
-LabAdc::Pin pot_pin = LabAdc::k0_26;
+LabAdc::ADC_Channel pot_channel        = LabAdc::channel_3;
+LabAdc::ADC_Channel light_sens_channel = LabAdc::channel_2;
+LabAdc::Pin pot_pin        = LabAdc::k0_26;
+LabAdc::Pin light_sens_pin = LabAdc::k0_25;
 
 LabPwm::PWM_Pin red_pin   = LabPwm::k2_0;
 LabPwm::PWM_Pin green_pin = LabPwm::k2_1;
@@ -26,20 +28,77 @@ struct sw{
     uint8_t pin  = 7;
 }sw1;
 
+typedef enum state{
+    Normal,
+    RGBPulse,
+    LightSense,
+    KnobRGB
+};
+
+state mode = Normal;
 
 
 
-Mode mode = NORMAL;
+//Mode mode = NORMAL;
 
 float duty_cycle_red, duty_cycle_green, duty_cycle_blue;
 
 
-float map(float x, float in_min, float in_max, float out_min, float out_max){
+inline float map(float x, float in_min, float in_max, float out_min, float out_max){
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 void vSwitchMode(){
-    mode = !mode;
+    switch (mode){
+        case Normal:
+            mode = RGBPulse;
+            break;
+        case RGBPulse:
+            mode = LightSense;
+            break;
+        case LightSense:
+            mode = KnobRGB;
+            break;
+        case KnobRGB:
+            mode = Normal;
+            break;
+        default:
+            break;
+    }
+    return;
+}
+
+void vLightRGB(void *pvParameters){
+    auto pwm = LabPwm();
+    auto adc = LabAdc();
+    adc.AdcSelectPin(pot_pin);
+    adc.AdcSelectPin(light_sens_pin);
+
+    float voltage;
+    double angle = 0;
+
+    while(1){
+        while((mode !=LightSense) && (mode != KnobRGB)){
+            vTaskDelay(100);
+        }
+        if (mode == LightSense)
+            voltage = adc.ReadAdcVoltageByChannel(light_sens_channel);
+        else
+            voltage = adc.ReadAdcVoltageByChannel(pot_channel);
+        angle = (double)map(voltage, 0, 3.3, 0, 360);
+        duty_cycle_red   = (float)((1*(sin((double)(angle/180*M_PI))+1))/2);
+//        duty_cycle_green = (float)((1*(sin((double)(angle/180*M_PI+((double)(1.5)*M_PI)))+1))/2);
+//        duty_cycle_blue  = (float)((1*(sin((double)(angle/180*M_PI+((double)(0.5)*M_PI)))+1))/2);
+        duty_cycle_green = (float)((1*(sin((double)(angle/180*M_PI+((double)(2.f/3.f)*M_PI)))+1))/2);
+        duty_cycle_blue  = (float)((1*(sin((double)(angle/180*M_PI+((double)(4.f/3.f)*M_PI)))+1))/2);
+        pwm.SetDutyCycle(red_pin,duty_cycle_red);
+        pwm.SetDutyCycle(green_pin,duty_cycle_green);
+        pwm.SetDutyCycle(blue_pin,duty_cycle_blue);
+        vTaskDelay(10);
+
+
+        }
+
 }
 
 void vRGBTEST(void *pvParamters){
@@ -51,7 +110,7 @@ void vRGBTEST(void *pvParamters){
     uint16_t delay = 1;
 
     while(1){
-        while(mode != EC){
+        while(mode != RGBPulse){
             vTaskDelay(100);
         }
         for (double x = 0; x < 360; x+=delay){
@@ -60,9 +119,9 @@ void vRGBTEST(void *pvParamters){
             duty_cycle_red   = (float)((1*(sin((double)(x/180*M_PI))+1))/2);
             duty_cycle_green = (float)((1*(sin((double)(x/180*M_PI+((double)(1.5)*M_PI)))+1))/2);
             duty_cycle_blue  = (float)((1*(sin((double)(x/180*M_PI+((double)(0.5)*M_PI)))+1))/2);
-            pwm.SetDutyCycle(LabPwm::k2_0,duty_cycle_red);
-            pwm.SetDutyCycle(LabPwm::k2_1,duty_cycle_green);
-            pwm.SetDutyCycle(LabPwm::k2_2,duty_cycle_blue);
+            pwm.SetDutyCycle(red_pin,duty_cycle_red);
+            pwm.SetDutyCycle(green_pin,duty_cycle_green);
+            pwm.SetDutyCycle(blue_pin,duty_cycle_blue);
             vTaskDelay(10);
         }
 
@@ -79,7 +138,7 @@ void vPrintTask(void *pvParamters){
 
     while (1){
         voltage = adc.ReadAdcVoltageByChannel(pot_channel);
-        printf("voltage: %f\nr_ds: %f\ng_ds: %f\nb_ds: %f\n\n", voltage, duty_cycle_red, duty_cycle_green, duty_cycle_blue);
+        printf("Mode: %d\nvoltage: %f\nr_ds: %f\ng_ds: %f\nb_ds: %f\n\n", mode, voltage, duty_cycle_red, duty_cycle_green, duty_cycle_blue);
         vTaskDelay(1000);
     }
 }
@@ -98,7 +157,7 @@ void vPWMADCTEST(void *pvParameters){
     float voltage;
 
     while (1){
-        while(mode != NORMAL){
+        while(mode != Normal){
             vTaskDelay(100);
         }
 
@@ -131,6 +190,7 @@ int main(){
     xTaskCreate(vPWMADCTEST, "PWMADCTest", 1000, NULL, PRIORITY_LOW, NULL);
     xTaskCreate(vRGBTEST, "RGBTest", 1000, NULL, PRIORITY_LOW, NULL);
     xTaskCreate(vPrintTask, "Print", 1000, NULL, PRIORITY_LOW, NULL);
+    xTaskCreate(vLightRGB, "LightSens", 1000, NULL, PRIORITY_LOW, NULL);
 
     scheduler_start();
     return EXIT_FAILURE;

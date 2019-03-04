@@ -1,8 +1,11 @@
-16:08:36 **** Incremental Build of configuration _build for project ADC_PWM ****
+19:25:18 **** Incremental Build of configuration _build for project ADC_PWM ****
 make -j2 all 
 Building file: ../L5_Application/main.cpp
 Invoking: Cross ARM C++ Compiler
 arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
+../L5_Application/main.cpp:36:1: warning: 'typedef' was ignored in this declaration
+ };
+ ^
 Finished building: ../L5_Application/main.cpp
  
 Building target: ADC_PWM.elf
@@ -15,19 +18,19 @@ Create binary file
 arm-none-eabi-objcopy -O binary ADC_PWM.elf ADC_PWM.bin
  
 Invoking: Cross ARM GNU Create Flash Image
+arm-none-eabi-objcopy -O ihex "ADC_PWM.elf"  "ADC_PWM.hex"
 Invoking: Cross ARM GNU Create Listing
 arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "ADC_PWM.elf" > "ADC_PWM.lst"
-arm-none-eabi-objcopy -O ihex "ADC_PWM.elf"  "ADC_PWM.hex"
 Finished building: ADC_PWM.hex
  
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "ADC_PWM.elf"
    text	   data	    bss	    dec	    hex	filename
-  96924	    764	   1472	  99160	  18358	ADC_PWM.elf
+  97388	    764	   1472	  99624	  18528	ADC_PWM.elf
 Finished building: ADC_PWM.siz
  
 Finished building: ADC_PWM.lst
  
 
-16:08:38 Build Finished (took 1s.813ms)
+19:25:19 Build Finished (took 1s.812ms)
 

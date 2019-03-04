@@ -139,7 +139,7 @@ void LabPwm::PwmInitSingleEdgeMode(uint32_t frequency_Hz)
 
 void LabPwm::SetDutyCycle(PWM_Pin pwm_pin_arg, float duty_cycle_percentage)
 {
-    if ((duty_cycle_percentage <= 0) || (duty_cycle_percentage > 1))
+    if ((duty_cycle_percentage < 0) || (duty_cycle_percentage > 1))
         return;
     uint32_t mr = (uint32_t)(duty_cycle_percentage * (float)mr0);
 

@@ -53,7 +53,7 @@ class LabPwm
     *
     * @param frequency_Hz is the initial frequency in Hz.
     */
-    void PwmInitSingleEdgeMode(uint32_t frequency_Hz = 1000);
+    void PwmInitSingleEdgeMode(uint32_t frequency_Hz = DEFAULT_FREQ);
 
     /**
     * 1) Convert duty_cycle_percentage to the appropriate match register value (depends on current frequency)
