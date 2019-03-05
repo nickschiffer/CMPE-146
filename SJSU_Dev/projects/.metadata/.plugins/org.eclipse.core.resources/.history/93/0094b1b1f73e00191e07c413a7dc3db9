@@ -204,7 +204,7 @@ void Eint3Handler(){
 int main(){
     scheduler_add_task(new terminalTask(PRIORITY_HIGH));
 
-    printf("Clock: %u\n", sys_get_cpu_clock());
+    printf("Clock: %f", sys_get_cpu_clock());
 
     GPIOInterrupt *gpio_interrupts = GPIOInterrupt::getInstance();
     gpio_interrupts->Initialize();

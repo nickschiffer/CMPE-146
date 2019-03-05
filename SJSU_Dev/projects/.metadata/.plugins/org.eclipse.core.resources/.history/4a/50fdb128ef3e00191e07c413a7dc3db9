@@ -91,7 +91,7 @@ void LabPwm::PwmInitSingleEdgeMode(uint32_t frequency_Hz)
     u0_dbg_printf("pr: %u\n\n", pr);
     mr0 = RESOLUTION;
     LPC_PWM1->MR0 = (uint32_t)mr0;
-    LPC_PWM1->PR  = (uint32_t)pr;
+    LPC_PWM1->PR = (uint32_t)pr;
     /*
      * Set to single edge
      */
