@@ -1,11 +1,16 @@
-19:36:33 **** Incremental Build of configuration _build for project ADC_PWM ****
+23:43:10 **** Incremental Build of configuration _build for project ADC_PWM ****
 make -j2 all 
+Building file: ../L5_Application/PWM/pwmDriver.cpp
 Building file: ../L5_Application/main.cpp
+Invoking: Cross ARM C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/PWM/pwmDriver.d" -MT"L5_Application/PWM/pwmDriver.o" -c -o "L5_Application/PWM/pwmDriver.o" "../L5_Application/PWM/pwmDriver.cpp"
 Invoking: Cross ARM C++ Compiler
 arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\ADC_PWM\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.d" -MT"L5_Application/main.o" -c -o "L5_Application/main.o" "../L5_Application/main.cpp"
 ../L5_Application/main.cpp:36:1: warning: 'typedef' was ignored in this declaration
  };
  ^
+Finished building: ../L5_Application/PWM/pwmDriver.cpp
+ 
 Finished building: ../L5_Application/main.cpp
  
 Building target: ADC_PWM.elf
@@ -13,24 +18,24 @@ Invoking: Cross ARM C++ Linker
 arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -T ../loader.ld -nostartfiles -Xlinker --gc-sections -Wl,-Map,"ADC_PWM.map" -specs=nano.specs -o "ADC_PWM.elf"  ./newlib/malloc_lock.o ./newlib/memory.o ./newlib/newlib_syscalls.o ./newlib/newlib_time.o  ./L5_Application/source/cmd_handlers/handlers.o ./L5_Application/source/cmd_handlers/prog_handlers.o ./L5_Application/source/cmd_handlers/wireless_handlers.o  ./L5_Application/source/high_level_init.o ./L5_Application/source/remote.o ./L5_Application/source/terminal.o  ./L5_Application/periodic_scheduler/period_callbacks.o ./L5_Application/periodic_scheduler/prd_monitor.o  ./L5_Application/examples/examples.o ./L5_Application/examples/rn_xv_task.o  ./L5_Application/PWM/pwmDriver.o  ./L5_Application/GPIO/GPIOInterrupt.o ./L5_Application/GPIO/GPIO_0_1_2.o  ./L5_Application/ADC/adcDriver.o  ./L5_Application/main.o  ./L4_IO/wireless/src/mesh.o ./L4_IO/wireless/src/nrf24L01Plus.o ./L4_IO/wireless/src/wireless.o  ./L4_IO/src/gpio.o ./L4_IO/src/io_source.o ./L4_IO/src/storage.o  ./L4_IO/fat/option/ccsbcs.o ./L4_IO/fat/option/reentrant.o  ./L4_IO/fat/disk/diskio.o ./L4_IO/fat/disk/sd.o ./L4_IO/fat/disk/spi_flash.o  ./L4_IO/fat/fatfs_time.o ./L4_IO/fat/ff.o  ./L3_Utils/tlm/src/c_tlm_binary.o ./L3_Utils/tlm/src/c_tlm_comp.o ./L3_Utils/tlm/src/c_tlm_stream.o ./L3_Utils/tlm/src/c_tlm_var.o  ./L3_Utils/src/c_list.o ./L3_Utils/src/command_handler.o ./L3_Utils/src/file_logger.o ./L3_Utils/src/freertos_timer.o ./L3_Utils/src/printf_lib.o ./L3_Utils/src/rtc_alarm.o ./L3_Utils/src/scheduler_task.o ./L3_Utils/src/str.o ./L3_Utils/src/utilities.o  ./L2_Drivers/src/adc.o ./L2_Drivers/src/can.o ./L2_Drivers/src/eint.o ./L2_Drivers/src/i2c2.o ./L2_Drivers/src/lpc_pwm.o ./L2_Drivers/src/lpc_rit.o ./L2_Drivers/src/lpc_timers.o ./L2_Drivers/src/nrf_stream.o ./L2_Drivers/src/rtc.o ./L2_Drivers/src/spi_dma.o ./L2_Drivers/src/spi_sem.o ./L2_Drivers/src/uart0.o ./L2_Drivers/src/uart2.o ./L2_Drivers/src/uart3.o  ./L2_Drivers/base/char_dev.o ./L2_Drivers/base/i2c_base.o ./L2_Drivers/base/uart_dev.o  ./L1_FreeRTOS/trace/run_time_counter.o ./L1_FreeRTOS/trace/trcBase.o ./L1_FreeRTOS/trace/trcHardwarePort.o ./L1_FreeRTOS/trace/trcKernel.o ./L1_FreeRTOS/trace/trcKernelPort.o ./L1_FreeRTOS/trace/trcUser.o  ./L1_FreeRTOS/src/croutine.o ./L1_FreeRTOS/src/event_groups.o ./L1_FreeRTOS/src/list.o ./L1_FreeRTOS/src/queue.o ./L1_FreeRTOS/src/tasks.o ./L1_FreeRTOS/src/timers.o  ./L1_FreeRTOS/portable/no_mpu/port.o  ./L1_FreeRTOS/portable/run_time_stats.o  ./L1_FreeRTOS/hooks/hooks.o  ./L1_FreeRTOS/MemMang/freertos_mem_man.o  ./L0_LowLevel/source/core_cm3.o ./L0_LowLevel/source/low_level_init.o ./L0_LowLevel/source/lpc_peripherals.o ./L0_LowLevel/source/lpc_sys.o ./L0_LowLevel/source/startup.o ./L0_LowLevel/source/sys_clock.o ./L0_LowLevel/source/uart0_min.o   
 Finished building target: ADC_PWM.elf
  
-make --no-print-directory post-build
+C:/CMPE146/CMPE-146/SJSU_Dev/binutils/make --no-print-directory post-build
 Create binary file
 arm-none-eabi-objcopy -O binary ADC_PWM.elf ADC_PWM.bin
  
 Invoking: Cross ARM GNU Create Flash Image
-arm-none-eabi-objcopy -O ihex "ADC_PWM.elf"  "ADC_PWM.hex"
 Invoking: Cross ARM GNU Create Listing
+arm-none-eabi-objcopy -O ihex "ADC_PWM.elf"  "ADC_PWM.hex"
 arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "ADC_PWM.elf" > "ADC_PWM.lst"
 Finished building: ADC_PWM.hex
  
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "ADC_PWM.elf"
    text	   data	    bss	    dec	    hex	filename
-  97420	    764	   1472	  99656	  18548	ADC_PWM.elf
+  97404	    764	   1480	  99648	  18540	ADC_PWM.elf
 Finished building: ADC_PWM.siz
  
 Finished building: ADC_PWM.lst
  
 
-19:36:37 Build Finished (took 3s.169ms)
+23:43:12 Build Finished (took 1s.808ms)
 

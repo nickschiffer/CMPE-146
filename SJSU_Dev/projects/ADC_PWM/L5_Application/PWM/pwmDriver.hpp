@@ -9,11 +9,9 @@
 #define PWMDRIVER_HPP_
 
 #include <sys/_stdint.h>
+#include <sys_config.h>
 #include <LPC17xx.h>
-#include "printf_lib.h"
 
-//#define PCLK_RATE    1500000
-#define PCLK_RATE    48000000
 #define RESOLUTION   1000
 #define DEFAULT_FREQ 1000
 
@@ -75,6 +73,7 @@ class LabPwm
  private:
     static uint64_t pr;
     static uint64_t mr0;
+    static uint64_t pclk_rate;
 };
 
 

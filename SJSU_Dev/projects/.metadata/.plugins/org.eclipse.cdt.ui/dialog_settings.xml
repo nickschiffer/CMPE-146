@@ -18,6 +18,11 @@
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
 	</section>
 	<section name="PDOMSearchPage">
+		<item value="true" key="caseSensitive"/>
+		<item value="227191" key="searchFlags"/>
+		<list key="previousPatterns">
+			<item value="sys_get_cpu_clock"/>
+		</list>
 	</section>
 	<section name="RenameInformationPopup">
 	</section>

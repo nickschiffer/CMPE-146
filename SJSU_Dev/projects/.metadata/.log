@@ -17990,3 +17990,723 @@ java.io.FileNotFoundException: C:\CMPE146\CMPE-146\SJSU_Dev\projects\.metadata\.
 	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2283)
 	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor$4.run(IDEWorkbenchAdvisor.java:456)
 	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:119)
+!SESSION 2019-03-04 23:04:43.508 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_141
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.cpp.product -clean -data projects
+
+!ENTRY org.eclipse.egit.ui 2 0 2019-03-04 23:05:37.183
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Nick'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:45.574
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:45.598
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getRecPtr(Database.java:489)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile$Finder.compare(PDOMFile.java:851)
+	at org.eclipse.cdt.internal.core.pdom.db.BTree.accept(BTree.java:575)
+	at org.eclipse.cdt.internal.core.pdom.db.BTree.accept(BTree.java:578)
+	at org.eclipse.cdt.internal.core.pdom.db.BTree.accept(BTree.java:586)
+	at org.eclipse.cdt.internal.core.pdom.db.BTree.accept(BTree.java:531)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.findFiles(PDOMFile.java:743)
+	at org.eclipse.cdt.internal.core.pdom.PDOM.getFiles(PDOM.java:568)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.getWritableFiles(WritableCIndex.java:45)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.getAvailableIndexFiles(AbstractIndexerTask.java:1509)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.selectIndexFile(AbstractIndexerTask.java:1472)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.collectOrderedFileKeys(AbstractIndexerTask.java:1336)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1276)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:899)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:05:45.600
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:45.608
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:45.618
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getRecPtr(Database.java:489)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile$Finder.compare(PDOMFile.java:851)
+	at org.eclipse.cdt.internal.core.pdom.db.BTree.accept(BTree.java:575)
+	at org.eclipse.cdt.internal.core.pdom.db.BTree.accept(BTree.java:578)
+	at org.eclipse.cdt.internal.core.pdom.db.BTree.accept(BTree.java:586)
+	at org.eclipse.cdt.internal.core.pdom.db.BTree.accept(BTree.java:531)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.findFiles(PDOMFile.java:743)
+	at org.eclipse.cdt.internal.core.pdom.PDOM.getFiles(PDOM.java:568)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.getWritableFiles(WritableCIndex.java:45)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.getAvailableIndexFiles(AbstractIndexerTask.java:1509)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.selectIndexFile(AbstractIndexerTask.java:1472)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.collectOrderedFileKeys(AbstractIndexerTask.java:1336)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1276)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:933)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:05:45.619
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:45.781
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.089
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.115
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.129
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.138
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.142
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.146
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.153
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.157
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.165
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.170
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.174
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.178
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.182
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.186
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.190
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.194
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.197
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.201
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.205
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.210
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.214
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.218
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.222
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.225
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.229
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.233
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.236
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.240
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.244
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.247
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.250
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.254
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.257
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.262
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.267
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.271
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.274
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.277
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.281
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.285
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.288
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.292
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.296
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.299
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.303
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.306
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.309
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.312
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.318
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.324
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.358
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.361
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.365
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.368
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.372
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.381
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.384
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.388
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.391
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.395
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:05:46.398
+!MESSAGE Error
+
+!ENTRY org.eclipse.core.resources 4 568 2019-03-04 23:10:40.633
+!MESSAGE Could not write metadata for '/RemoteSystemsTempFiles'.
+!STACK 0
+java.io.FileNotFoundException: C:\CMPE146\CMPE-146\SJSU_Dev\projects\.metadata\.plugins\org.eclipse.core.resources\.projects\RemoteSystemsTempFiles\.markers.snap (The system cannot find the path specified)
+	at java.io.FileOutputStream.open0(Native Method)
+	at java.io.FileOutputStream.open(Unknown Source)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:45)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:41)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1768)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1852)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1224)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1165)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:52)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:28:08.599
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:28:34.391
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:28:38.341
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:327)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.<init>(PDOMFile.java:131)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.addUncommittedFile(WritablePDOM.java:85)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.addUncommittedFile(WritableCIndex.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeFileInIndex(PDOMWriter.java:588)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeSymbolsInIndex(PDOMWriter.java:320)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.addSymbols(PDOMWriter.java:279)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1297)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:899)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:28:38.341
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:28:56.480
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:327)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.<init>(PDOMFile.java:131)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.addUncommittedFile(WritablePDOM.java:85)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.addUncommittedFile(WritableCIndex.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeFileInIndex(PDOMWriter.java:588)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeSymbolsInIndex(PDOMWriter.java:320)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.addSymbols(PDOMWriter.java:279)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1297)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:899)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:28:56.480
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.145
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.170
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.179
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.184
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.188
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.191
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.195
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.200
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.205
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.208
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.212
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.215
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.219
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.223
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.226
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.230
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.233
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.237
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.240
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.243
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.247
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.250
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.255
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.259
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.263
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.266
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.270
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.273
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.277
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.311
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.314
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.318
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.321
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.324
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.328
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.331
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.334
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.337
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.346
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.349
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.352
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.356
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.360
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.363
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.367
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.370
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.373
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.376
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.379
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.382
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.385
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.419
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.423
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.426
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.429
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.433
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.437
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.440
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.444
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.447
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:04.450
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:13.398
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:38.935
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:327)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.<init>(PDOMFile.java:131)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.addUncommittedFile(WritablePDOM.java:85)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.addUncommittedFile(WritableCIndex.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeFileInIndex(PDOMWriter.java:588)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeSymbolsInIndex(PDOMWriter.java:320)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.addSymbols(PDOMWriter.java:279)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1297)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:899)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:29:38.935
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:29:58.250
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:327)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.<init>(PDOMFile.java:131)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.addUncommittedFile(WritablePDOM.java:85)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.addUncommittedFile(WritableCIndex.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeFileInIndex(PDOMWriter.java:588)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeSymbolsInIndex(PDOMWriter.java:320)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.addSymbols(PDOMWriter.java:279)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1297)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:899)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:29:58.250
+!MESSAGE Error
+
+!ENTRY org.eclipse.core.resources 4 568 2019-03-04 23:33:08.634
+!MESSAGE Could not write metadata for '/RemoteSystemsTempFiles'.
+!STACK 0
+java.io.FileNotFoundException: C:\CMPE146\CMPE-146\SJSU_Dev\projects\.metadata\.plugins\org.eclipse.core.resources\.projects\RemoteSystemsTempFiles\.markers.snap (The system cannot find the path specified)
+	at java.io.FileOutputStream.open0(Native Method)
+	at java.io.FileOutputStream.open(Unknown Source)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:45)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:41)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1768)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1852)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1224)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1165)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:52)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:36:02.264
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:327)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.<init>(PDOMFile.java:131)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.addUncommittedFile(WritablePDOM.java:85)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.addUncommittedFile(WritableCIndex.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeFileInIndex(PDOMWriter.java:588)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeSymbolsInIndex(PDOMWriter.java:320)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.addSymbols(PDOMWriter.java:279)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1297)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseVersionInContext(AbstractIndexerTask.java:997)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:914)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:36:02.264
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:36:17.789
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:327)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.<init>(PDOMFile.java:131)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.addUncommittedFile(WritablePDOM.java:85)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.addUncommittedFile(WritableCIndex.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeFileInIndex(PDOMWriter.java:588)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeSymbolsInIndex(PDOMWriter.java:320)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.addSymbols(PDOMWriter.java:279)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1297)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:899)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:36:17.789
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:36:20.312
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:327)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.<init>(PDOMFile.java:131)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.addUncommittedFile(WritablePDOM.java:85)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.addUncommittedFile(WritableCIndex.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeFileInIndex(PDOMWriter.java:588)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeSymbolsInIndex(PDOMWriter.java:320)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.addSymbols(PDOMWriter.java:279)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1297)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:899)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:36:20.312
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:37:01.402
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:37:50.430
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:295)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:275)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:327)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.<init>(PDOMFile.java:131)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.addUncommittedFile(WritablePDOM.java:85)
+	at org.eclipse.cdt.internal.core.index.WritableCIndex.addUncommittedFile(WritableCIndex.java:62)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeFileInIndex(PDOMWriter.java:588)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.storeSymbolsInIndex(PDOMWriter.java:320)
+	at org.eclipse.cdt.internal.core.pdom.PDOMWriter.addSymbols(PDOMWriter.java:279)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.writeToIndex(AbstractIndexerTask.java:1297)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseFile(AbstractIndexerTask.java:1104)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.parseLinkage(AbstractIndexerTask.java:899)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:560)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:155)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2019-03-04 23:37:50.430
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2019-03-04 23:38:03.310
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 1 0 2019-03-04 23:38:21.304
+!MESSAGE Indexed 'ADC_PWM' (88 sources, 396 headers) in 3.46 sec: 28,633 declarations; 67,134 references; 0 unresolved inclusions; 3 syntax errors; 711 unresolved names (0.74%)
+
+!ENTRY org.eclipse.core.resources 4 568 2019-03-04 23:41:02.267
+!MESSAGE Could not write metadata for '/RemoteSystemsTempFiles'.
+!STACK 0
+java.io.FileNotFoundException: C:\CMPE146\CMPE-146\SJSU_Dev\projects\.metadata\.plugins\org.eclipse.core.resources\.projects\RemoteSystemsTempFiles\.markers.snap (The system cannot find the path specified)
+	at java.io.FileOutputStream.open0(Native Method)
+	at java.io.FileOutputStream.open(Unknown Source)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:45)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:41)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1768)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1852)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1224)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1165)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:52)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.ui.ide 4 4 2019-03-04 23:45:59.127
+!MESSAGE Problems saving workspace
+
+!ENTRY org.eclipse.ui.ide 4 1 2019-03-04 23:45:59.132
+!MESSAGE Problems occurred while trying to save the state of the workbench.
+!SUBENTRY 1 org.eclipse.core.resources 4 568 2019-03-04 23:45:59.132
+!MESSAGE Could not write metadata for '/RemoteSystemsTempFiles'.
+!STACK 0
+java.io.FileNotFoundException: C:\CMPE146\CMPE-146\SJSU_Dev\projects\.metadata\.plugins\org.eclipse.core.resources\.projects\RemoteSystemsTempFiles\.markers (The system cannot find the path specified)
+	at java.io.FileOutputStream.open0(Native Method)
+	at java.io.FileOutputStream.open(Unknown Source)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at org.eclipse.core.internal.localstore.SafeFileOutputStream.<init>(SafeFileOutputStream.java:51)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSave(SaveManager.java:1657)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSave(SaveManager.java:1739)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1199)
+	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2283)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor$4.run(IDEWorkbenchAdvisor.java:456)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:119)

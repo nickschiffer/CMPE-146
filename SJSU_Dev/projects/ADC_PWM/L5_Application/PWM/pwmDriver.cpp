@@ -7,12 +7,13 @@
 
 #include <PWM/pwmDriver.hpp>
 
-uint64_t LabPwm::pr = 0;
-uint64_t LabPwm::mr0 = 0;
-
+uint64_t LabPwm::pr   = 0;
+uint64_t LabPwm::mr0  = 0;
+uint64_t LabPwm::pclk_rate = 0;
 LabPwm::LabPwm(){
     pr = 0;
     mr0 = 0;
+    pclk_rate = sys_get_cpu_clock();
 }
 
 void LabPwm::PwmSelectAllPins()
@@ -78,7 +79,6 @@ void LabPwm::PwmInitSingleEdgeMode(uint32_t frequency_Hz)
      * Enable PWM peripheral power and clock
      */
     LPC_SC->PCONP    |=  (1 << pconp_pwm1);
-    //LPC_SC->PCLKSEL0 |=  (2 << (2*pclk_pwm1)); // /8
     LPC_SC->PCLKSEL0 |=  (1 << (2*pclk_pwm1));
 
     /*
@@ -87,8 +87,7 @@ void LabPwm::PwmInitSingleEdgeMode(uint32_t frequency_Hz)
      * PCLK = 48MHz/4 => 12Mhz
      * 12MHz / (PC + 1) = 1Khz => PC = 11999
      */
-    pr = (uint64_t)((((uint32_t)PCLK_RATE / frequency_Hz)/RESOLUTION) - 1);
-    u0_dbg_printf("pr: %u\n\n", pr);
+    pr = (uint64_t)((((uint32_t)pclk_rate / frequency_Hz)/RESOLUTION) - 1);
     mr0 = RESOLUTION;
     LPC_PWM1->MR0 = (uint32_t)mr0;
     LPC_PWM1->PR  = (uint32_t)pr;
@@ -151,7 +150,6 @@ void LabPwm::SetDutyCycle(PWM_Pin pwm_pin_arg, float duty_cycle_percentage)
         case k2_1:
             LPC_PWM1->MR2 = mr;
             LPC_PWM1->LER |= (1 << 2);
-            //u0_dbg_printf("mr0: %u, pr: %u, tc: %u\n\n", LPC_PWM1->MR0, LPC_PWM1->PR, LPC_PWM1->TC);
             break;
         case k2_2:
             LPC_PWM1->MR3 = mr;
@@ -178,7 +176,7 @@ void LabPwm::SetFrequency(uint32_t frequency_Hz)
 {
     if (frequency_Hz <= 0)
         return;
-    pr = (uint64_t)((((uint32_t)PCLK_RATE / frequency_Hz)/RESOLUTION) - 1);
+    pr = (uint64_t)((((uint32_t)pclk_rate / frequency_Hz)/RESOLUTION) - 1);
     mr0 = RESOLUTION;
     LPC_PWM1->PR  = (uint32_t)pr;
     LPC_PWM1->MR0 = (uint32_t)mr0;
