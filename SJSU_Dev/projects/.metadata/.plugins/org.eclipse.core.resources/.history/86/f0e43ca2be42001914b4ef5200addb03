@@ -105,6 +105,7 @@ void init_my_uart2(void)
         default:
             break;
     }
+    uint32_t pclk = sys_get_cpu_clock();// >> 2;
     uint16_t dl = (uint16_t)(pclk / ((uint16_t)BAUD_RATE << 4));
     /*
      * Set DLAB bit to 1 to access DLL and DLM registers

@@ -88,23 +88,19 @@ void init_my_uart2(void)
     /*
      * Set baud rate for 38400bps (see baud rate formula)
      */
-    uint32_t pclk;
     switch ((LPC_SC->PCLKSEL1 >> 16) & 0x3){
         case clkdiv_1:
-            pclk = sys_get_cpu_clock();
             break;
         case clkdiv_2:
-            pclk = sys_get_cpu_clock() >> 1;
             break;
         case clkdiv_4:
-            pclk = sys_get_cpu_clock() >> 2;
             break;
         case clkdiv_8:
-            pclk = sys_get_cpu_clock() >> 3;
             break;
         default:
             break;
     }
+    uint32_t pclk = sys_get_cpu_clock();// >> 2;
     uint16_t dl = (uint16_t)(pclk / ((uint16_t)BAUD_RATE << 4));
     /*
      * Set DLAB bit to 1 to access DLL and DLM registers
