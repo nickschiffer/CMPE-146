@@ -1,13 +1,13 @@
-01:59:26 **** Incremental Build of configuration _build for project UART ****
+14:48:28 **** Incremental Build of configuration _build for project UART ****
 make -j2 all 
 Building file: ../L5_Application/main.part0.cpp
 Invoking: Cross ARM C++ Compiler
 arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wshadow -Wlogical-op -Wfloat-equal -DBUILD_CFG_MPU=0 -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\newlib" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L0_LowLevel" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L1_FreeRTOS" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L1_FreeRTOS\include" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L1_FreeRTOS\portable" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L1_FreeRTOS\portable\no_mpu" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L2_Drivers" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L2_Drivers\base" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L3_Utils" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L3_Utils\tlm" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L4_IO" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L4_IO\fat" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L4_IO\wireless" -I"C:\CMPE146\CMPE-146\SJSU_Dev\projects\UART\L5_Application" -std=gnu++11 -fabi-version=0 -fno-exceptions -MMD -MP -MF"L5_Application/main.part0.d" -MT"L5_Application/main.part0.o" -c -o "L5_Application/main.part0.o" "../L5_Application/main.part0.cpp"
 ../L5_Application/main.part0.cpp: In function 'void init_my_uart2()':
-../L5_Application/main.part0.cpp:102:65: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t {aka long unsigned int}' [-Wformat=]
+../L5_Application/main.part0.cpp:103:65: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t {aka long unsigned int}' [-Wformat=]
      printf("pclk: %u\nsysclock: %u\n", pclk, sys_get_cpu_clock());
                                                                  ^
-../L5_Application/main.part0.cpp:102:65: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t {aka long unsigned int}' [-Wformat=]
+../L5_Application/main.part0.cpp:103:65: warning: format '%u' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t {aka long unsigned int}' [-Wformat=]
 Finished building: ../L5_Application/main.part0.cpp
  
 Building target: UART.elf
@@ -21,18 +21,18 @@ arm-none-eabi-objcopy -O binary UART.elf UART.bin
  
 Invoking: Cross ARM GNU Create Flash Image
 Invoking: Cross ARM GNU Create Listing
-arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "UART.elf" > "UART.lst"
 arm-none-eabi-objcopy -O ihex "UART.elf"  "UART.hex"
+arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "UART.elf" > "UART.lst"
 Finished building: UART.hex
  
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "UART.elf"
    text	   data	    bss	    dec	    hex	filename
-  90116	    788	   1176	  92080	  167b0	UART.elf
+  90292	    788	   1176	  92256	  16860	UART.elf
 Finished building: UART.siz
  
 Finished building: UART.lst
  
 
-01:59:28 Build Finished (took 1s.869ms)
+14:48:30 Build Finished (took 1s.857ms)
 

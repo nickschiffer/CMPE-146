@@ -28,10 +28,10 @@ char string[] = "This is a test or something.\n";
 uint8_t string_iterator = 0;
 QueueHandle_t tx_queue;
 
-void my_uart2_rx_intr(void)
+void my_uart2_rx_intr()
 {
   // TODO: Queue your data and clear UART Rx interrupt
-    printf("interrupted\n\n");
+   // printf("interrupted\n\n");
     char c;
     if (!(LPC_UART2->IIR & 1)
             && ((LPC_UART2->IIR >> 1) & (1 << 1))
@@ -39,10 +39,11 @@ void my_uart2_rx_intr(void)
 
         c = LPC_UART2->RBR;
         xQueueSend(tx_queue, &c, 100);
-        printf("Enqueuing %c\n", c);
+        //printf("Enqueuing %c\n", c);
     }
-    vTaskDelay(100);
+
 }
+
 
 void init_my_uart2(void)
 {
@@ -67,7 +68,7 @@ void init_my_uart2(void)
     /*
      * Enable pullup on TX pin (2.8)
      */
-    LPC_PINCON->PINSEL4 &= ~(0b11 << 16); //00
+    LPC_PINCON->PINMODE4 &= ~(0b11 << 16); //00
     /*
      * Set frame size to 8
      */
@@ -112,17 +113,21 @@ void init_my_uart2(void)
     /*
      * Enable TX
      */
-    LPC_UART2->TER |= (1 << 7);
+    //LPC_UART2->TER |= (1 << 7);
+    /*
+     * Reset TX & RX buffers
+     */
+    LPC_UART2->FCR |= ((1 << 1) | (1 << 2));
     /*
      * Enable RX Status Line Interrupts
      */
-    //LPC_UART2->IER |= (1 << 2);
+    LPC_UART2->IER |= (1 << 2);
 
 
 
 
   // Init UART Rx interrupt (TX interrupt is optional)
-  //isr_register(Uart2, my_uart2_rx_intr);
+    NVIC_EnableIRQ(UART2_IRQn);
     isr_register(UART2_IRQn, my_uart2_rx_intr); //TODO figure out interrupts
 }
 
@@ -142,14 +147,38 @@ void vUART_RX_print(void *pvParameters)
 void vUART_TX(void *pvParameters){
     while (1){
        char c;
-       //printf("getting char\n");
        c = (string[string_iterator]);
-       //printf("got char\n");
-       while (!((LPC_UART2->LSR >> 5) & 1)); //wait until THRE is empty
+       while (!((LPC_UART2->LSR >> 5) & 1))printf("waiting\n"); //wait until THRE is empty
        LPC_UART2->THR = c;
-       printf("Enqueuing %c\n", c);
-       string_iterator = (string_iterator + 1) % 30;
+       //printf("Transmitting %c\n", c);
+       string_iterator = (string_iterator + 1) % TEST_STRING_LENGTH;
        vTaskDelay(100);
+    }
+
+}
+
+void vUART_Status(void *pvParamters){
+    while (1){
+        uint16_t isr = LPC_UART2->IIR;
+        uint8_t lsr = LPC_UART2->LSR;
+        if (!(isr & 1)){
+            printf("Interrupt pending\n");
+        }
+        else printf("No Interrupt Pending\n");
+        vTaskDelay(100);
+
+        if (lsr & 1) printf("receiver data ready.\n");
+        else printf("no reciver data ready.\n");
+
+        if (lsr & (1 << 1)) printf("overrun error\n");
+
+        if (lsr & (1 << 3)) printf("framing error\n");
+
+        if (lsr & (1 << 5)) printf("txholding register empty\n");
+
+        if (lsr & (1 << 6)) printf("transmitter empty\n");
+
+        if (lsr & (1 << 7)) printf("error on rx fifo\n");
     }
 
 }
@@ -158,10 +187,12 @@ int main(void)
 {
   scheduler_add_task(new terminalTask(PRIORITY_HIGH));
   strcpy(string, "This is a test or something.\n");
+  printf("char size: %d\n\n", sizeof(char));
   tx_queue = xQueueCreate(TEST_STRING_LENGTH + 1, sizeof(char));
   init_my_uart2();
   xTaskCreate(vUART_RX_print,"UART print",1000, NULL,PRIORITY_LOW, NULL);
   xTaskCreate(vUART_TX,"UART TX",1000, NULL,PRIORITY_LOW, NULL);
+  //xTaskCreate(vUART_Status,"UART Status",1000, NULL,PRIORITY_LOW, NULL);
   scheduler_start();
   return -1;
 }
