@@ -133,3 +133,11 @@ Finished building: ADC_PWM.siz
  
 Finished building: ADC_PWM.lst
  
+19:33:55 **** Build of configuration _build for project ADC_PWM ****
+make -j2 all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "ADC_PWM.elf"
+   text	   data	    bss	    dec	    hex	filename
+  97404	    764	   1480	  99648	  18540	ADC_PWM.elf
+Finished building: ADC_PWM.siz
+ 
