@@ -10,6 +10,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string>
 #include <LPC17xx.h>
 #include "utilities.h"
 #include "io.hpp"
@@ -18,9 +20,10 @@
 
 #define TEST_STRING_LENGTH    29
 #define BAUD_RATE          38400
-uint32_t sys_clock = sys_get_cpu_clock();
+//uint32_t sys_clock = sys_get_cpu_clock();
 
-char *string = (char *)malloc((TEST_STRING_LENGTH + 1)*sizeof(char));
+char string[] = "This is a test or something.\n";
+//std::string string2 = "This is a test or something.\n";
 
 uint8_t string_iterator = 0;
 QueueHandle_t tx_queue;
@@ -28,6 +31,7 @@ QueueHandle_t tx_queue;
 void my_uart2_rx_intr(void)
 {
   // TODO: Queue your data and clear UART Rx interrupt
+    printf("interrupted\n\n");
     char c;
     if (!(LPC_UART2->IIR & 1)
             && ((LPC_UART2->IIR >> 1) & (1 << 1))
@@ -37,6 +41,7 @@ void my_uart2_rx_intr(void)
         xQueueSend(tx_queue, &c, 100);
         printf("Enqueuing %c\n", c);
     }
+    vTaskDelay(100);
 }
 
 void init_my_uart2(void)
@@ -49,7 +54,9 @@ void init_my_uart2(void)
     /*
      * Select Peripheral Clock
      */
-    LPC_SC->PCLKSEL1 &= ~(0b11 << 16); // /4
+    LPC_SC->PCLKSEL1 &= ~(1 << 17);
+    LPC_SC->PCLKSEL1 |=  (1 << 16);
+
     /*
      * Select TX2{17:16 => 10} and RX2 pins{19:18 => 10}
      */
@@ -57,6 +64,10 @@ void init_my_uart2(void)
     LPC_PINCON->PINSEL4 &= ~(1 << 16);
     LPC_PINCON->PINSEL4 |=  (1 << 19);
     LPC_PINCON->PINSEL4 &= ~(1 << 18);
+    /*
+     * Enable pullup on TX pin (2.8)
+     */
+    LPC_PINCON->PINSEL4 &= ~(0b11 << 16); //00
     /*
      * Set frame size to 8
      */
@@ -76,7 +87,7 @@ void init_my_uart2(void)
     /*
      * Set baud rate for 38400bps (see baud rate formula)
      */
-    uint32_t pclk = sys_clock >> 2;
+    uint32_t pclk = sys_get_cpu_clock();// >> 2;
     uint16_t dl = (uint16_t)(pclk / ((uint16_t)BAUD_RATE << 4));
     /*
      * Set DLAB bit to 1 to access DLL and DLM registers
@@ -85,8 +96,10 @@ void init_my_uart2(void)
     /*
      * Set DLM and DLL registers
      */
-    LPC_UART2->DLL = (uint8_t)(dl & 0xFF);
-    LPC_UART2->DLM = (uint8_t)((dl >> 8)&0xFF);
+    LPC_UART2->DLL = (dl & 0xFF);
+    LPC_UART2->DLM = ((dl >> 8) & 0xFF);
+    printf("DLL: %X\nDLM: %X\n",(dl & 0xFF), ((dl >> 8) & 0xFF) );
+    printf("pclk: %u\nsysclock: %u\n", pclk, sys_get_cpu_clock());
     /*
      * Enable RX Interrupt (need to set DLAB to 0 first)
      */
@@ -96,6 +109,14 @@ void init_my_uart2(void)
      * Start FIFO
      */
     LPC_UART2->FCR |= (1 << 0);
+    /*
+     * Enable TX
+     */
+    LPC_UART2->TER |= (1 << 7);
+    /*
+     * Enable RX Status Line Interrupts
+     */
+    //LPC_UART2->IER |= (1 << 2);
 
 
 
@@ -109,8 +130,8 @@ void vUART_RX_print(void *pvParameters)
 {
   char c;
   while (1) {
-    if (xQueueReceive(tx_queue, &c, 100)) {
-      printf("Got %c char from my UART... job is half done!\n", c);
+    if (xQueueReceive(tx_queue, &c, 1000)) {
+      printf("%c", c);
     }
     else{
         printf("RX Queue Empty.\n\n");
@@ -119,12 +140,17 @@ void vUART_RX_print(void *pvParameters)
 }
 
 void vUART_TX(void *pvParameters){
-   char c;
-   c = string[string_iterator];
-   while (!((LPC_UART2->LSR >> 5) & 1)); //wait until THRE is empty
-   LPC_UART2->THR = c;
-   printf("Enqueuing %c\n", c);
-   string_iterator = (string_iterator + 1) % 30;
+    while (1){
+       char c;
+       //printf("getting char\n");
+       c = (string[string_iterator]);
+       //printf("got char\n");
+       while (!((LPC_UART2->LSR >> 5) & 1)); //wait until THRE is empty
+       LPC_UART2->THR = c;
+       printf("Enqueuing %c\n", c);
+       string_iterator = (string_iterator + 1) % 30;
+       vTaskDelay(100);
+    }
 
 }
 

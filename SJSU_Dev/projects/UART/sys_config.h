@@ -119,7 +119,7 @@ unsigned int sys_get_cpu_clock();
 #define RTC_CLOCK               (32768UL)               ///< Do not change, this is the typical RTC crystal value
 
 //#define SYS_CFG_DESIRED_CPU_CLK	(48 * 1000 * 1000UL)    ///< Define the CPU speed you desire, must be between 1-100Mhz
-#define SYS_CFG_DESIRED_CPU_CLK (48 * 1000 * 1000UL)    ///< Define the CPU speed you desire, must be between 1-100Mhz
+#define SYS_CFG_DESIRED_CPU_CLK (96 * 1000 * 1000UL)
 #define SYS_CFG_DEFAULT_CPU_CLK (24 * 1000 * 1000UL)    ///< Do not change.  This is the fall-back CPU speed if SYS_CFG_DESIRED_CPU_CLK cannot be attained
 
 

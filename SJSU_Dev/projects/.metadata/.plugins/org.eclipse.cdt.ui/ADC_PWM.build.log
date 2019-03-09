@@ -1,4 +1,4 @@
-22:51:42 **** Incremental Build of configuration _build for project ADC_PWM ****
+01:59:25 **** Incremental Build of configuration _build for project ADC_PWM ****
 make -j2 all 
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "ADC_PWM.elf"
@@ -7,5 +7,5 @@ arm-none-eabi-size --format=berkeley "ADC_PWM.elf"
 Finished building: ADC_PWM.siz
  
 
-22:51:43 Build Finished (took 655ms)
+01:59:26 Build Finished (took 704ms)
 
