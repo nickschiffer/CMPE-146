@@ -1,0 +1,46 @@
+/*
+ *  Nickolas Schiffer
+ *  CMPE 146 S19
+ *  Lab: UART: part0
+ */
+
+/**
+ * @file
+ * @brief This is the application entry point.
+ */
+
+#include <stdio.h>
+#include <LPC17xx.h>
+#include "utilities.h"
+#include "io.hpp"
+#include <tasks.hpp>
+
+char *string = malloc(50*sizeof(char));
+
+void my_uart2_rx_intr(void)
+{
+  // TODO: Queue your data and clear UART Rx interrupt
+}
+
+void init_my_uart2(void)
+{
+  // Init PINSEL, baud rate, frame size, etc.
+
+  // Init UART Rx interrupt (TX interrupt is optional)
+  isr_register(Uart2, my_uart2_rx_intr);
+}
+
+void vUART_TEST(void *p)
+{
+  while (1) {
+    if (xQueueReceive(..., portMAX_DELAY)) {
+      printf("Got %c char from my UART... job is half done!");
+    }
+  }
+}
+
+int main(void)
+{
+  init_my_uart2();
+  xTaskCreate(vUART_TEST,"UART Test",1000, NULL,PRIORITY_LOW, NULL);
+}
