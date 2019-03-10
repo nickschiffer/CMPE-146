@@ -1,4 +1,4 @@
-22:19:50 **** Incremental Build of configuration _build for project UART ****
+22:32:25 **** Incremental Build of configuration _build for project UART ****
 make -j2 all 
 Building file: ../L5_Application/UART/UART_0_1_2_3.cpp
 Invoking: Cross ARM C++ Compiler
@@ -59,10 +59,10 @@ arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -ffunction-sect
                  switch(device){
                        ^
 ../L5_Application/UART/UART_0_1_2_3.cpp: In member function 'char LabUart::Receive()':
-../L5_Application/UART/UART_0_1_2_3.cpp:578:14: warning: converting to non-pointer type 'char' from NULL [-Wconversion-null]
+../L5_Application/UART/UART_0_1_2_3.cpp:582:14: warning: converting to non-pointer type 'char' from NULL [-Wconversion-null]
      char c = NULL;
               ^
-../L5_Application/UART/UART_0_1_2_3.cpp:579:11: warning: enumeration value 'None' not handled in switch [-Wswitch]
+../L5_Application/UART/UART_0_1_2_3.cpp:583:11: warning: enumeration value 'None' not handled in switch [-Wswitch]
      switch(this_device){
            ^
 Finished building: ../L5_Application/UART/UART_0_1_2_3.cpp
@@ -77,9 +77,9 @@ Create binary file
 arm-none-eabi-objcopy -O binary UART.elf UART.bin
  
 Invoking: Cross ARM GNU Create Flash Image
-arm-none-eabi-objcopy -O ihex "UART.elf"  "UART.hex"
 Invoking: Cross ARM GNU Create Listing
 arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "UART.elf" > "UART.lst"
+arm-none-eabi-objcopy -O ihex "UART.elf"  "UART.hex"
 Finished building: UART.hex
  
 Invoking: Cross ARM GNU Print Size
@@ -91,5 +91,5 @@ Finished building: UART.siz
 Finished building: UART.lst
  
 
-22:19:52 Build Finished (took 1s.756ms)
+22:32:27 Build Finished (took 1s.755ms)
 

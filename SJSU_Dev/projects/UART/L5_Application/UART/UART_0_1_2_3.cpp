@@ -2,7 +2,7 @@
  * UART_0_1_2_3.cpp
  *
  *  Created on: Mar 9, 2019
- *      Author: Nick
+ *      Author: nickschiffer (nick@schiffer.us)
  */
 
 #include <UART/UART_0_1_2_3.hpp>
@@ -555,15 +555,19 @@ int LabUart::Transmit(char c)
 {
     switch(this_device){
         case U0:
+            while (!((LPC_UART0->LSR >> 5) & 1));
             LPC_UART0->THR = c;
             break;
         case U1:
+            while (!((LPC_UART1->LSR >> 5) & 1));
             LPC_UART1->THR = c;
             break;
         case U2:
+            while (!((LPC_UART2->LSR >> 5) & 1));
             LPC_UART2->THR = c;
             break;
         case U3:
+            while (!((LPC_UART3->LSR >> 5) & 1));
             LPC_UART3->THR = c;
             break;
         default:
@@ -578,19 +582,19 @@ char LabUart::Receive()
     char c = NULL;
     switch(this_device){
         case U0:
-            if (LPC_UART0->LSR & 1)
+            while (!(LPC_UART0->LSR & 1));
                 c = LPC_UART0->RBR;
             break;
         case U1:
-            if (LPC_UART1->LSR & 1)
+            while (!(LPC_UART1->LSR & 1));
                 c = LPC_UART1->RBR;
             break;
         case U2:
-            if (LPC_UART2->LSR & 1)
+            while (!(LPC_UART2->LSR & 1));
                 c = LPC_UART2->RBR;
             break;
         case U3:
-            if (LPC_UART3->LSR & 1)
+            while (!(LPC_UART3->LSR & 1));
                 c = LPC_UART3->RBR;
             break;
     }

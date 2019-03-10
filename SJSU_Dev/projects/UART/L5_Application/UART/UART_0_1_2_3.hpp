@@ -2,7 +2,7 @@
  * UART_0_1_2_3.hpp
  *
  *  Created on: Mar 9, 2019
- *      Author: Nick
+ *      Author: nickschiffer (nick@schiffer.us)
  */
 
 #ifndef UART_0_1_2_3_HPP_
@@ -76,7 +76,8 @@ class LabUart : public CharDev
      * @param break_control determines whether or not break control will occur.
      * @param parity_enable determines whether parity bits will be generated.
      * @param parity_select is the Parity_Select enumeration for desired parity behavior.
-     * @return returns 1 if Initialization is successful, 0 if Initialization has failed
+     * @return returns UART_Init_Result::Success if Initialization is successful,
+     *     other UART_Init_Result status if Initialization has failed
      */
     int Initialize(UART_Device device = U2, BAUD_Rate baud_rate = b38400,
             bool rx_interrupt_enable = false, Frame_Size frame_size = f8_bit, Stop_Bit stop_bit = s1_bit,
@@ -90,6 +91,7 @@ class LabUart : public CharDev
 
     /*
      * Returns next char in RX FIFO
+     * If RX interrupt is not enabled, this will block until a character is available
      * @return oldest char in RX FIFO
      */
     char Receive();
