@@ -1,0 +1,76 @@
+/*
+ * UART_1_2_3.hpp
+ *
+ *  Created on: Mar 9, 2019
+ *      Author: Nick
+ */
+
+#ifndef UART_1_2_3_HPP_
+#define UART_1_2_3_HPP_
+
+
+class LabUart : public CharDev
+{
+ public:
+    enum UART_Device {
+        U2,
+        U3
+    };
+
+    enum BAUD_Rate {
+        b600    = 600,
+        b1200   = 1200,
+        b2400   = 2400,
+        b4800   = 4800,
+        b9600   = 9600,
+        b14400  = 14400,
+        b19200  = 19200,
+        b38400  = 38400,
+        b56000  = 56000,
+        b57600  = 57600,
+        b115200 = 115200
+    };
+
+    enum Frame_Size {
+        f5_bit,
+        f6_bit,
+        f7_bit,
+        f8_bit
+    };
+
+    enum Stop_Bit {
+        s1_bit,
+        s2_bit
+    };
+
+    enum Parity_Select {
+        pOdd,
+        pEven,
+        pForced_1,
+        pForced_2
+    };
+
+    LabUart();
+    ~LabUart();
+
+    // TODO: Fill in methods for Initialize(), Transmit(), Receive() etc.
+    /*
+     * Intitializes UARTn interface.
+     * @param
+     */
+    int Initialize(UART_Device device = U2, BAUD_Rate baud_rate = b38400,
+            bool rx_interrupt = false, Frame_Size frame_size = f8_bit,
+            bool parity_enable = false, Parity_Select parity = pOdd);
+
+    int Transmit();
+
+    char Receive();
+
+    // Optional: For the adventurous types, you may inherit from "CharDev" class
+    // to get a lot of functionality for free
+ private:
+};
+
+
+
+#endif /* UART_1_2_3_HPP_ */

@@ -1,0 +1,30 @@
+/*
+ * UART_1_2_3.cpp
+ *
+ *  Created on: Mar 9, 2019
+ *      Author: Nick
+ */
+
+#include <UART/UART_2_3.hpp>
+
+LabUart::LabUart()
+{
+}
+
+LabUart::~LabUart()
+{
+}
+
+int LabUart::Initialize(UART_Device device, BAUD_Rate baud_rate,
+        bool rx_interrupt, Frame_Size frame_size, bool break_control,
+        bool parity_enable, Parity_Select parity)
+{
+}
+
+int LabUart::Transmit(char c)
+{
+}
+
+char LabUart::Receive()
+{
+}
