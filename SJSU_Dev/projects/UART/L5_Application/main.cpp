@@ -17,9 +17,6 @@
 #include <LED_Display.hpp>
 #include <UART/UART_0_1_2_3.hpp>
 
-#define TEST_STRING_LENGTH    29
-#define BAUD_RATE          38400
-
 
 #define LOW  false
 #define HIGH true
@@ -88,7 +85,7 @@ void vControl_Unit(void *pvParameters){
             result2 = uart2.Receive();
             led.setNumber((result1 * 10) + result2);
             printf("CU Result %d\n",(result1 * 10) + result2);
-            vTaskDelay(1000);
+            vTaskDelay(500);
         }
 
     }
