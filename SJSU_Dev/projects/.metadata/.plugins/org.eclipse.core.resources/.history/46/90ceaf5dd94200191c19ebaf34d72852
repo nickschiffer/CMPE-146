@@ -1,0 +1,78 @@
+/*
+ * UART_2_3.cpp
+ *
+ *  Created on: Mar 9, 2019
+ *      Author: Nick
+ */
+
+#include <UART/UART_2_3.hpp>
+
+LabUart::LabUart()
+{
+}
+
+LabUart::~LabUart()
+{
+}
+
+int LabUart::Initialize(UART_Device device, BAUD_Rate baud_rate,
+        bool rx_interrupt, Frame_Size frame_size, bool break_control,
+        bool parity_enable, Parity_Select parity)
+{
+    switch (device){
+        case U2:
+            /*
+             * Power on UART2 Device
+             */
+            LPC_SC->PCONP |= (1 << pconp_uart2);
+            /*
+             * Select Peripheral Clock
+             */
+            LPC_SC->PCLKSEL1 &= ~(1 << 17);
+            LPC_SC->PCLKSEL1 |=  (1 << 16);
+            /*
+             * Select TX2{17:16 => 10} and RX2 pins{19:18 => 10}
+             */
+            LPC_PINCON->PINSEL4 |=  (1 << 17);
+            LPC_PINCON->PINSEL4 &= ~(1 << 16);
+            LPC_PINCON->PINSEL4 |=  (1 << 19);
+            LPC_PINCON->PINSEL4 &= ~(1 << 18);
+            /*
+             * Enable pullup on TX pin (2.8)
+             */
+            LPC_PINCON->PINMODE4 &= ~(0b11 << 16); //00
+            switch (frame_size){
+                case f5_bit:
+                    /*
+                     * Set frame size to 5 (00)
+                     */
+                    LPC_UART2->LCR &= ~(0b11 << 0);
+                    break;
+                case f6_bit:
+                    /*
+                     * Set frame size to 6 (01)
+                     */
+                    LPC_UART2->LCR &= ~(1 << 0);
+                    break;
+                case f7_bit:
+                    break;
+                case f8_bit:
+                    break;
+                default:
+                    return 1;
+            }
+            break;
+        case U3:
+            break;
+        default:
+            return 1;
+    }
+}
+
+int LabUart::Transmit(char c)
+{
+}
+
+char LabUart::Receive()
+{
+}

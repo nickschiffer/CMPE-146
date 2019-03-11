@@ -1,0 +1,32 @@
+/*
+ * UART_1_2_3.hpp
+ *
+ *  Created on: Mar 9, 2019
+ *      Author: Nick
+ */
+
+#ifndef UART_1_2_3_HPP_
+#define UART_1_2_3_HPP_
+
+
+class LabUart : public CharDev
+{
+ public:
+    LabUart();
+    ~LabUart();
+
+    // TODO: Fill in methods for Initialize(), Transmit(), Receive() etc.
+    int Initialize();
+
+    int Transmit();
+
+    char Receive();
+
+    // Optional: For the adventurous types, you may inherit from "CharDev" class
+    // to get a lot of functionality for free
+ private:
+};
+
+
+
+#endif /* UART_1_2_3_HPP_ */

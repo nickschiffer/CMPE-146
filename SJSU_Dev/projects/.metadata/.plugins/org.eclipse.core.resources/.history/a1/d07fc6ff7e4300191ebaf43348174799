@@ -1,0 +1,282 @@
+/*
+ *  Nickolas Schiffer
+ *  CMPE 146 S19
+ *  Lab: UART: part0
+ */
+
+/**
+ * @file
+ * @brief This is the application entry point.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <LPC17xx.h>
+#include "utilities.h"
+#include "io.hpp"
+#include <tasks.hpp>
+#include <string.h>
+
+#define TEST_STRING_LENGTH    29
+#define BAUD_RATE          38400
+//uint32_t sys_clock = sys_get_cpu_clock();
+
+char string[] = "This is a test or something.\n";
+//std::string string2 = "This is a test or something.\n";
+
+uint8_t string_iterator = 0;
+QueueHandle_t tx_queue;
+SemaphoreHandle_t rx_sem = NULL;
+
+void my_uart2_rx_intr()
+{
+    //xSemaphoreGiveFromISR(rx_sem, NULL);
+  // TODO: Queue your data and clear UART Rx interrupt
+   // printf("interrupted\n\n");
+    char c;
+    //printf("int: %X\n",(LPC_UART2->IIR & 0xF) );
+//    if (LPC_UART2->IIR & 1);
+//    if (((LPC_UART2->IIR >> 1) & 0x7) == 0x2){
+//        c = LPC_UART2->RBR;
+//        xQueueSend(tx_queue, &c, 100);
+//    }
+//    if (!(LPC_UART2->IIR & 1)
+//            && ((LPC_UART2->IIR >> 1) & (1 << 1))
+//            && !((LPC_UART2->IIR >> 1) & 1)){ //rx interrupt pending if bit 0 = 0 and [3:1] = 20
+//        c = LPC_UART2->RBR;
+//        xQueueSend(tx_queue, &c, 100);
+//    }
+    while (LPC_UART2->LSR & 1){
+        c = LPC_UART2->RBR;
+        xQueueSend(tx_queue, &c, 1);
+    }
+
+}
+
+
+void init_my_uart2(void)
+{
+  // Init PINSEL, baud rate, frame size, etc.
+    /*
+     * Power on UART2 Device
+     */
+    LPC_SC->PCONP |= (1 << pconp_uart2);
+    /*
+     * Select Peripheral Clock
+     */
+    LPC_SC->PCLKSEL1 &= ~(1 << 17);
+    LPC_SC->PCLKSEL1 |=  (1 << 16);
+
+    /*
+     * Select TX2{17:16 => 10} and RX2 pins{19:18 => 10}
+     */
+    LPC_PINCON->PINSEL4 |=  (1 << 17);
+    LPC_PINCON->PINSEL4 &= ~(1 << 16);
+    LPC_PINCON->PINSEL4 |=  (1 << 19);
+    LPC_PINCON->PINSEL4 &= ~(1 << 18);
+    /*
+     * Enable pullup on TX pin (2.8)
+     */
+    LPC_PINCON->PINMODE4 &= ~(0b11 << 16); //00
+    /*
+     * Set frame size to 8
+     */
+    LPC_UART2->LCR |= (0b11 << 0);
+    /*
+     * 1 Stop bit
+     */
+    LPC_UART2->LCR &= ~(1 << 2);
+    /*
+     * Disable Parity Bit
+     */
+    LPC_UART2->LCR &= ~(1 << 3);
+    /*
+     * Disable Break Control
+     */
+    LPC_UART2->LCR &= ~(1 << 6);
+    /*
+     * Set baud rate for 38400bps (see baud rate formula)
+     */
+    uint32_t pclk;
+    switch ((LPC_SC->PCLKSEL1 >> 16) & 0x3){
+        case clkdiv_1:
+            pclk = sys_get_cpu_clock();
+            break;
+        case clkdiv_2:
+            pclk = sys_get_cpu_clock() >> 1;
+            break;
+        case clkdiv_4:
+            pclk = sys_get_cpu_clock() >> 2;
+            break;
+        case clkdiv_8:
+            pclk = sys_get_cpu_clock() >> 3;
+            break;
+        default:
+            break;
+    }
+    uint16_t dl = (uint16_t)(pclk / ((uint16_t)BAUD_RATE << 4));
+    /*
+     * Set DLAB bit to 1 to access DLL and DLM registers
+     */
+    LPC_UART2->LCR |= (1 << 7);
+    /*
+     * Set DLM and DLL registers
+     */
+    LPC_UART2->DLL = (dl & 0xFF);
+    LPC_UART2->DLM = ((dl >> 8) & 0xFF);
+    printf("DLL: %X\nDLM: %X\n",(dl & 0xFF), ((dl >> 8) & 0xFF) );
+    printf("pclk: %u\nsysclock: %u\n", pclk, sys_get_cpu_clock());
+    /*
+     * Enable RX Interrupt (need to set DLAB to 0 first)
+     */
+    LPC_UART2->LCR &= ~(1 << 7);
+    LPC_UART2->IER |=  (1 << 0);
+    /*
+     * Start FIFO
+     */
+    LPC_UART2->FCR |= (1 << 0);
+    /*
+     * Enable TX
+     */
+    //LPC_UART2->TER |= (1 << 7);
+    /*
+     * Reset TX & RX buffers
+     */
+    LPC_UART2->FCR |= ((1 << 1) | (1 << 2));
+    /*
+     * Enable RX Status Line Interrupts
+     */
+    LPC_UART2->IER |= (1 << 2);
+
+
+
+
+  // Init UART Rx interrupt (TX interrupt is optional)
+    NVIC_EnableIRQ(UART2_IRQn);
+    isr_register(UART2_IRQn, my_uart2_rx_intr); //TODO figure out interrupts
+}
+
+void vUART_RX_Queue(void *pvParameters){
+    char c;
+    if (xSemaphoreTakeFromISR(rx_sem, NULL)){
+        while (LPC_UART2->LSR & 1){
+            c = LPC_UART2->RBR;
+            xQueueSend(tx_queue, &c, 100);
+        }
+    }
+}
+
+void vUART_RX_print(void *pvParameters)
+{
+  char c;
+  while (1) {
+    if (xQueueReceive(tx_queue, &c, 1000)) {
+      printf("%c", c);
+    }
+    else{
+        printf("RX Queue Empty.\n\n");
+    }
+  }
+}
+
+void vUART_TX(void *pvParameters){
+    while (1){
+       char c;
+       c = (string[string_iterator]);
+       while (!((LPC_UART2->LSR >> 5) & 1))printf("waiting\n"); //wait until THRE is empty
+       LPC_UART2->THR = c;
+       //printf("Transmitting %c\n", c);
+       string_iterator = (string_iterator + 1) % TEST_STRING_LENGTH;
+       vTaskDelay(100);
+    }
+
+}
+
+void vUART_Status(void *pvParamters){
+    while (1){
+        uint16_t isr = LPC_UART2->IIR;
+        uint8_t lsr = LPC_UART2->LSR;
+        if (!(isr & 1)){
+            printf("Interrupt pending\n");
+        }
+        else printf("No Interrupt Pending\n");
+        vTaskDelay(100);
+
+        if (lsr & 1) printf("receiver data ready.\n");
+        else printf("no reciver data ready.\n");
+
+        if (lsr & (1 << 1)) printf("overrun error\n");
+
+        if (lsr & (1 << 3)) printf("framing error\n");
+
+        if (lsr & (1 << 5)) printf("txholding register empty\n");
+
+        if (lsr & (1 << 6)) printf("transmitter empty\n");
+
+        if (lsr & (1 << 7)) printf("error on rx fifo\n");
+    }
+
+}
+
+void vPrintMacroTest(void *pvParameters){
+    while(1){
+
+
+//        printf("LPC_SC->PCLKSEL1 >> 8 & 0xF: 00\n", (LPC_SC->PCLKSEL1 >> 8) & 0xF);
+//        LPC_SC->PCLKSEL1 &= ~(1 << 17);
+//        LPC_SC->PCLKSEL1 |=  (1 << 16);
+//        printf("LPC_SC->PCLKSEL1 >> 8 & 0xF: 01\n", (LPC_SC->PCLKSEL1 >> 8) & 0xF);
+//        LPC_SC->PCLKSEL1 &=  ~(0b11 << 16);
+
+//        auto *pclksel = &LPC_SC->PCLKSEL1;
+//        printf("LPC_SC->PCLKSEL1 >> 8 & 0xF: 00\n", (*pclksel >> 8) & 0xF);
+//        *pclksel &= ~(1 << 17);
+//        *pclksel |=  (1 << 16);
+//        printf("LPC_SC->PCLKSEL1 >> 8 & 0xF: 01\n", (*pclksel >> 8) & 0xF);
+//        *pclksel &=  ~(0b11 << 16);
+
+        union data {
+                LPC_UART_TypeDef *u;
+                LPC_UART0_TypeDef *u0;
+                LPC_UART1_TypeDef *u1;
+        };
+
+        data uart0;
+        uart0.u0 = LPC_UART0;
+        uart0.u0->LSR;
+
+
+        //WANT
+        auto *test = LPC_SC;
+        printf("LPC_SC->PCLKSEL1 >> 8 & 0xF: 00\n", (test->PCLKSEL1 >> 8) & 0xF);
+        test->PCLKSEL1 &= ~(1 << 17);
+        test->PCLKSEL1 |=  (1 << 16);
+        printf("LPC_SC->PCLKSEL1 >> 8 & 0xF: 01\n", (test->PCLKSEL1 >> 8) & 0xF);
+        test->PCLKSEL1 &=  ~(0b11 << 16);
+
+//        printf("LPC_PINCON->PINSEL0: %u\n\n", LPC_PINCON->PINSEL0);
+//        auto *addr = &LPC_PINCON;
+//        printf("&LPC_PINCON->PINSEL0: %u\n\n", &LPC_PINCON->PINSEL0);
+//        printf("addr: %u\n\n", addr);
+//        printf("*addr: %u\n\n", (**addr)->PINSEL0);
+        vTaskDelay(1000);
+    }
+}
+
+int main(void)
+{
+  scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+  strcpy(string, "This is a test or something.\n");
+  printf("char size: %d\n\n", sizeof(char));
+  tx_queue = xQueueCreate(TEST_STRING_LENGTH + 1, sizeof(char));
+  rx_sem = xSemaphoreCreateBinary();
+  init_my_uart2();
+  //xTaskCreate(vUART_RX_print,"UART print",1000, NULL,PRIORITY_LOW, NULL);
+  //xTaskCreate(vUART_TX,"UART TX",1000, NULL,PRIORITY_LOW, NULL);
+  //xTaskCreate(vUART_Status,"UART Status",1000, NULL,PRIORITY_LOW, NULL);
+  //xTaskCreate(vUART_RX_Queue,"UART RX",1000, NULL,PRIORITY_LOW, NULL);
+  xTaskCreate(vPrintMacroTest,"Macro",1000, NULL,PRIORITY_LOW, NULL);
+  scheduler_start();
+  return -1;
+}

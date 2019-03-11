@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;UART/L5_Application/main.cpp&apos; to &apos;main.part0.cpp&apos;" description="Rename resource &apos;main.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="L5_Application/main.cpp" name="main.part0.cpp" stamp="1552103471693" updateReferences="true"/>
+</session>

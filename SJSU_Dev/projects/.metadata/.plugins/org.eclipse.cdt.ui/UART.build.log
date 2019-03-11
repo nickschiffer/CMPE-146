@@ -1,0 +1,11 @@
+17:36:52 **** Incremental Build of configuration _build for project UART ****
+make -j2 all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "UART.elf"
+   text	   data	    bss	    dec	    hex	filename
+  93020	    756	   1200	  94976	  17300	UART.elf
+Finished building: UART.siz
+ 
+
+17:36:53 Build Finished (took 588ms)
+

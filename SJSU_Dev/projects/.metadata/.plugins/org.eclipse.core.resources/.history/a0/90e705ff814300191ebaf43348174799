@@ -1,0 +1,55 @@
+/*
+ *  Nickolas Schiffer
+ *  CMPE 146 S19
+ *  Lab: UART: part0
+ */
+
+/**
+ * @file
+ * @brief This is the application entry point.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <LPC17xx.h>
+#include "utilities.h"
+#include "io.hpp"
+#include <tasks.hpp>
+#include <string.h>
+#include <switches.hpp>
+
+#define TEST_STRING_LENGTH    29
+#define BAUD_RATE          38400
+//uint32_t sys_clock = sys_get_cpu_clock();
+
+char string[] = "This is a test or something.\n";
+//std::string string2 = "This is a test or something.\n";
+
+uint8_t string_iterator = 0;
+QueueHandle_t tx_queue;
+SemaphoreHandle_t rx_sem = NULL;
+
+void vALU(void *pvParameters){
+    while(1){
+
+    }
+}
+
+void vControl_Unit(void *pvParameters){
+    while(1){
+
+    }
+}
+
+void vSwitchTest(void *pvParamters){
+    auto sw = Switches::getInstance();
+    sw.init();
+    while (1){
+
+    }
+}
+
+int main(){
+    return -1;
+}

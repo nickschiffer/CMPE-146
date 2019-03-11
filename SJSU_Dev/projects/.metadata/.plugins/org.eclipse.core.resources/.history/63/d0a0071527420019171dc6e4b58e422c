@@ -1,0 +1,83 @@
+/*
+ *  Nickolas Schiffer
+ *  CMPE 146 S19
+ *  Lab: UART: part0
+ */
+
+/**
+ * @file
+ * @brief This is the application entry point.
+ */
+
+#include <stdio.h>
+#include <LPC17xx.h>
+#include "utilities.h"
+#include "io.hpp"
+#include <tasks.hpp>
+#include <string.h>
+
+#define TEST_STRING_LENGTH 29
+
+char *string = (char *)malloc((TEST_STRING_LENGTH + 1)*sizeof(char));
+
+uint8_t string_iterator = 0;
+QueueHandle_t tx_queue;
+
+void my_uart2_rx_intr(void)
+{
+  // TODO: Queue your data and clear UART Rx interrupt
+    while (1){
+        char c = string[string_iterator];
+        printf("Enqueuing %c\n", c);
+        xQueueSend(tx_queue, &c, 100);
+        string_iterator = (string_iterator + 1) % 30;
+
+    }
+}
+
+void init_my_uart2(void)
+{
+  // Init PINSEL, baud rate, frame size, etc.
+    /*
+     * Power on UART2 Device
+     */
+    LPC_SC->PCONP |= (1 << pconp_uart2);
+    /*
+     * Select Peripheral Clock
+     */
+    LPC_SC->PCLKSEL1 |= (0b11 << 16); // /4
+    /*
+     * Select TX2{17:16 => 10} and RX2 pins{19:18 => 10}
+     */
+    LPC_PINCON->PINSEL4 |=  (1 << 17);
+    LPC_PINCON->PINSEL4 |=  (1 << 19);
+    LPC_PINCON->PINSEL4 &= ~(1 << 16);
+    LPC_PINCON->PINSEL4 &= ~(1 << 18);
+
+  // Init UART Rx interrupt (TX interrupt is optional)
+  //isr_register(Uart2, my_uart2_rx_intr);
+    isr_register(UART2_IRQn, my_uart2_rx_intr);
+}
+
+void vUART_TX(void *p)
+{
+  char c;
+  while (1) {
+    if (xQueueReceive(tx_queue, &c, 100)) {
+      printf("Got %c char from my UART... job is half done!\n", c);
+    }
+    else{
+        printf("Queue Empty.\n\n");
+    }
+  }
+}
+
+int main(void)
+{
+  strcpy(string, "This is a test or something.\n");
+  tx_queue = xQueueCreate(TEST_STRING_LENGTH + 1, sizeof(char));
+  init_my_uart2();
+  xTaskCreate(vUART_TX,"UART Test",1000, NULL,PRIORITY_LOW, NULL);
+  scheduler_start();
+  return -1;
+}
