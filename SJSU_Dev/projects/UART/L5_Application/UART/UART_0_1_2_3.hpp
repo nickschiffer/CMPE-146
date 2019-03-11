@@ -11,12 +11,15 @@
 #include <LPC17xx.h>
 #include <char_dev.hpp>
 
+#define QUEUE_SIZE 100
+#define ENQUEUE_TIMEOUT 1
+#define DEQUEUE_TIMEOUT portMAX_DELAY
 
-class LabUart : public CharDev
+
+class LabUart// : public CharDev
 {
  public:
     enum UART_Device {
-        None,
         U0,
         U1,
         U2,
@@ -80,7 +83,7 @@ class LabUart : public CharDev
      *     other UART_Init_Result status if Initialization has failed
      */
     int Initialize(UART_Device device = U2, BAUD_Rate baud_rate = b38400,
-            bool rx_interrupt_enable = false, Frame_Size frame_size = f8_bit, Stop_Bit stop_bit = s1_bit,
+            bool rx_interrupt_enable = true, Frame_Size frame_size = f8_bit, Stop_Bit stop_bit = s1_bit,
             bool break_control = false, bool parity_enable = false, Parity_Mode parity_mode = pNone);
     /*
      * Transmits character on initialized device
@@ -97,9 +100,26 @@ class LabUart : public CharDev
     char Receive();
 
 
+
+
+
+
  private:
-    UART_Device this_device = None;
+    UART_Device this_device = U2;
     bool initialized = false;
+    bool intr_enabled = false;
+
+    static void uart0_rx_intr();
+    static void uart1_rx_intr();
+    static void uart2_rx_intr();
+    static void uart3_rx_intr();
+
+    static QueueHandle_t u0_rx_queue;
+    static QueueHandle_t u1_rx_queue;
+    static QueueHandle_t u2_rx_queue;
+    static QueueHandle_t u3_rx_queue;
+
+
 };
 
 

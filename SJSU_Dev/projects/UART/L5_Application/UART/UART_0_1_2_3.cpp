@@ -7,7 +7,10 @@
 
 #include <UART/UART_0_1_2_3.hpp>
 
-
+QueueHandle_t LabUart::u0_rx_queue;
+QueueHandle_t LabUart::u1_rx_queue;
+QueueHandle_t LabUart::u2_rx_queue;
+QueueHandle_t LabUart::u3_rx_queue;
 
 LabUart::~LabUart()
 {
@@ -18,14 +21,7 @@ int LabUart::Initialize(UART_Device device, BAUD_Rate baud_rate,
         bool rx_interrupt_enable, Frame_Size frame_size, Stop_Bit stop_bit, bool break_control,
         bool parity_enable, Parity_Mode parity_mode)
 {
-//    unsigned long int* uart_selection[4];
-////    auto *uart_selection[4] = {nullptr};
-//    uart_selection[0] = &LPC_UART0;
-//    uart_selection[1] = &LPC_UART1;
-//    uart_selection[2] = &LPC_UART2;
-//    uart_selection[3] = &LPC_UART3;
-//
-//    uint8_t register_selector = 0;
+
     switch (device){
         case U0:
         case U1:
@@ -483,19 +479,52 @@ int LabUart::Initialize(UART_Device device, BAUD_Rate baud_rate,
                     switch (device){
                         case U0:
                             LPC_UART0->LCR &= ~(1 << 7);
-                            rx_interrupt_enable ? (LPC_UART0->IER |=  (1 << 0)) : (LPC_UART0->IER &= ~(1 << 0));
+                            if (rx_interrupt_enable){
+                                LPC_UART0->IER |=  (1 << 0);
+                                NVIC_EnableIRQ(UART0_IRQn);
+                                isr_register(UART0_IRQn, uart0_rx_intr);
+                                u0_rx_queue = xQueueCreate(QUEUE_SIZE, sizeof(char));
+                                intr_enabled = true;
+
+                            }
+                            else
+                                LPC_UART0->IER &= ~(1 << 0);
                             break;
                         case U1:
                             LPC_UART1->LCR &= ~(1 << 7);
-                            rx_interrupt_enable ? (LPC_UART1->IER |=  (1 << 0)) : (LPC_UART1->IER &= ~(1 << 0));
+                            if (rx_interrupt_enable){
+                                LPC_UART1->IER |=  (1 << 0);
+                                NVIC_EnableIRQ(UART1_IRQn);
+                                isr_register(UART1_IRQn, uart1_rx_intr);
+                                u1_rx_queue = xQueueCreate(QUEUE_SIZE, sizeof(char));
+                                intr_enabled = true;
+                            }
+                            else
+                                LPC_UART1->IER &= ~(1 << 0);
                             break;
                         case U2:
                             LPC_UART2->LCR &= ~(1 << 7);
-                            rx_interrupt_enable ? (LPC_UART2->IER |=  (1 << 0)) : (LPC_UART2->IER &= ~(1 << 0));
+                            if (rx_interrupt_enable){
+                                LPC_UART2->IER |=  (1 << 0);
+                                NVIC_EnableIRQ(UART2_IRQn);
+                                isr_register(UART2_IRQn, uart2_rx_intr);
+                                u2_rx_queue = xQueueCreate(QUEUE_SIZE, sizeof(char));
+                                intr_enabled = true;
+                            }
+                            else
+                                LPC_UART2->IER &= ~(1 << 0);
                             break;
                         case U3:
                             LPC_UART3->LCR &= ~(1 << 7);
-                            rx_interrupt_enable ? (LPC_UART3->IER |=  (1 << 0)) : (LPC_UART3->IER &= ~(1 << 0));
+                            if (rx_interrupt_enable){
+                                LPC_UART3->IER |=  (1 << 0);
+                                NVIC_EnableIRQ(UART3_IRQn);
+                                isr_register(UART3_IRQn, uart3_rx_intr);
+                                u3_rx_queue = xQueueCreate(QUEUE_SIZE, sizeof(char));
+                                intr_enabled = true;
+                            }
+                            else
+                                LPC_UART3->IER &= ~(1 << 0);
                             break;
                         default:
                             return Unspecified_Error;
@@ -580,23 +609,66 @@ int LabUart::Transmit(char c)
 char LabUart::Receive()
 {
     char c = NULL;
-    switch(this_device){
-        case U0:
-            while (!(LPC_UART0->LSR & 1));
-                c = LPC_UART0->RBR;
-            break;
-        case U1:
-            while (!(LPC_UART1->LSR & 1));
-                c = LPC_UART1->RBR;
-            break;
-        case U2:
-            while (!(LPC_UART2->LSR & 1));
-                c = LPC_UART2->RBR;
-            break;
-        case U3:
-            while (!(LPC_UART3->LSR & 1));
-                c = LPC_UART3->RBR;
-            break;
-    }
+    if (intr_enabled){
+        switch(this_device){
+            case U0:
+                xQueueReceive(u0_rx_queue, &c, DEQUEUE_TIMEOUT);
+                break;
+            case U1:
+                xQueueReceive(u1_rx_queue, &c, DEQUEUE_TIMEOUT);
+                break;
+            case U2:
+                xQueueReceive(u2_rx_queue, &c, DEQUEUE_TIMEOUT);
+                break;
+            case U3:
+                xQueueReceive(u3_rx_queue, &c, DEQUEUE_TIMEOUT);
+                break;
+        }
     return c;
+    }
+    else{
+        switch(this_device){
+            case U0:
+                while (!(LPC_UART0->LSR & 1));
+                    c = LPC_UART0->RBR;
+                break;
+            case U1:
+                while (!(LPC_UART1->LSR & 1));
+                    c = LPC_UART1->RBR;
+                break;
+            case U2:
+                while (!(LPC_UART2->LSR & 1));
+                    c = LPC_UART2->RBR;
+                break;
+            case U3:
+                while (!(LPC_UART3->LSR & 1));
+                    c = LPC_UART3->RBR;
+                break;
+        }
+    return c;
+    }
+}
+
+void LabUart::uart0_rx_intr()
+{
+    char c = LPC_UART0->RBR;
+    xQueueSend(u0_rx_queue, &c, ENQUEUE_TIMEOUT);
+}
+
+void LabUart::uart1_rx_intr()
+{
+    char c = LPC_UART1->RBR;
+    xQueueSend(u1_rx_queue, &c, ENQUEUE_TIMEOUT);
+}
+
+void LabUart::uart2_rx_intr()
+{
+    char c = LPC_UART2->RBR;
+    xQueueSend(u2_rx_queue, &c, ENQUEUE_TIMEOUT);
+}
+
+void LabUart::uart3_rx_intr()
+{
+    char c = LPC_UART3->RBR;
+    xQueueSend(u3_rx_queue, &c, ENQUEUE_TIMEOUT);
 }
