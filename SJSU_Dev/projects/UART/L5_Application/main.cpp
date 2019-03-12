@@ -81,8 +81,9 @@ void vControl_Unit(void *pvParameters){
             uart2.Transmit((char)dig2);
             uart2.Transmit((char)op);
 
-            result1 = uart2.Receive();
-            result2 = uart2.Receive();
+            result1 = (uint8_t)uart2.Receive();
+            result2 = (uint8_t)uart2.Receive();
+            printf("received: %d, %d\n", result1, result2);
             led.setNumber((result1 * 10) + result2);
             printf("CU Result %d\n",(result1 * 10) + result2);
             vTaskDelay(500);
