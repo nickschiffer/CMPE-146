@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="UART2" key="selection"/>
+		<item value="taskEntry" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="taskentry"/>
 			<item value="UART2"/>
 			<item value="get"/>
 			<item value="SC-"/>
@@ -15,7 +16,6 @@
 			<item value="ADC"/>
 			<item value="AD0CR"/>
 			<item value="PCONP"/>
-			<item value="PCLKSEL1"/>
 		</list>
 		<list key="replacehistory">
 			<item value="LabGPIO_0_1_2"/>
