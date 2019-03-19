@@ -1,0 +1,134 @@
+/*
+ * Nickolas Schiffer CMPE 146
+ * Producer Consumer Tasks
+ */
+
+#include <command_handler.hpp>
+#include <FreeRTOSConfig.h>
+#include <queue.h>
+#include <scheduler_task.hpp>
+#include <stdio.h>
+#include <str.hpp>
+#include <task.h>
+#include <tasks.hpp>
+#include <acceleration_sensor.hpp>
+
+
+
+QueueHandle_t q = NULL;
+
+TaskHandle_t vProducerHandle;
+
+Acceleration_Sensor orientation_sens = Acceleration_Sensor::getInstance();
+
+typedef enum { invalid, up, down, left, right } orientation_t;
+
+
+CMD_HANDLER_FUNC(orientationToggleHandler){
+
+    if (cmdParams == "on") {
+        vTaskResume(vProducerHandle);
+        printf("Orientation monitor toggled on\n");
+    }
+    else if (cmdParams == "off") {
+        vTaskSuspend(vProducerHandle);
+        printf("Orientation monitor toggled off\n");
+    }
+    else
+        return false;
+
+    /* return false will display command's help to the user */
+    return true; /* return true if command was successful */
+}
+
+void vProducer(void *pvParameters) /* LOW priority */
+{
+  orientation_t orientation = invalid;
+  int16_t x, y, z;
+  vTaskSuspend(vProducerHandle);
+  while (1) {
+    x = orientation_sens.getX();
+    y = orientation_sens.getY();
+
+
+    if (abs(x) > abs(y)){      //left/right
+        if (x > 0)
+            orientation = left;
+        else if (x < 0)
+            orientation = right;
+        else
+            orientation = invalid;
+    }
+    else if (abs(x) < abs(y)){ //up/down
+        if (y > 0)
+            orientation = up;
+        else if (y < 0)
+            orientation = down;
+        else
+            orientation = invalid;
+    }
+    else
+        orientation = invalid;
+
+    printf("x: %d, y: %d, z: %d\n", x, y, z);
+    switch (orientation){
+        case 0:
+            printf("producer: sending orientation 'invalid'\n");
+            break;
+        case 1:
+            printf("producer: sending orientation 'up'\n");
+            break;
+        case 2:
+            printf("producer: sending orientation 'down'\n");
+            break;
+        case 3:
+            printf("producer: sending orientation 'left'\n");
+            break;
+        case 4:
+            printf("producer: sending orientation 'right'\n");
+            break;
+    }
+    xQueueSend(q, &orientation, 0);
+    switch (orientation){
+            case 0:
+                printf("producer: sending orientation 'invalid'\n");
+                break;
+            case 1:
+                printf("producer: sending orientation 'up'\n");
+                break;
+            case 2:
+                printf("producer: sending orientation 'down'\n");
+                break;
+            case 3:
+                printf("producer: sending orientation 'left'\n");
+                break;
+            case 4:
+                printf("producer: sending orientation 'right'\n");
+                break;
+    }
+    vTaskDelay(100);
+  }
+}
+
+void vConsumer(void *pvParameters) /* HIGH priority */
+{
+  orientation_t orientation;
+  while (1) {
+    xQueueReceive(q, &x, portMAX_DELAY);
+    printf("consumer: received orientation: %d\n", x);
+  }
+}
+
+int main(void)
+{
+
+
+  // Queue handle is not valid until you create it
+  scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+  q = xQueueCreate(10, sizeof(int));
+  xTaskCreate(vConsumer, "Consumer", 1024, NULL, PRIORITY_HIGH, NULL);
+  xTaskCreate(vProducer, "Producer", 1024, NULL, PRIORITY_LOW, &vProducerHandle);
+  scheduler_start();
+  return -1;
+
+}

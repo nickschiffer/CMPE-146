@@ -1,0 +1,84 @@
+/*
+ * Nickolas Schiffer CMPE 146
+ * Producer Consumer Tasks
+ */
+
+#include <command_handler.hpp>
+#include <FreeRTOSConfig.h>
+#include <queue.h>
+#include <scheduler_task.hpp>
+#include <stdio.h>
+#include <str.hpp>
+#include <task.h>
+#include <tasks.hpp>
+
+
+
+QueueHandle_t q = NULL;
+
+TaskHandle_t vProducerHandle;
+
+typedef enum { invalid, up, down, left, right } orientation_t;
+
+
+CMD_HANDLER_FUNC(orientationToggleHandler){
+    /* cmdParams is a str passed to you after user's command.
+     * If command was "newcmd test 123" then cmdParams will be "test 123".
+     *
+     * output is a CharDev class where the command came from, so
+     * we can use this to output a reply message.
+     * See "handlers.cpp" for more examples
+     */
+    if (cmdParams == "on") {
+        vTaskResume(vProducerHandle);
+        printf("Orientation monitor toggled on\n");
+    }
+    else {
+        vTaskSuspend(vProducerHandle);
+        printf("Orientation monitor toggled off\n");
+    }
+
+    /* return false will display command's help to the user */
+    return true; /* return true if command was successful */
+}
+
+void vProducer(void *pvParameters) /* LOW priority */
+{
+  int x = 0;
+  vTaskSuspend(vProducerHandle);
+  while (1) {
+    // This xQueueSend() will internally switch context over to the "consumer" task
+    // because it is higher priority than this "producer" task
+    // Then, when the consumer task sleeps, we will resume out of xQueueSend()
+    // and go over to the next line
+
+    printf("producer: sending orientation: %d\n", x);
+    xQueueSend(q, &x, 0);
+    printf("producer: sent orientation: %d\n\n", x);
+    vTaskDelay(1000);
+    ++x;
+  }
+}
+
+void vConsumer(void *pvParameters) /* HIGH priority */
+{
+  int x;
+  while (1) {
+    xQueueReceive(q, &x, portMAX_DELAY);
+    printf("consumer: received orientation: %d\n", x);
+  }
+}
+
+int main(void)
+{
+
+
+  // Queue handle is not valid until you create it
+  scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+  q = xQueueCreate(10, sizeof(int));
+  xTaskCreate(vConsumer, "Consumer", 1024, NULL, PRIORITY_HIGH, NULL);
+  xTaskCreate(vProducer, "Producer", 1024, NULL, PRIORITY_LOW, &vProducerHandle);
+  scheduler_start();
+  return -1;
+
+}
