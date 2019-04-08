@@ -1,0 +1,119 @@
+/*
+ *     SocialLedge.com - Copyright (C) 2013
+ *
+ *     This file is part of free software framework for embedded processors.
+ *     You can use it and/or distribute it as long as this copyright header
+ *     remains unmodified.  The code is free for personal use and requires
+ *     permission to use in a commercial product.
+ *
+ *      THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
+ *      OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+ *      MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+ *      I SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
+ *      CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+ *
+ *     You can reach the author of this software at :
+ *          p r e e t . w i k i @ g m a i l . c o m
+ */
+
+/**
+ * @file
+ * @brief This is the application entry point.
+ */
+
+#include <stdio.h>
+#include "utilities.h"
+#include "io.hpp"
+#include <i2c2.hpp>
+#include <tasks.hpp>
+#include <GPIO/GPIOInterrupt.hpp>
+#include <LED_Display.hpp>
+#include <printf_lib.h>
+#include <uart0_min.h>
+
+volatile uint8_t buffer[256] = { 0 };
+
+typedef enum {
+    addition,
+    subtraction,
+    multiplication
+} operation;
+
+uint8_t operand_1 = 0, operand_2 = 0;
+
+uint8_t result = 0;
+
+
+
+
+void vReadBuffer(void *pvParameters){
+    while(1){
+        for (uint8_t i = 0; i < 10; i++){
+            printf("Buffer %u: %X\n", i, buffer[i]);
+        }
+        puts("\n");
+        vTaskDelay(1000);
+    }
+}
+
+
+void vCalculate(void *pvParameters){
+
+    LD.clear();
+    uart0_puts("cleared lcd");
+    while (1){
+        //...do stuff
+        operand_1 = buffer[1];
+        operand_2 = buffer[2];
+
+        uart0_puts("retrieved operands");
+        switch (buffer[3]){
+            case addition:
+                uart0_puts("trying addition");
+                result = operand_1 + operand_2;
+                uart0_puts("addition succeeded");
+                break;
+            case subtraction:
+                if (operand_1 >= operand_2){
+                    result = operand_1 - operand_2;
+                }
+                else result = 0;
+                break;
+            case multiplication:
+                if ((operand_1 <= 9) && (operand_2 <= 9)){
+                    result = operand_1 * operand_2;
+                }
+                else result = 0;
+                break;
+            default:
+                result = 0;
+                break;
+        }
+        LD.set(result);
+        printf("Result: %u\n", result);
+
+        vTaskDelay(1000);
+    }
+}
+
+
+
+int main(void)
+{
+
+
+    I2C2& i2c = I2C2::getInstance();
+    const uint8_t slaveAddr = 0xC0;
+
+    i2c.initSlave(slaveAddr, &buffer[0], (size_t)sizeof(buffer));
+
+
+    //xTaskCreate(vReadBuffer, "ReadBuf", 1024, NULL, PRIORITY_LOW, NULL);
+    xTaskCreate(vCalculate, "Calc", 1024, NULL, PRIORITY_LOW, NULL);
+
+    scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+
+    scheduler_start();
+
+    return -1;
+}
