@@ -1,4 +1,4 @@
-16:33:20 **** Incremental Build of configuration _build for project LED_Switch ****
+18:11:05 **** Incremental Build of configuration _build for project LED_Switch ****
 make -j2 all 
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "LED_Switch.elf"
@@ -7,5 +7,5 @@ arm-none-eabi-size --format=berkeley "LED_Switch.elf"
 Finished building: LED_Switch.siz
  
 
-16:33:20 Build Finished (took 639ms)
+18:11:07 Build Finished (took 1s.16ms)
 

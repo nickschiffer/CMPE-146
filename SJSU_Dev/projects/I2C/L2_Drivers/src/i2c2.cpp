@@ -75,6 +75,8 @@ bool I2C2::init(unsigned int speedInKhz)
     }
 }
 
+
+
 I2C2::I2C2() : I2C_Base((LPC_I2C_TypeDef*) LPC_I2C2_BASE)
 {
 

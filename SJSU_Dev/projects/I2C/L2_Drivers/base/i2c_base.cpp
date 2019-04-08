@@ -21,6 +21,9 @@
 #include "i2c_base.hpp"
 #include "lpc_sys.h"
 
+#include <printf_lib.h>
+#include <uart0_min.h>
+
 
 
 /**
@@ -189,6 +192,41 @@ bool I2C_Base::init(uint32_t pclk, uint32_t busRateInKhz)
     return true;
 }
 
+bool I2C_Base::initSlave(const uint8_t slaveAddr, volatile uint8_t *bufferAddr, size_t bufferSize)
+{
+    /*
+     * Slave Sender/Receiver Mode (19.6.3/4 in manual)
+     */
+    LPC_I2C2->I2CONSET = 0x44;
+
+    /*
+     * Make sure requested address is not reserved.
+     */
+    switch ((int)slaveAddr){
+        case 0x38:
+            return false;
+        case 0x90:
+            return false;
+        case 0x40:
+            return false;
+        default:
+            break;
+    }
+    /*
+     * Set Slave Address from parameter (19.8.7 in manual)
+     */
+    LPC_I2C2->I2ADR2 = slaveAddr;
+
+    /*
+     * Save buffer location
+     */
+    mTransaction.pMasterData = (uint8_t*) bufferAddr;
+    mTransaction.trxSize = (uint32_t) bufferSize;
+
+    return true;
+
+
+}
 
 
 /// Private ///
@@ -239,6 +277,17 @@ I2C_Base::mStateMachineStatus_t I2C_Base::i2cStateMachine()
         readModeNackedBySlave = 0x48,
         dataAvailableAckSent  = 0x50,
         dataAvailableNackSent = 0x58,
+
+        // Slave Receiver States
+        slaveAddressReceived    = 0x60,
+        slaveDataReceived       = 0x80,
+        slaveStoporRptStartRecv = 0xA0,
+
+        // Slave Transmitter States
+        slaveDataSend           = 0xA8,
+        dataAckedByMaster       = 0xB8,
+        masterNackRecv          = 0xC0
+
     };
 
     mStateMachineStatus_t state = busy;
@@ -350,6 +399,80 @@ I2C_Base::mStateMachineStatus_t I2C_Base::i2cStateMachine()
             state = I2C_READ_MODE(mTransaction.slaveAddr) ? readComplete : writeComplete;
             mTransaction.error = mpI2CRegs->I2STAT;
             break;
+
+
+        /*
+         * I2C Slave RX States
+         */
+
+        case slaveAddressReceived: {
+            uart0_puts("Entered state 0x60");
+            mpI2CRegs->I2CONSET = 0x04;
+            clearSIFlag();
+            break;
+        }
+
+        case slaveDataReceived: {
+            uart0_puts("Entered state 0x80");
+            if (isFirst80) { //Register number is received
+                isFirst80 = false;
+                mTransaction.firstReg = mpI2CRegs->I2DAT;
+            }
+            else {
+//                if ((mTransaction.firstReg - *mTransaction.pMasterData) + write_counter + 1 <= mTransaction.trxSize){
+//                    *(mTransaction.pMasterData + mTransaction.firstReg + write_counter++) = mpI2CRegs->I2DAT;
+//                }
+//                else {
+//                    uart0_puts("buffsploit prevented");
+//                }
+                *(mTransaction.pMasterData + mTransaction.firstReg + write_counter++) = mpI2CRegs->I2DAT;
+            }
+            clearSIFlag();
+            break;
+        }
+
+        case slaveStoporRptStartRecv: {
+            uart0_puts("Entered state 0xA0");
+            isFirst80 = true;
+            write_counter = 0;
+            mpI2CRegs->I2CONSET = 0x04;
+            clearSIFlag();
+            break;
+        }
+
+        /*
+         * I2C Slave TX States
+         */
+        case slaveDataSend: {
+            uart0_puts("Entered State 0xA8");
+            if (read_counter + 1 <= mTransaction.trxSize){
+                mpI2CRegs->I2DAT = *(mTransaction.pMasterData + mTransaction.firstReg + read_counter++);
+            }
+            else {
+                uart0_puts("Read too far");
+            }
+            mpI2CRegs->I2CONSET = 0x04;
+            clearSIFlag();
+            break;
+        }
+
+        case dataAckedByMaster: {
+            uart0_puts("Entered State 0xB8");
+            if (read_counter + 1 <= mTransaction.trxSize){
+                mpI2CRegs->I2DAT = *(mTransaction.pMasterData + mTransaction.firstReg + read_counter++);
+            }
+            mpI2CRegs->I2CONSET = 0x04;
+            clearSIFlag();
+            break;
+        }
+
+        case masterNackRecv: {
+            uart0_puts("Entered State 0xC0");
+            read_counter = 0;
+            mpI2CRegs->I2CONSET = 0x04;
+            clearSIFlag();
+            break;
+        }
 
         case slaveAddressNacked:    // no break
         case dataNackedBySlave:     // no break

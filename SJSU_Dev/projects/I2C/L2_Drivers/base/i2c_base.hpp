@@ -35,6 +35,7 @@
 #include "task.h"       // xTaskGetSchedulerState()
 #include "semphr.h"     // Semaphores used in I2C
 #include "LPC17xx.h"
+//#include <i2c2.hpp>
 
 
 
@@ -108,6 +109,9 @@ class I2C_Base
          */
         bool checkDeviceResponse(uint8_t deviceAddress);
 
+        /// Initializes I2C2 Slave at the give @param speedInKHz
+        bool initSlave(const uint8_t slaveAddr, volatile uint8_t *bufferAddr, size_t bufferSize);
+
 
 
     protected:
@@ -124,6 +128,9 @@ class I2C_Base
          */
         bool init(uint32_t pclk, uint32_t busRateInKhz);
 
+
+
+
         /**
          * Disables I2C operation
          * This can be used to disable all I2C operations in case of severe I2C Bus Failure
@@ -138,6 +145,10 @@ class I2C_Base
         bool mDisableOperation;        ///< Tracks if I2C is disabled by disableOperation()
         SemaphoreHandle_t mI2CMutex;   ///< I2C Mutex used when FreeRTOS is running
         SemaphoreHandle_t mTransferCompleteSignal; ///< Signal that indicates read is complete
+        bool isFirst80 = true;
+        uint8_t write_counter = 0;
+        uint8_t read_counter = 0;
+
 
         /**
          * The status of I2C is returned from the I2C function that handles state machine
