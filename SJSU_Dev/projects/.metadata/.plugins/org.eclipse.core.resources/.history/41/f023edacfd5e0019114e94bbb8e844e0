@@ -1,0 +1,484 @@
+/*
+ *     SocialLedge.com - Copyright (C) 2013
+ *
+ *     This file is part of free software framework for embedded processors.
+ *     You can use it and/or distribute it as long as this copyright header
+ *     remains unmodified.  The code is free for personal use and requires
+ *     permission to use in a commercial product.
+ *
+ *      THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
+ *      OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+ *      MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+ *      I SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
+ *      CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+ *
+ *     You can reach the author of this software at :
+ *          p r e e t . w i k i @ g m a i l . c o m
+ */
+
+/**
+ * @file
+ * @brief This is the application entry point.
+ */
+
+#include <stdio.h>
+#include "io.hpp"
+#include <tasks.hpp>
+#include <storage.hpp>
+#include <string>
+#include <event_groups.h>
+#include <ff.h>
+#include <cstring>
+#include <task.h>
+#include <str.hpp>
+
+
+#define PRODUCER_BIT (1 << 1)
+#define CONSUMER_BIT (1 << 2)
+
+
+typedef struct {
+    uint16_t avg;
+    uint64_t time;
+} light_entry_t;
+
+typedef struct {
+    QueueHandle_t *queue;
+    EventGroupHandle_t *event_group;
+
+} task_params_t;
+
+
+QueueHandle_t sensor_queue     = xQueueCreate(100, sizeof(light_entry_t));
+EventGroupHandle_t event_group = xEventGroupCreate();
+
+TaskHandle_t producer_handle = NULL, consumer_handle = NULL, watchdog_handle = NULL, cpu_info_handle = NULL;
+
+
+CMD_HANDLER_FUNC(taskHandler){
+//    uint8_t numtasks = 0;
+//    bool sus_or_res = false;
+//    TaskHandle_t task_to_be_changed = NULL;
+//    auto c = cmdParams.getToken(" ", false);
+//    printf("Initial token: %s\n", c->c_str());
+//    if (c != NULL) {
+//        if (c->compareToIgnoreCase("suspend")) {
+//            sus_or_res = true;
+//            puts("compared to suspend == true");
+//            while (1) {
+//                auto t = cmdParams.getToken(" ", false);
+//                printf("t: %s\n", t->c_str());
+//                if (t != NULL) {
+//                    printf("searching for %s\n", t->c_str());
+//                    task_to_be_changed = xTaskGetHandle(t->c_str());
+//                    if (task_to_be_changed != NULL) {
+//                        puts("suspending a task");
+//                        vTaskSuspend(task_to_be_changed);
+//                            numtasks++;
+//                    }
+//                    else {
+//                        printf("Task \"%s\" not found\n", t->c_str());
+//                        break;
+//                    }
+//                }
+//                else {
+//                    puts("t was null");
+//                    break;
+//                }
+//            }
+//        }
+//        else if (c->compareToIgnoreCase("resume")) {
+//            while (1) {
+//                auto t = cmdParams.getToken(" ");
+//                if (t != NULL) {
+//                    task_to_be_changed = xTaskGetHandle(t->c_str());
+//                    if (task_to_be_changed != NULL) {
+//                        puts("resuming a task");
+//                        vTaskResume(task_to_be_changed);
+//                            numtasks++;
+//                    }
+//                    else {
+//                        printf("Task \"%s\" not found\n", t->c_str());
+//                    }
+//                }
+//                else {
+//                    break;
+//                }
+//            }
+//
+//        }
+//        else {
+//            puts("No command given.");
+//            return 0;
+//        }
+//
+//    }
+//    else{
+//        puts("something happened");
+//    }
+//    printf("%d tasks %s\n", numtasks, sus_or_res ? "suspended" : "resumed");
+//    cmdParams.clear();
+    auto params = (char *)cmdParams.c_str();
+    printf("command: %s\n", params);
+    char *pch = NULL;
+    uint8_t numtasks = 0;
+
+    pch = strtok(params, " ");
+
+    if (strcasecmp(pch, "suspend") == 0){
+        pch = strtok(NULL, " ");
+        while(pch != NULL){
+            if (strcasecmp(pch, "consumer") == 0){
+                vTaskSuspend(consumer_handle);
+                puts("Suspended Consumer");
+                numtasks++;
+            }
+            else if (strcasecmp(pch, "producer") == 0){
+                vTaskSuspend(producer_handle);
+                puts("Suspended Producer");
+                numtasks++;
+            }
+            else if (strcasecmp(pch, "watchdog") == 0){
+                vTaskSuspend(watchdog_handle);
+                puts("Suspended Watchdog");
+                numtasks++;
+            }
+            else {
+                printf("\"%s\" is not a valid task.\n", pch);
+            }
+            pch = strtok(NULL, " ");
+        }
+        if (numtasks){
+            printf("%d tasks suspended.\n", numtasks);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else if (strcasecmp(pch, "resume") == 0) {
+        puts("resuming");
+        pch = strtok(NULL, " ");
+        while (pch != NULL) {
+            if (strcasecmp(pch, "consumer") == 0) {
+                vTaskResume(consumer_handle);
+                puts("Resumed Consumer");
+                numtasks++;
+            }
+            else if (strcasecmp(pch, "producer") == 0) {
+                vTaskResume(producer_handle);
+                puts("Resumed Producer");
+                numtasks++;
+            }
+            else if (strcasecmp(pch, "watchdog") == 0) {
+                vTaskResume(watchdog_handle);
+                puts("Resumed Watchdog");
+                numtasks++;
+            }
+            else {
+                printf("\"%s\" is not a valid task.\n", pch);
+            }
+            pch = strtok(NULL, " ");
+        }
+        if (numtasks) {
+            printf("%d tasks resumed.\n", numtasks);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+//    while (pch != NULL)
+//      {
+//        printf ("%s\n",pch);
+//        pch = strtok (NULL, " ");
+//      }
+
+//    auto c = cmdParams.getToken(" ", false);
+//    if (c->compareToIgnoreCase("suspend")){
+//        c = cmdParams.getToken(" ", false);
+//        if (c->compareToIgnoreCase("producer")){
+//            vTaskSuspend(producer_handle);
+//            puts("Suspended Producer");
+//            return true;
+//        }
+//        else if (c->compareToIgnoreCase("consumer")){
+//            vTaskSuspend(consumer_handle);
+//            puts("Suspended Consumer");
+//            return true;
+//        }
+//        if (c->compareToIgnoreCase("watchdog")){
+//            vTaskSuspend(watchdog_handle);
+//            puts("Suspended Watchdog");
+//            return true;
+//        }
+//    }
+//    else if (c->compareToIgnoreCase("resume")){
+//        c = cmdParams.getToken(" ", false);
+//        if (c->compareToIgnoreCase("producer")){
+//            vTaskResume(producer_handle);
+//            puts("Resumed Producer");
+//            return true;
+//        }
+//        else if (c->compareToIgnoreCase("consumer")){
+//            vTaskResume(consumer_handle);
+//            puts("Resumed Consumer");
+//            return true;
+//        }
+//        if (c->compareToIgnoreCase("watchdog")){
+//            vTaskResume(watchdog_handle);
+//            puts("Resumed Watchdog");
+//            return true;
+//        }
+//    }
+//    else {
+//        puts("Invalid Command");
+//        return false;
+//    }
+
+    return true;
+}
+
+void vTaskGetHandle(void *pvParamters){
+    std::string handle_name = "producer";
+    TaskHandle_t handle1 = NULL, handle2 = NULL, handle3 = NULL, handle4 = NULL;
+    while (1){
+        handle1 = xTaskGetHandle("producer");
+        handle2 = xTaskGetHandle("consumer");
+        handle3 = xTaskGetHandle("get_handle");
+        handle4 = xTaskGetIdleTaskHandle();
+        printf("%X\n%X\n%X\n%X\n\n", handle1, handle2, handle3, handle4);
+        vTaskDelay(1000);
+    }
+}
+
+void vTokenizer(void *pvParameters){
+
+    while(1){
+        str string = "Hello my name is Simon";
+        str *token = nullptr;
+
+        while (1){
+            auto t = string.getToken(" ", false);
+            if (t != NULL){
+                puts(t->c_str());
+            }
+            else {
+                break;
+            }
+
+        }
+        vTaskDelay(100);
+    }
+}
+
+void vCPUUsageTask(void *pvParameters){
+    std::string file = "";
+    char buffer[BUFSIZ + 1];
+
+
+    while(1){
+        //vTaskDelayMs(60000);
+        const int delayInMs = 60000;
+        // Enum to char : eRunning, eReady, eBlocked, eSuspended, eDeleted
+            const char * const taskStatusTbl[] = { "RUN", "RDY", "BLK", "SUS", "DEL" };
+
+            // Limit the tasks to avoid heap allocation.
+            const unsigned portBASE_TYPE maxTasks = 16;
+            TaskStatus_t status[maxTasks];
+            uint32_t totalRunTime = 0;
+            uint32_t tasksRunTime = 0;
+            const unsigned portBASE_TYPE uxArraySize =
+                    uxTaskGetSystemState(&status[0], maxTasks, &totalRunTime);
+
+            //output.printf("%10s Sta Pr Stack CPU%%          Time\n", "Name");
+            snprintf(buffer, BUFSIZ, "%10s Sta Pr Stack CPU%%          Time\n", "Name");
+            file += buffer;
+            for(unsigned priorityNum = 0; priorityNum < configMAX_PRIORITIES; priorityNum++)
+            {
+                /* Print in sorted priority order */
+                for (unsigned i = 0; i < uxArraySize; i++) {
+                    TaskStatus_t *e = &status[i];
+                    if (e->uxBasePriority == priorityNum) {
+                        tasksRunTime += e->ulRunTimeCounter;
+
+                        const uint32_t cpuPercent = (0 == totalRunTime) ? 0 : e->ulRunTimeCounter / (totalRunTime/100);
+                        const uint32_t timeUs = e->ulRunTimeCounter;
+                        const uint32_t stackInBytes = (4 * e->usStackHighWaterMark);
+
+//                        output.printf("%10s %s %2u %5u %4u %10u us\n",
+//                                      e->pcTaskName, taskStatusTbl[e->eCurrentState], e->uxBasePriority,
+//                                      stackInBytes, cpuPercent, timeUs);
+                        snprintf(buffer, BUFSIZ, "%10s %s %2u %5u %4u %10u us\n",
+                                e->pcTaskName, taskStatusTbl[e->eCurrentState], e->uxBasePriority,
+                                stackInBytes, cpuPercent, timeUs);
+                        file += buffer;
+                    }
+                }
+            }
+
+            /* Overhead is the time not accounted towards any of the tasks.
+             * For example, when an ISR happens, that is not part of a task's CPU usage.
+             */
+            const uint32_t overheadUs = (totalRunTime - tasksRunTime);
+            const uint32_t overheadPercent = overheadUs / (totalRunTime / 100);
+//            output.printf("%10s --- -- ----- %4u %10u uS\n",
+//                          "(overhead)", overheadPercent, overheadUs);
+            snprintf(buffer, BUFSIZ, "%10s --- -- ----- %4u %10u luS\n",
+                    "(overhead)", overheadPercent, overheadUs);
+            file += buffer;
+            if (uxTaskGetNumberOfTasks() > maxTasks) {
+                //output.printf("** WARNING: Only reported first %u tasks\n", maxTasks);
+                snprintf(buffer, BUFSIZ, "** WARNING: Only reported first %lu tasks\n", maxTasks);
+                file += buffer;
+            }
+            Storage::append("1:cpu.txt", file.c_str(), file.size());
+            file.clear();
+            memset(buffer,0,sizeof(buffer));
+
+
+
+
+    }
+}
+
+void vProducerTask(void *pvParameters){
+
+//    task_params_t *params = (task_params_t *)(pvParameters);
+//    printf("sensor queue: %X, Event Group: %X\n", &(params->queue), &(params->event_group));
+//    QueueHandle_t *sensor_queue = (params->queue);
+//    EventGroupHandle_t *event_group = (params->event_group);
+//    printf("sensor queue: %X, Event Group: %X\n", *sensor_queue, *event_group);
+//    QueueHandle_t sensor_queue = params->queue;
+//    EventGroupHandle_t event_group = params->event_group;
+    //QueueHandle_t sensor_queue = (QueueHandle_t) pvParameters;
+    Light_Sensor light_sensor = Light_Sensor::getInstance();
+    light_sensor.init();
+    uint8_t counter = 0;
+    uint32_t sum = 0;
+    light_entry_t entry = {0, 0};
+    uint64_t start_time = xTaskGetMsCount();
+
+    while(1){
+
+        if (counter == 99){
+            entry.avg = (uint16_t)sum/100;
+            entry.time = (uint64_t)xTaskGetMsCount() - start_time;
+            //printf("%lu, %lu\n", entry.time, entry.avg);
+            puts("producer checking in");
+            xQueueSend(sensor_queue, &entry, portMAX_DELAY);
+            sum = counter = 0;
+        }
+        else{
+            sum += light_sensor.getRawValue();
+            counter++;
+            vTaskDelay(1);
+        }
+        xEventGroupSetBits(event_group, PRODUCER_BIT);
+
+
+
+    }
+
+}
+
+void vConsumerTask(void *pvParameters){
+    //QueueHandle_t sensor_queue = (QueueHandle_t) pvParameters;
+    light_entry_t entry = {0,0};
+    uint8_t counter = 0;
+    std::string buffer = "";
+
+    char string[BUFSIZ + 1] = {0};
+
+    while(1){
+        xQueueReceive(sensor_queue, &entry, portMAX_DELAY);
+        snprintf(&string[0], BUFSIZ, "%lu, %u\n", (unsigned long)entry.time, entry.avg);
+        //printf("%lu, %u\n", (unsigned long)entry.time, entry.avg);
+        buffer += string;
+        counter++;
+        if (counter == 10){
+            counter = 0;
+            Storage::append("1:test.txt", buffer.c_str(), buffer.size());
+            buffer.clear();
+        }
+        xEventGroupSetBits(event_group, CONSUMER_BIT);
+
+
+    }
+}
+
+void vWatchDogTask(void *pvParameters){
+    std::string buffer = "";
+    char string[BUFSIZ + 1] = {0};
+    while(1){
+        xEventGroupClearBits(event_group, (PRODUCER_BIT | CONSUMER_BIT));
+        EventBits_t bits = xEventGroupWaitBits(
+                event_group,
+                (PRODUCER_BIT | CONSUMER_BIT),
+                pdTRUE,
+                pdTRUE,
+                1000 );
+        printf("bits: %X\n", bits);
+        if (!(bits & (PRODUCER_BIT))){
+            if ((!(bits & (CONSUMER_BIT)))){
+                //both bits unset
+                snprintf(&string[0], BUFSIZ, "time: %lu: Both Tasks are Stuck.\n", xTaskGetMsCount());
+                buffer += string;
+                Storage::append("1:stuck.txt", buffer.c_str(), buffer.size());
+                memset(string,0,sizeof(string));
+                buffer.clear();
+                puts("Producer and Consumer Stuck");
+            }
+            else {
+                //just producer unset
+                snprintf(&string[0], BUFSIZ, "time: %lu: Producer Task is Stuck.\n", xTaskGetMsCount());
+                buffer += string;
+                Storage::append("1:stuck.txt", buffer.c_str(), buffer.size());
+                memset(string,0,sizeof(string));
+                buffer.clear();
+                puts("Producer Stuck");
+            }
+        }
+        else if (!(bits & (CONSUMER_BIT))){
+            //just consumer unset
+            snprintf(&string[0], BUFSIZ, "time: %lu: Consumer Task is Stuck.\n", xTaskGetMsCount());
+            buffer += string;
+            Storage::append("1:stuck.txt", buffer.c_str(), buffer.size());
+            memset(string,0,sizeof(string));
+            buffer.clear();
+            puts("Consumer Stuck");
+        }
+
+
+    }
+}
+
+int main(void)
+{
+
+
+//    task_params_t task_params = {&sensor_queue, &event_group};
+//    task_params_t *params_ptr = &task_params;
+
+
+    scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+
+    f_unlink("1:test.txt");
+    f_unlink("1:stuck.txt");
+
+
+
+
+    xTaskCreate(vProducerTask, "producer", 1024, NULL, PRIORITY_MEDIUM, &producer_handle);
+    xTaskCreate(vConsumerTask, "consumer", 1024, NULL, PRIORITY_MEDIUM, &consumer_handle);
+    xTaskCreate(vWatchDogTask, "watchdog", 1024, NULL, PRIORITY_HIGH, &watchdog_handle);
+    xTaskCreate(vCPUUsageTask, "CPU Usage", 1024, NULL, PRIORITY_MEDIUM, )
+//      xTaskCreate(vTokenizer, "Tokenizer", 1024, NULL, PRIORITY_LOW, NULL);
+    //xTaskCreate(vTaskGetHandle, "get_handle", 1024, NULL, PRIORITY_LOW, NULL);
+
+
+
+    scheduler_start();
+    return -1;
+}

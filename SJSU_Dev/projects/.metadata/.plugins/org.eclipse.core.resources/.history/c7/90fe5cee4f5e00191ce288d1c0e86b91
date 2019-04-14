@@ -1,0 +1,110 @@
+/*
+ *     SocialLedge.com - Copyright (C) 2013
+ *
+ *     This file is part of free software framework for embedded processors.
+ *     You can use it and/or distribute it as long as this copyright header
+ *     remains unmodified.  The code is free for personal use and requires
+ *     permission to use in a commercial product.
+ *
+ *      THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
+ *      OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+ *      MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+ *      I SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
+ *      CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+ *
+ *     You can reach the author of this software at :
+ *          p r e e t . w i k i @ g m a i l . c o m
+ */
+
+/**
+ * @file
+ * @brief This is the application entry point.
+ */
+
+#include <stdio.h>
+#include "io.hpp"
+#include <tasks.hpp>
+#include <storage.hpp>
+#include <string>
+
+
+#define PRODUCER_BIT (1 << 0)
+#define CONSUMER_BIT (1 << 1)
+
+
+typedef struct {
+    uint16_t avg;
+    uint64_t time;
+} light_entry_t;
+
+
+
+void vProducerTask(void *pvParameters){
+
+    QueueHandle_t sensor_queue = (QueueHandle_t) pvParameters;
+    Light_Sensor light_sensor = Light_Sensor::getInstance();
+    light_sensor.init();
+    uint8_t counter = 0;
+    uint32_t sum = 0;
+    light_entry_t entry = {0, 0};
+    uint64_t start_time = xTaskGetTickCount();
+    while(1){
+        if (counter == 99){
+            entry.avg = (uint16_t)sum/100;
+            entry.time = (uint64_t)xTaskGetTickCount() - start_time;
+            //printf("%lu, %lu\n", entry.time, entry.avg);
+            xQueueSend(sensor_queue, &entry, portMAX_DELAY);
+            sum = counter = 0;
+        }
+        else{
+            sum += light_sensor.getRawValue();
+            counter++;
+            vTaskDelay(1);
+        }
+
+    }
+
+}
+
+void vConsumerTask(void *pvParameters){
+    QueueHandle_t sensor_queue = (QueueHandle_t) pvParameters;
+    light_entry_t entry = {0,0};
+    uint8_t counter = 0;
+    std::string buffer = "";
+
+    char string[BUFSIZ + 1] = {0};
+
+    while(1){
+        xQueueReceive(sensor_queue, &entry, portMAX_DELAY);
+        snprintf(&string[0], BUFSIZ, "%020llu, %u\n", entry.time, entry.avg);
+        printf("%020llu, %u\n", entry.time, entry.avg);
+        buffer += string;
+        counter++;
+        if (counter == 10){
+            counter = 0;
+            Storage::append("1:test.txt", buffer.c_str(), buffer.size());
+            buffer.clear();
+        }
+
+
+    }
+}
+
+void vWatchDogTask(void *pvParameters){
+    while(1){
+        vTaskDelay(100);
+    }
+}
+
+int main(void)
+{
+    QueueHandle_t sensor_queue =  xQueueCreate(1, sizeof(light_entry_t));
+    scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+
+
+    xTaskCreate(vProducerTask, "Producer", 1024, (void *)sensor_queue, PRIORITY_MEDIUM, NULL);
+    xTaskCreate(vConsumerTask, "Consumer", 1024, (void *)sensor_queue, PRIORITY_MEDIUM, NULL);
+    xTaskCreate(vWatchDogTask, "Watchdog", 1024, NULL, PRIORITY_HIGH, NULL);
+    scheduler_start();
+    return -1;
+}

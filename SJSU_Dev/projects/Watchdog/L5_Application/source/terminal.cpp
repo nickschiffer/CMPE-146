@@ -37,6 +37,7 @@
 #include "c_tlm_comp.h"
 #include "c_tlm_stream.h"
 #include "c_tlm_binary.h"
+#include <task.h>
 
 
 
@@ -68,7 +69,11 @@ bool terminalTask::regTlm(void)
 bool terminalTask::taskEntry()
 {
     /* remoteTask() creates shared object in its init(), so we can get it now */
-    CommandProcessor &cp = mCmdProc;
+        CommandProcessor &cp = mCmdProc;
+
+    /* Task Command for suspending/resuming tasks (Watchdogs Lab) */
+    CMD_HANDLER_FUNC(taskHandler);
+    cp.addHandler(taskHandler, "task", "Suspend or Resume a Task by name. \"task suspend task1\" should suspend a task named \"task1\" ");
 
     // System information handlers
     cp.addHandler(taskListHandler, "info",    "Task/CPU Info.  Use 'info 200' to get CPU during 200ms");
