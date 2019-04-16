@@ -39,190 +39,78 @@ EventGroupHandle_t event_group = xEventGroupCreate();
 
 TaskHandle_t producer_handle = NULL, consumer_handle = NULL, watchdog_handle = NULL, cpu_info_handle = NULL;
 
-CMD_HANDLER_FUNC(taskHandler)
-{
-//    uint8_t numtasks = 0;
-//    bool sus_or_res = false;
-//    TaskHandle_t task_to_be_changed = NULL;
-//    auto c = cmdParams.getToken(" ", false);
-//    printf("Initial token: %s\n", c->c_str());
-//    if (c != NULL) {
-//        if (c->compareToIgnoreCase("suspend")) {
-//            sus_or_res = true;
-//            puts("compared to suspend == true");
-//            while (1) {
-//                auto t = cmdParams.getToken(" ", false);
-//                printf("t: %s\n", t->c_str());
-//                if (t != NULL) {
-//                    printf("searching for %s\n", t->c_str());
-//                    task_to_be_changed = xTaskGetHandle(t->c_str());
-//                    if (task_to_be_changed != NULL) {
-//                        puts("suspending a task");
-//                        vTaskSuspend(task_to_be_changed);
-//                            numtasks++;
-//                    }
-//                    else {
-//                        printf("Task \"%s\" not found\n", t->c_str());
-//                        break;
-//                    }
-//                }
-//                else {
-//                    puts("t was null");
-//                    break;
-//                }
-//            }
-//        }
-//        else if (c->compareToIgnoreCase("resume")) {
-//            while (1) {
-//                auto t = cmdParams.getToken(" ");
-//                if (t != NULL) {
-//                    task_to_be_changed = xTaskGetHandle(t->c_str());
-//                    if (task_to_be_changed != NULL) {
-//                        puts("resuming a task");
-//                        vTaskResume(task_to_be_changed);
-//                            numtasks++;
-//                    }
-//                    else {
-//                        printf("Task \"%s\" not found\n", t->c_str());
-//                    }
-//                }
-//                else {
-//                    break;
-//                }
-//            }
-//
-//        }
-//        else {
-//            puts("No command given.");
-//            return 0;
-//        }
-//
-//    }
-//    else{
-//        puts("something happened");
-//    }
-//    printf("%d tasks %s\n", numtasks, sus_or_res ? "suspended" : "resumed");
-//    cmdParams.clear();
+CMD_HANDLER_FUNC(taskHandler) {
+
     auto params = (char *) cmdParams.c_str();
+    TaskHandle_t task_to_be_changed = NULL;
     printf("command: %s\n", params);
     char *pch = NULL;
     uint8_t numtasks = 0;
 
+    char trunc[configMAX_TASK_NAME_LEN] = { 0 };
+
     pch = strtok(params, " ");
 
     if (strcasecmp(pch, "suspend") == 0) {
-        pch = strtok(NULL, " ");
-        while (pch != NULL) {
-            if (strcasecmp(pch, "consumer") == 0) {
-                vTaskSuspend(consumer_handle);
-                puts("Suspended Consumer");
-                numtasks++;
+        while ((pch = strtok(NULL, " ")) != NULL) {
+            if (strlen(pch) > configMAX_TASK_NAME_LEN - 1) {
+                strncpy(trunc, pch, configMAX_TASK_NAME_LEN - 1);
+                if ((task_to_be_changed = xTaskGetHandle(trunc)) != NULL) {
+                    vTaskSuspend(task_to_be_changed);
+                    numtasks++;
+                }
+                else {
+                    printf("\"%s\" is not a valid task.\n", pch);
+                }
             }
-            else if (strcasecmp(pch, "producer") == 0) {
-                vTaskSuspend(producer_handle);
-                puts("Suspended Producer");
-                numtasks++;
-            }
-            else if (strcasecmp(pch, "watchdog") == 0) {
-                vTaskSuspend(watchdog_handle);
-                puts("Suspended Watchdog");
+            else if ((task_to_be_changed = xTaskGetHandle(pch)) != NULL) {
+                vTaskSuspend(task_to_be_changed);
                 numtasks++;
             }
             else {
                 printf("\"%s\" is not a valid task.\n", pch);
             }
-            pch = strtok(NULL, " ");
         }
         if (numtasks) {
-            printf("%d tasks suspended.\n", numtasks);
+            printf("%d task%s suspended.\n", numtasks, (numtasks > 1) ? "s" : "");
             return true;
         }
-        else {
-            return false;
-        }
+
+        return false;
+
     }
     else if (strcasecmp(pch, "resume") == 0) {
-        puts("resuming");
-        pch = strtok(NULL, " ");
-        while (pch != NULL) {
-            if (strcasecmp(pch, "consumer") == 0) {
-                vTaskResume(consumer_handle);
-                puts("Resumed Consumer");
-                numtasks++;
+        while ((pch = strtok(NULL, " ")) != NULL) {
+            if (strlen(pch) > configMAX_TASK_NAME_LEN - 1) {
+                strncpy(trunc, pch, configMAX_TASK_NAME_LEN - 1);
+                if ((task_to_be_changed = xTaskGetHandle(trunc)) != NULL) {
+                    vTaskResume(task_to_be_changed);
+                    numtasks++;
+                }
+                else {
+                    printf("\"%s\" is not a valid task.\n", pch);
+                }
             }
-            else if (strcasecmp(pch, "producer") == 0) {
-                vTaskResume(producer_handle);
-                puts("Resumed Producer");
-                numtasks++;
-            }
-            else if (strcasecmp(pch, "watchdog") == 0) {
-                vTaskResume(watchdog_handle);
-                puts("Resumed Watchdog");
+            else if ((task_to_be_changed = xTaskGetHandle(pch)) != NULL) {
+                vTaskResume(task_to_be_changed);
                 numtasks++;
             }
             else {
                 printf("\"%s\" is not a valid task.\n", pch);
             }
-            pch = strtok(NULL, " ");
         }
         if (numtasks) {
-            printf("%d tasks resumed.\n", numtasks);
+            printf("%d task%s resumed.\n", numtasks, (numtasks > 1) ? "s" : "");
             return true;
         }
-        else {
-            return false;
-        }
+
+        return false;
+
+
     }
-
-//    while (pch != NULL)
-//      {
-//        printf ("%s\n",pch);
-//        pch = strtok (NULL, " ");
-//      }
-
-//    auto c = cmdParams.getToken(" ", false);
-//    if (c->compareToIgnoreCase("suspend")){
-//        c = cmdParams.getToken(" ", false);
-//        if (c->compareToIgnoreCase("producer")){
-//            vTaskSuspend(producer_handle);
-//            puts("Suspended Producer");
-//            return true;
-//        }
-//        else if (c->compareToIgnoreCase("consumer")){
-//            vTaskSuspend(consumer_handle);
-//            puts("Suspended Consumer");
-//            return true;
-//        }
-//        if (c->compareToIgnoreCase("watchdog")){
-//            vTaskSuspend(watchdog_handle);
-//            puts("Suspended Watchdog");
-//            return true;
-//        }
-//    }
-//    else if (c->compareToIgnoreCase("resume")){
-//        c = cmdParams.getToken(" ", false);
-//        if (c->compareToIgnoreCase("producer")){
-//            vTaskResume(producer_handle);
-//            puts("Resumed Producer");
-//            return true;
-//        }
-//        else if (c->compareToIgnoreCase("consumer")){
-//            vTaskResume(consumer_handle);
-//            puts("Resumed Consumer");
-//            return true;
-//        }
-//        if (c->compareToIgnoreCase("watchdog")){
-//            vTaskResume(watchdog_handle);
-//            puts("Resumed Watchdog");
-//            return true;
-//        }
-//    }
-//    else {
-//        puts("Invalid Command");
-//        return false;
-//    }
-
-    return true;
+    else {
+        return false;
+    }
 }
 
 void vTaskGetHandle(void *pvParamters)
